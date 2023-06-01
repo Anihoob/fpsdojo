@@ -98,8 +98,8 @@
   }
 .homesliderswiper {
     width: 100%;
-    height: 200px;
-    padding: 30px;
+    height: 250px;
+    padding: 20px;
     background: linear-gradient(180deg, #010101 0%, #090909 76.03%, #171717 91.39%, #1B1B1D 100%);
 }
 
@@ -107,14 +107,30 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 15px;
     overflow: hidden;
+    position: relative;
+    /* background: aqua; */
   }
   
-.homesliderswiperslide img {
+  .homesliderswiperslide img {
     width: 100%;
-    height: 100%;
+    border-radius: 15px;
+    height: 70%;
     object-fit: cover;
+  }
+
+  .homesliderswiperslide-info{
+    position: absolute;
+    color: white;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  
+  .homesliderswiperslide-info h4:last-child{
+    font-weight: 400;
   }
 
   /* home slider end */
