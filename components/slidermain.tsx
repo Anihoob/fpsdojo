@@ -11,7 +11,12 @@ import "./components.css";
 // import required modules
 import { Pagination } from "swiper";
 
-export default function HomeMainSlider() {
+type imageUrl ={
+  image1:string;
+  image2:string;
+} 
+
+export default function MainSlider(props:imageUrl) {
   return (
     <>
       <Swiper
@@ -20,7 +25,7 @@ export default function HomeMainSlider() {
         className="homemainsliderswiper"
       >
         <SwiperSlide className="homemainsliderswiperslide">
-            <img src="https://res.cloudinary.com/dxi9wcchp/image/upload/v1635591822/jujutsu_kaizen_gazruz.jpg" alt="" />
+            <img src={props.image1} alt="" />
             <div className="homemainsliderinfo">
               <h4 className="homemainsliderinfo-name">JUJUTSU KAISEN</h4>
               <span>
@@ -32,7 +37,7 @@ export default function HomeMainSlider() {
             </div>
         </SwiperSlide>
         <SwiperSlide className="homemainsliderswiperslide">
-            <img src="https://res.cloudinary.com/dp9icjdvf/image/upload/v1667323307/Frame_3bluelockposter_foyhti.png" alt="" />
+            <img src={props.image2} alt="" />
             <div className="homemainsliderinfo">
               <h4 className="homemainsliderinfo-name">BLUE LOCK</h4>
               <span>

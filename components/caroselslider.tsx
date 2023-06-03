@@ -12,7 +12,7 @@ type Props = {
   section: string;
 };
 
-export default function HomeSlider(props: Props) {
+export default function CaroselSlider(props: Props) {
   return (
     <>
       <h4 className="homesliderswiper-sec">{props.section}</h4>

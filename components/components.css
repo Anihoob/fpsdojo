@@ -1,4 +1,8 @@
 /* Navbar */
+.active{
+  color: #E86F00;
+}
+
 .nav-main{
   position: fixed;
   bottom: 0;
@@ -20,10 +24,15 @@
   color: white;
 }
 
-.nav-links li{
+/* .nav-links li{
+  
+} */
+
+.nav-links li a{
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white;
 }
 
 .nav-links svg{
