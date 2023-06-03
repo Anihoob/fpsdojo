@@ -21,8 +21,8 @@ export default function HomeSlider(props: Props) {
         slidesPerView={1.5}
         className="homesliderswiper"
       >
-        <Link href={'/Test'}>
         <SwiperSlide className="homesliderswiperslide">
+        <Link href={'/Test'}>
           <img
             src="https://res.cloudinary.com/dp9icjdvf/image/upload/v1667323320/Frame_4bluelock_2_oilzbq.png"
             alt=""
@@ -32,8 +32,8 @@ export default function HomeSlider(props: Props) {
             <hr />
             <h4>S1</h4>
           </div>
-        </SwiperSlide>
         </Link>
+        </SwiperSlide>
         <Link href={"/Test"}>
         <SwiperSlide className="homesliderswiperslide">
           <img

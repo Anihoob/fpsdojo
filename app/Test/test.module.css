@@ -18,6 +18,10 @@
   display: flex;
   justify-content: space-between;
 }
+.infopageoptions span a{
+  z-index: 2;
+}
+
 .infopageoptions span svg {
   width: 40px;
   height: 40px;
@@ -27,7 +31,6 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border-radius: 50%;
-  z-index: 2;
 }
 
 .infopageposter {
@@ -86,7 +89,7 @@
   margin: 0;
 }
 
-.infopagedwnldbtn {
+.infopageselectbtn {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -108,6 +111,19 @@
   color: black;
 }
 
+.infopagedwnldbtn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.infopagedwnldbtn button{
+  background: white;
+  border: 0;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 700;
+
+}
 .infopageabout{
   padding: 10px 20px;
   text-align: justify;
