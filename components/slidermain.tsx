@@ -1,22 +1,85 @@
-'use client'
+"use client";
+import { useEffect, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
 import "./components.css";
-
-// import required modules
+// import swiper modules
 import { Pagination } from "swiper";
 
-type imageUrl ={
-  image1:string;
-  image2:string;
-} 
+// type interface
+type imageUrl = {
+  image1: string;
+  image2: string;
+};
 
-export default function MainSlider(props:imageUrl) {
+type animeslider = {
+  id?: number;
+  title: string;
+  season: number;
+  description?: string | undefined;
+};
+type animedes = {
+  id?: number;
+  title?: string;
+  description?: string | undefined;
+  image?:string;
+  type?:string;
+  releaseDate?:string;
+};
+
+// supabase
+import Supabase from "@/thirdparty_req/supabase";
+
+export default function MainSlider(props: imageUrl) {
+  const superbase = Supabase();
+
+  const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(null);
+
+  async function fetchslider() {
+    try {
+      const { data: anime } = await superbase.from("tv series").select("*");
+
+      if (anime === null) {
+        setAnimecontainer([]);
+      } else {
+        const mappedData: animeslider[] = anime.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          season: item.seasons,
+        }));
+        setAnimecontainer(mappedData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const [animeData, setAnimeData] = useState<animedes[] | null>(null);
+  async function fetchDetails() {
+    if (!animecontainer) return;
+
+    try {
+      const animeDataPromise = animecontainer.map(async (singleanime) => {
+        const res = await fetch(`https://api.consumet.org/anime/gogoanime/info/` + singleanime.title ,{ cache: 'force-cache'});
+        const demta = await res.json()
+        return { ...demta, id: singleanime.id }
+      });
+      const animeData = await Promise.all(animeDataPromise);
+      setAnimeData(animeData); 
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  
+  useEffect(() => {
+    fetchslider();
+    fetchDetails();
+  },);
+
   return (
     <>
       <Swiper
@@ -24,30 +87,32 @@ export default function MainSlider(props:imageUrl) {
         modules={[Pagination]}
         className="homemainsliderswiper"
       >
-        <SwiperSlide className="homemainsliderswiperslide">
-            <img src={props.image1} alt="" />
+       {animeData?.map((animedescription)=>
+          <SwiperSlide
+            className="homemainsliderswiperslide"
+            key={animedescription.id}
+          >
+            <img src={animedescription.image} alt="" />
             <div className="homemainsliderinfo">
-              <h4 className="homemainsliderinfo-name">JUJUTSU KAISEN</h4>
+              <h4 className="homemainsliderinfo-name">
+                {animedescription.title?.toUpperCase()}
+              </h4>
               <span>
-                <h6>TV</h6>
+                { animedescription.type === "TV SERIES" && (
+                  <h6>Tv</h6>
+                )}
+                { animedescription.type === "MOVIES" && (
+                  <h6>Movie</h6>
+                )}
                 <h6>23min</h6>
-                <h6>16+</h6>
-              </span>
-              <p className="about">Yuuji Itadori searches for the rest of the cursed talisman in order to exorcise himself.</p>
+                <h6>{animedescription.releaseDate}</h6>
+              </span> 
+              <p className="about">
+                {animedescription.description}
+              </p>
             </div>
-        </SwiperSlide>
-        <SwiperSlide className="homemainsliderswiperslide">
-            <img src={props.image2} alt="" />
-            <div className="homemainsliderinfo">
-              <h4 className="homemainsliderinfo-name">BLUE LOCK</h4>
-              <span>
-                <h6>TV</h6>
-                <h6>23min</h6>
-                <h6>6+</h6>
-              </span>
-              <p className="about">Japan's desire for World Cup glory leads the Japanese Football Association to launch a new training programme.</p>
-            </div>
-        </SwiperSlide>
+          </SwiperSlide>
+              )}
       </Swiper>
     </>
   );

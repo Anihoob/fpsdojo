@@ -1,27 +1,34 @@
+"use client";
 import Link from "next/link";
 import Styles from "./test.module.css";
+import Supabase from "@/thirdparty_req/supabase";
+import { useEffect } from "react";
+import { ANIME } from "@consumet/extensions";
 
 export default function Test() {
+  const superbase = Supabase();
+
+
   return (
     <div className={Styles.infopagemain}>
       <div className={Styles.infopageoptions}>
         <span>
           <Link href={"/"}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path
-              fill="#ffff"
-              d="M15.125 21.1L6.7 12.7q-.15-.15-.213-.325T6.425 12q0-.2.062-.375T6.7 11.3l8.425-8.425q.35-.35.875-.35t.9.375q.375.375.375.875t-.375.875L9.55 12l7.35 7.35q.35.35.35.863t-.375.887q-.375.375-.875.375t-.875-.375Z"
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                fill="#ffff"
+                d="M15.125 21.1L6.7 12.7q-.15-.15-.213-.325T6.425 12q0-.2.062-.375T6.7 11.3l8.425-8.425q.35-.35.875-.35t.9.375q.375.375.375.875t-.375.875L9.55 12l7.35 7.35q.35.35.35.863t-.375.887q-.375.375-.875.375t-.875-.375Z"
               />
-          </svg>
-              </Link>
-              <Link href={"/"}>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <path
-              fill="#fff"
-              d="M24 13a1 1 0 0 1 .993.883L25 14v8a4 4 0 0 1-3.8 3.995L21 26H7a4 4 0 0 1-3.995-3.8L3 22v-8a1 1 0 0 1 1.993-.117L5 14v8a2 2 0 0 0 1.85 1.994L7 24h14a2 2 0 0 0 1.994-1.85L23 22v-8a1 1 0 0 1 1-1ZM6.929 8.657l6.364-6.364a1 1 0 0 1 1.32-.083l.094.083l6.364 6.364a1 1 0 0 1-1.32 1.497l-.094-.083L15 5.414V18a1 1 0 0 1-.883.993L14 19a1 1 0 0 1-.993-.883L13 18V5.414l-4.657 4.657a1 1 0 0 1-1.32.083l-.094-.083a1 1 0 0 1-.083-1.32l.083-.094l6.364-6.364l-6.364 6.364Z"
+            </svg>
+          </Link>
+          <Link href={"/"}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+              <path
+                fill="#fff"
+                d="M24 13a1 1 0 0 1 .993.883L25 14v8a4 4 0 0 1-3.8 3.995L21 26H7a4 4 0 0 1-3.995-3.8L3 22v-8a1 1 0 0 1 1.993-.117L5 14v8a2 2 0 0 0 1.85 1.994L7 24h14a2 2 0 0 0 1.994-1.85L23 22v-8a1 1 0 0 1 1-1ZM6.929 8.657l6.364-6.364a1 1 0 0 1 1.32-.083l.094.083l6.364 6.364a1 1 0 0 1-1.32 1.497l-.094-.083L15 5.414V18a1 1 0 0 1-.883.993L14 19a1 1 0 0 1-.993-.883L13 18V5.414l-4.657 4.657a1 1 0 0 1-1.32.083l-.094-.083a1 1 0 0 1-.083-1.32l.083-.094l6.364-6.364l-6.364 6.364Z"
               />
-          </svg>
-        </Link>
+            </svg>
+          </Link>
         </span>
       </div>
       <div className={Styles.infopageposter}>
