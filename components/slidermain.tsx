@@ -28,6 +28,7 @@ type animedes = {
   image?:string;
   type?:string;
   releaseDate?:string;
+  totalEpisodes: number;
 };
 
 // supabase
@@ -40,8 +41,8 @@ export default function MainSlider(props: imageUrl) {
 
   async function fetchslider() {
     try {
-      const { data: anime } = await superbase.from("tv series").select("*");
-
+      const { data: anime } = await superbase.from("tv series").select("*").limit(5);
+      console.log(anime)
       if (anime === null) {
         setAnimecontainer([]);
       } else {
@@ -58,6 +59,7 @@ export default function MainSlider(props: imageUrl) {
   }
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
+
   async function fetchDetails() {
     if (!animecontainer) return;
 
@@ -78,7 +80,7 @@ export default function MainSlider(props: imageUrl) {
   useEffect(() => {
     fetchslider();
     fetchDetails();
-  },);
+  },[]);
 
   return (
     <>
@@ -98,10 +100,10 @@ export default function MainSlider(props: imageUrl) {
                 {animedescription.title?.toUpperCase()}
               </h4>
               <span>
-                { animedescription.type === "TV SERIES" && (
+                { animedescription.totalEpisodes > 1 && (
                   <h6>Tv</h6>
                 )}
-                { animedescription.type === "MOVIES" && (
+                { animedescription.totalEpisodes < 1 && (
                   <h6>Movie</h6>
                 )}
                 <h6>23min</h6>
