@@ -42,7 +42,6 @@ export default function MainSlider(props: imageUrl) {
   async function fetchslider() {
     try {
       const { data: anime } = await superbase.from("tv series").select("*").limit(5);
-      console.log(anime)
       if (anime === null) {
         setAnimecontainer([]);
       } else {
@@ -80,7 +79,7 @@ export default function MainSlider(props: imageUrl) {
   useEffect(() => {
     fetchslider();
     fetchDetails();
-  },[]);
+  });
 
   return (
     <>
