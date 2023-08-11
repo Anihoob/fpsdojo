@@ -7,12 +7,89 @@ import "swiper/css/pagination";
 
 import "./components.css";
 import Link from "next/link";
+import Supabase from "@/thirdparty_req/supabase";
+import { useEffect, useState } from "react";
 
 type Props = {
   section: string;
 };
 
+type animeslider = {
+  id?: number;
+  title?: string;
+  season?: number;
+  description?: string | undefined;
+};
+type animedes = {
+  id?: number;
+  title?: string;
+  description?: string | undefined;
+  image?: string;
+  type?: string;
+  releaseDate?: string;
+  totalEpisodes: number;
+};
+
 export default function CaroselSlider(props: Props) {
+  const superbase = Supabase();
+
+  const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
+    null
+  );
+
+  async function fetchslider() {
+    try {
+      const { data: anime } = await superbase
+        .from("tv_series")
+        .select("*")
+        .limit(5);
+      if (anime === null) {
+        setAnimecontainer([]);
+      } else {
+        const mappedData: animeslider[] = anime.map((item: any) => ({
+          id: item.id,
+          title: item.title,
+          season: item.seasons,
+        }));
+        setAnimecontainer(mappedData);
+        // console.log(animecontainer)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchslider();
+  });
+
+  const [animeData, setAnimeData] = useState<animedes[] | null>(null);
+
+  async function fetchDetails() {
+    if (!animecontainer) return;
+
+    try {
+      const animeDataPromise = animecontainer.map(async (singleanime) => {
+        const res = await fetch(
+          `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title
+        );
+        const demta = await res.json();
+        // console.log(demta)
+        return { ...demta };
+      });
+      const animeData = await Promise.all(animeDataPromise);
+      setAnimeData(animeData);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    if (fetchslider!) {
+      fetchDetails();
+    }
+  });
+
   return (
     <>
       <h4 className="homesliderswiper-sec">{props.section}</h4>
@@ -21,54 +98,21 @@ export default function CaroselSlider(props: Props) {
         slidesPerView={1.5}
         className="homesliderswiper"
       >
-        <SwiperSlide className="homesliderswiperslide">
-        <Link href={'/Test'}>
-          <img
-            src="https://res.cloudinary.com/dp9icjdvf/image/upload/v1667323320/Frame_4bluelock_2_oilzbq.png"
-            alt=""
-            />
-          <div className="homesliderswiperslide-info">
-            <h4 className="homesliderswiperslide-name">Blue Lock</h4>
-            <hr />
-            <h4>S1</h4>
-          </div>
-        </Link>
-        </SwiperSlide>
-        <Link href={"/Test"}>
-        <SwiperSlide className="homesliderswiperslide">
-          <img
-            src="https://res.cloudinary.com/dxi9wcchp/image/upload/v1635591823/jujutsu-kaisen_xa1hsz.jpg"
-            alt=""
-            />
-          <div className="homesliderswiperslide-info">
-            <h4 className="homesliderswiperslide-name">Jujutsu Kaisen</h4>
-            <hr />
-            <h4>S1</h4>
-          </div>
-        </SwiperSlide>
+        {animeData?.map((animeinfo) => (
+          <SwiperSlide className="homesliderswiperslide">
+            <Link href={`/Anidojo/${animeinfo.releaseDate}/${animeinfo.id}`}>
+              <img
+                src={animeinfo.image}
+                alt=""
+              />
+              <div className="homesliderswiperslide-info">
+                <h4 className="homesliderswiperslide-name">{animeinfo.title}</h4>
+                <hr />
+                <h4>{animeinfo.releaseDate}</h4>
+              </div>
             </Link>
-        <SwiperSlide className="homesliderswiperslide">
-          <img
-            src="https://res.cloudinary.com/dp9icjdvf/image/upload/v1667323320/Frame_4bluelock_2_oilzbq.png"
-            alt=""
-          />
-          <div className="homesliderswiperslide-info">
-            <h4 className="homesliderswiperslide-name">Blue Lock</h4>
-            <hr />
-            <h4>S1</h4>
-          </div>
-        </SwiperSlide>
-        <SwiperSlide className="homesliderswiperslide">
-          <img
-            src="https://res.cloudinary.com/dxi9wcchp/image/upload/v1635591823/jujutsu-kaisen_xa1hsz.jpg"
-            alt=""
-          />
-          <div className="homesliderswiperslide-info">
-            <h4 className="homesliderswiperslide-name">Jujutsu Kaisen</h4>
-            <hr />
-            <h4>S1</h4>
-          </div>
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );

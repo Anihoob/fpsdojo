@@ -132,10 +132,12 @@
 }
 
 .homesliderswiperslide img {
-  width: 100%;
+  width: 250px;
   border-radius: 15px;
-  height: 70%;
+  height: 150px;
   object-fit: cover;
+  filter: brightness(80%);
+  object-position: center center;
 }
 
 .homesliderswiperslide-info {
