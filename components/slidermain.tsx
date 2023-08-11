@@ -57,11 +57,16 @@ export default function MainSlider(props: imageUrl) {
           season: item.seasons,
         }));
         setAnimecontainer(mappedData);
+        // console.log(animecontainer)
       }
     } catch (error) {
       console.log(error);
     }
   }
+
+  useEffect(()=>{
+    fetchslider();
+  })
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
 
@@ -72,10 +77,10 @@ export default function MainSlider(props: imageUrl) {
       const animeDataPromise = animecontainer.map(async (singleanime) => {
         const res = await fetch(
           `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title,
-          { cache: "force-cache" }
         );
         const demta = await res.json();
-        return { ...demta, id: singleanime.id };
+        // console.log(demta)
+        return { ...demta};
       });
       const animeData = await Promise.all(animeDataPromise);
       setAnimeData(animeData);
@@ -85,8 +90,9 @@ export default function MainSlider(props: imageUrl) {
   }
 
   useEffect(() => {
-    fetchslider();
-    fetchDetails();
+    if(fetchslider!){
+      fetchDetails();
+    }
   });
 
   return (
@@ -103,8 +109,7 @@ export default function MainSlider(props: imageUrl) {
               className="homemainsliderswiperslide"
             >
               <img src={animedescription.image} alt="" />
-              {animecontainer?.map((info)=>(
-                <Link className="homemainsliderinfo" href={`/Anidojo/${info.id}/${info.title}`}
+                <Link className="homemainsliderinfo" href={`/Anidojo/${animedescription.releaseDate}/${animedescription.id}`}
                 >
                 <h4 className="homemainsliderinfo-name">
                   {animedescription.title?.toUpperCase()}
@@ -117,7 +122,6 @@ export default function MainSlider(props: imageUrl) {
                 </span>
                 <p className="about">{animedescription.description}</p>
           </Link>
-            ))}
             </SwiperSlide>
         ))}
       </Swiper>

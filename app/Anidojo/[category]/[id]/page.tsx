@@ -30,6 +30,8 @@ type animedes = {
 };
 
 export default function Tv({ params }: { params: umrl }) {
+
+
   const whichanime = params.id;
   // console.log(whichanime)
 
@@ -73,7 +75,7 @@ export default function Tv({ params }: { params: umrl }) {
         `https://api.consumet.org/anime/gogoanime/info/` + whichanime
       );
       const demta: animedes = await gugufind.json();
-      setGugudata(demta);
+      setGugudata({...demta, id: whichanime.id});
     } catch (error) {
       console.log(error);
     }
