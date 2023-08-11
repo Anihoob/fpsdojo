@@ -76,7 +76,7 @@ export default function MainSlider(props: imageUrl) {
     try {
       const animeDataPromise = animecontainer.map(async (singleanime) => {
         const res = await fetch(
-          `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title,
+          `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title,{cache:'force-cache'}
         );
         const demta = await res.json();
         // console.log(demta)
@@ -90,9 +90,7 @@ export default function MainSlider(props: imageUrl) {
   }
 
   useEffect(() => {
-    if(fetchslider!){
       fetchDetails();
-    }
   });
 
   return (
