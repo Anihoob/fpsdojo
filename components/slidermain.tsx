@@ -35,7 +35,7 @@ type animedes = {
 import Supabase from "@/thirdparty_req/supabase";
 import Link from "next/link";
 
-export default function MainSlider(props: imageUrl) {
+export default function MainSlider() {
   const superbase = Supabase();
 
   const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
@@ -79,7 +79,6 @@ export default function MainSlider(props: imageUrl) {
           `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title,{cache:'force-cache'}
         );
         const demta = await res.json();
-        // console.log(demta)
         return { ...demta};
       });
       const animeData = await Promise.all(animeDataPromise);
