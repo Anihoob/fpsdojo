@@ -8,6 +8,16 @@ import { ANIME } from "@consumet/extensions";
 export default function Test() {
   const superbase = Supabase();
 
+  async function fetchall() {
+    try {
+      const { data } = await superbase.rpc("fetch_tv_series_with_seasons_and_episodes");
+      console.log(data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  fetchall()
 
   return (
     <div className={Styles.infopagemain}>

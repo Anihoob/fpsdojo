@@ -17,31 +17,37 @@ type imageUrl = {
 
 type animeslider = {
   id?: number;
-  title: string;
-  season: number;
+  title?: string;
+  season?: number;
   description?: string | undefined;
 };
 type animedes = {
   id?: number;
   title?: string;
   description?: string | undefined;
-  image?:string;
-  type?:string;
-  releaseDate?:string;
+  image?: string;
+  type?: string;
+  releaseDate?: string;
   totalEpisodes: number;
 };
 
 // supabase
 import Supabase from "@/thirdparty_req/supabase";
+import Link from "next/link";
 
 export default function MainSlider(props: imageUrl) {
   const superbase = Supabase();
 
-  const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(null);
+  const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
+    null
+  );
 
   async function fetchslider() {
     try {
-      const { data: anime } = await superbase.from("tv series").select("*").limit(5);
+      const { data: anime } = await superbase
+        .from("tv_series")
+        .select("*")
+        .limit(5);
       if (anime === null) {
         setAnimecontainer([]);
       } else {
@@ -64,18 +70,20 @@ export default function MainSlider(props: imageUrl) {
 
     try {
       const animeDataPromise = animecontainer.map(async (singleanime) => {
-        const res = await fetch(`https://api.consumet.org/anime/gogoanime/info/` + singleanime.title ,{ cache: 'force-cache'});
-        const demta = await res.json()
-        return { ...demta, id: singleanime.id }
+        const res = await fetch(
+          `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title,
+          { cache: "force-cache" }
+        );
+        const demta = await res.json();
+        return { ...demta, id: singleanime.id };
       });
       const animeData = await Promise.all(animeDataPromise);
-      setAnimeData(animeData); 
+      setAnimeData(animeData);
     } catch (error) {
       console.error(error);
     }
   }
 
-  
   useEffect(() => {
     fetchslider();
     fetchDetails();
@@ -88,32 +96,30 @@ export default function MainSlider(props: imageUrl) {
         modules={[Pagination]}
         className="homemainsliderswiper"
       >
-       {animeData?.map((animedescription)=>
-          <SwiperSlide
-            className="homemainsliderswiperslide"
-            key={animedescription.id}
-          >
-            <img src={animedescription.image} alt="" />
-            <div className="homemainsliderinfo">
-              <h4 className="homemainsliderinfo-name">
-                {animedescription.title?.toUpperCase()}
-              </h4>
-              <span>
-                { animedescription.totalEpisodes > 1 && (
-                  <h6>Tv</h6>
-                )}
-                { animedescription.totalEpisodes < 1 && (
-                  <h6>Movie</h6>
-                )}
-                <h6>23min</h6>
-                <h6>{animedescription.releaseDate}</h6>
-              </span> 
-              <p className="about">
-                {animedescription.description}
-              </p>
-            </div>
-          </SwiperSlide>
-              )}
+        {animeData?.map((animedescription) => (
+         
+            <SwiperSlide
+              key={animedescription.id}
+              className="homemainsliderswiperslide"
+            >
+              <img src={animedescription.image} alt="" />
+              {animecontainer?.map((info)=>(
+                <Link className="homemainsliderinfo" href={`/Anidojo/${info.id}/${info.title}`}
+                >
+                <h4 className="homemainsliderinfo-name">
+                  {animedescription.title?.toUpperCase()}
+                </h4>
+                <span>
+                  {animedescription.totalEpisodes > 1 && <h6>Tv</h6>}
+                  {animedescription.totalEpisodes < 1 && <h6>Movie</h6>}
+                  {animedescription.totalEpisodes > 1 &&<h6>{animedescription.totalEpisodes}</h6>}
+                  <h6>{animedescription.releaseDate}</h6>
+                </span>
+                <p className="about">{animedescription.description}</p>
+          </Link>
+            ))}
+            </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
