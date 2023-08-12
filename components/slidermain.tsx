@@ -35,8 +35,6 @@ import Link from "next/link";
 export default function MainSlider() {
   const pathname = usePathname();
 
-  // console.log(searchParam)
-
   const superbase = Supabase();
 
   const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
