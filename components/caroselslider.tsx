@@ -37,12 +37,11 @@ export default function CaroselSlider(props: Props) {
     null
   );
 
-  async function fetchslider() {
+  async function fetchcarosel() {
     try {
       const { data: anime } = await superbase
         .from("tv_series")
         .select("*")
-        .limit(5);
       if (anime === null) {
         setAnimecontainer([]);
       } else {
@@ -59,7 +58,7 @@ export default function CaroselSlider(props: Props) {
   }
 
   useEffect(() => {
-    fetchslider();
+    fetchcarosel();
   });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
@@ -70,7 +69,7 @@ export default function CaroselSlider(props: Props) {
     try {
       const animeDataPromise = animecontainer.map(async (singleanime) => {
         const res = await fetch(
-          `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title, {cache: 'force-cache'}
+          `https://ani-dojo-api.vercel.app/anime/gogoanime/info/` + singleanime.title, {cache: 'force-cache'}
         );
         const demta = await res.json();
         // console.log(demta)

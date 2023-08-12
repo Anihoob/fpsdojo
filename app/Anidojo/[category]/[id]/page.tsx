@@ -30,8 +30,6 @@ type animedes = {
 };
 
 export default function Tv({ params }: { params: umrl }) {
-
-
   const whichanime = params.id;
   // console.log(whichanime)
 
@@ -55,11 +53,15 @@ export default function Tv({ params }: { params: umrl }) {
     fetchsupabase();
   }, []);
 
+  const [fetchepsiode, setFetchepisode] = useState<datatype | null>();
+
   function fetchAnimeByTitle() {
     if (supabasedata) {
       const rez = supabasedata.find(
         (bruh: datatype) => whichanime === bruh.tv_series_title
       );
+      setFetchepisode(rez);
+      // console.log(rez)
     }
   }
 
@@ -72,10 +74,10 @@ export default function Tv({ params }: { params: umrl }) {
   async function gugu() {
     try {
       const gugufind = await fetch(
-        `https://api.consumet.org/anime/gogoanime/info/` + whichanime
+        `https://ani-dojo-api.vercel.app/anime/gogoanime/info/` + whichanime
       );
       const demta: animedes = await gugufind.json();
-      setGugudata({...demta, id: whichanime.id});
+      setGugudata({ ...demta, id: whichanime.id });
     } catch (error) {
       console.log(error);
     }
@@ -124,22 +126,24 @@ export default function Tv({ params }: { params: umrl }) {
                 <hr />
                 <h5>{gugudata.totalEpisodes}</h5>
               </div>
-              <div className={Styles.infopageselectbtn}>
-                <select className={Styles.infopagedwnldselect}>
-                  <option value="0">Season</option>
-                  <option value="1">Season 1</option>
-                  <option value="2">Season 2</option>
-                  <option value="3">Season 3</option>
-                </select>
-                <select className={Styles.infopagedwnldselect}>
-                  <option value="0">Episode</option>
-                  <option value="1">Episode 1</option>
-                  <option value="2">Episode 2</option>
-                  <option value="3">Episode 3</option>
-                  <option value="4">Episode 4</option>
-                  <option value="5">Episode 5</option>
-                </select>
-              </div>
+              
+                <div className={Styles.infopageselectbtn}>
+                  <select className={Styles.infopagedwnldselect}>
+                    <option value="0">Season</option>
+                    {fetchepsiode && (
+                    <option value={fetchepsiode.season_number}>
+                      Season {fetchepsiode.season_number}
+                    </option>
+                       )}
+                  </select>
+                  <select className={Styles.infopagedwnldselect}>
+                    <option value="0">Episode</option>
+                    {fetchepsiode && (
+                    <option value={fetchepsiode.episode_number}>Episode {fetchepsiode.episode_number}</option>
+                    )}
+                  </select>
+                </div>
+           
               <div className={Styles.infopagedwnldbtn}>
                 <button>Download</button>
               </div>
