@@ -34,6 +34,7 @@ import Link from "next/link";
 
 export default function MainSlider() {
   const pathname = usePathname();
+ 
 
   const superbase = Supabase();
 
@@ -65,7 +66,7 @@ export default function MainSlider() {
     } else if (pathname === "/Movies") {
       try {
         const { data: movie } = await superbase
-          .from("Movies")
+          .from("movies")
           .select("*")
           .limit(5);
         if (movie === null) {
@@ -114,7 +115,7 @@ export default function MainSlider() {
           const singlemovi = singlemovie.title;
           const res = await fetch(
             `https://ani-dojo-api.vercel.app/movies/flixhq/ ` +
-              singlemovie.title
+              singlemovie.title,{ cache: "force-cache" }
           );
           const demta = await res.json();
           const { results } = demta;
@@ -154,7 +155,7 @@ export default function MainSlider() {
             <img src={animedescription.image} alt="" />
             <Link
               className="homemainsliderinfo"
-              href={`/Anidojo/${animedescription.releaseDate}/${animedescription.id}`}
+              href={pathname === "/Movies" ? `/AniDojo/movie/${animedescription.title}` : `/AniDojo/anime/${animedescription.id}` }
             >
               <h4 className="homemainsliderinfo-name">
                 {animedescription.title?.toUpperCase()}

@@ -1,12 +1,99 @@
+"use client";
 import Link from "next/link";
 import Styles from "./movie.module.css";
+import Supabase from "@/thirdparty_req/supabase";
+import { useEffect, useState } from "react";
 
-export default function Tv() {
+interface umrl {
+  title: string | undefined | any;
+  id: string | any;
+}
+
+interface datatype {
+  movies_id: number;
+  movies_title:string | any;
+  download_id:string;
+  download_link: string | any | null;
+}
+
+
+type movides = {
+  id?: number;
+  title?: string;
+  description?: string | undefined;
+  image?: string;
+  type?: string;
+  releaseDate?: string;
+  totalEpisodes: number;
+  genres: string;
+  duration:string | any;
+};
+
+
+export default function Movie({params}:{params: umrl}) {
+  const whichmovie = decodeURIComponent(params.id)
+
+  const superbase = Supabase();
+
+  const [supabasedata, setSupabasedata] = useState<datatype[]>();
+  // console.log(supabasedata)
+
+  async function fetchsupabase(){
+    try {
+      const {data} = await superbase.rpc("get_movies");
+      setSupabasedata(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    fetchsupabase();
+  }, []);
+
+  const [ fetchmovie, setFetchmovie] = useState<datatype | null>();
+
+  function fetchMovieByTitle(){
+    if(supabasedata){
+      const rez = supabasedata.find((lmao: datatype)=> whichmovie === lmao.movies_title);
+      setFetchmovie(rez)
+    }
+  }
+ useEffect(()=>{
+  fetchMovieByTitle()
+ },[ supabasedata, whichmovie])
+
+ const { closest } = require("fastest-levenshtein");
+
+ const [flixData, setFlixdata] = useState<movides | null>(null);
+
+ async function flixhq(){
+  try{
+    const res = await fetch(`https://ani-dojo-api.vercel.app/movies/flixhq/` + whichmovie)
+    const deta = await res.json()
+    const {results} = deta;
+    const closestMatch = closest( whichmovie, results.map((ayo: any) => ayo.title))
+    const closestMovie = results.find((lmo:any)=> lmo.title === closestMatch)
+    const closestMovieId = closestMovie.id;
+
+    const flixfind = await fetch(`https://ani-dojo-api.vercel.app/movies/flixhq/info?id=` + closestMovieId)
+    const finaldeta = await flixfind.json()
+    setFlixdata(finaldeta)
+  }catch(error){
+    console.log(error)
+  }
+ }
+useEffect(()=>{
+   flixhq()
+
+})
+
+
+
   return (
     <div className={Styles.infopagemain}>
       <div className={Styles.infopageoptions}>
         <span>
-          <Link href={"/"}>
+          <Link href={"/Movies"}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
               fill="#ffff"
@@ -14,7 +101,7 @@ export default function Tv() {
               />
           </svg>
               </Link>
-              <Link href={"/"}>
+              <Link href={"/Movies"}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
             <path
               fill="#fff"
@@ -24,30 +111,34 @@ export default function Tv() {
         </Link>
         </span>
       </div>
-      <div className={Styles.infopageposter}>
+        {flixData && (
+          <>
+      <div className={Styles.infopageposter}>      
         <img
-          src="https://res.cloudinary.com/dp9icjdvf/image/upload/v1654939148/thebatman22.jpg"
+          src={flixData.image}
           alt=""
         />
       </div>
       <div className={Styles.infopageinfo}>
         <div className={Styles.infopagecard}>
-          <h4 className={Styles.infopagetitle}>THE BATMAN</h4>
+          <h4 className={Styles.infopagetitle}>{flixData.title}</h4>
           <div className={Styles.infopagegenre}>
-            <h5>Thriller</h5>
+            <h5>{flixData.genres[0]}</h5>
             <hr />
-            <h5>2020</h5>
+            <h5>{flixData.releaseDate}</h5>
             <hr />
-            <h5>2hr 45mins</h5>
+            <h5>{flixData.duration}</h5>
           </div>
-          <div className={Styles.infopagedwnldbtn}>
+          {fetchmovie && (
+            <div className={Styles.infopagedwnldbtn}>
+            <Link href={fetchmovie.download_link}>
             <button>Download</button>
+            </Link>
           </div>
+            )}
           <div className={Styles.infopageabout}>
             <p>
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod,
-              ipsam totam! Soluta recusandae fugit sapiente ut ex. Est,
-              repellendus sapiente!
+              {flixData.description}
             </p>
           </div>
           <div className={Styles.infopageaquality}>
@@ -113,6 +204,8 @@ export default function Tv() {
           </div>
         </div>
       </div>
+      </>
+        )}
     </div>
   );
 }

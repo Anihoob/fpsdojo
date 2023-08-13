@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Styles from "./tvseries.module.css";
 import Supabase from "@/thirdparty_req/supabase";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface umrl {
@@ -36,7 +35,6 @@ export default function Tv({ params }: { params: umrl }) {
   const superbase = Supabase();
 
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
-  // console.log(supabasedata)
 
   async function fetchsupabase() {
     try {
