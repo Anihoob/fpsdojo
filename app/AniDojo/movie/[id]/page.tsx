@@ -48,7 +48,7 @@ export default function Movie({params}:{params: umrl}) {
   }
   useEffect(() => {
     fetchsupabase();
-  }, []);
+  });
 
   const [ fetchmovie, setFetchmovie] = useState<datatype | null>();
 
@@ -60,7 +60,7 @@ export default function Movie({params}:{params: umrl}) {
   }
  useEffect(()=>{
   fetchMovieByTitle()
- },[ supabasedata, whichmovie])
+ },[supabasedata, whichmovie])
 
  const { closest } = require("fastest-levenshtein");
 
@@ -84,7 +84,6 @@ export default function Movie({params}:{params: umrl}) {
  }
 useEffect(()=>{
    flixhq()
-
 })
 
 

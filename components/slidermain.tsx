@@ -124,7 +124,7 @@ export default function MainSlider() {
           const closestMovie = results.find((lmao :any) => lmao.title === closestMatch);
           const closestMovieId = closestMovie.id;
 
-          const movieInfo = await fetch (`https://ani-dojo-api.vercel.app/movies/flixhq/info?id=` + closestMovieId)
+          const movieInfo = await fetch (`https://ani-dojo-api.vercel.app/movies/flixhq/info?id=` + closestMovieId,{ cache: "force-cache" })
           const finalDemta = await movieInfo.json()
           return finalDemta
         });
