@@ -12,9 +12,12 @@ interface umrl {
 interface datatype {
   id: number;
   tv_series_title: string;
-  season_number: string;
-  episode_number: string;
+  season_number: number | any;
+  episode_number: number| any;
   episode_link: string;
+  episode_id: string;
+  season_id: string;
+  tv_series_id: string;
 }
 
 type animedes = {
@@ -37,7 +40,7 @@ export default function Tv({ params }: { params: umrl }) {
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
 
   async function fetchsupabase() {
-    if (supabasedata === null) {
+    if (!supabasedata) {
       try {
         const { data } = await superbase.rpc(
           "fetch_tv_series_with_seasons_and_episodes"
@@ -53,22 +56,41 @@ export default function Tv({ params }: { params: umrl }) {
 
   useEffect(() => {
     fetchsupabase();
-  }, []);
+  });
 
-  const [fetchepsiode, setFetchepisode] = useState<datatype | null>();
+  const [fetchepsiode, setFetchepisode] = useState<datatype[] | null>(null);
+  const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
+  const [selectedEpisode, setSelectedEpisode] = useState<datatype | null>(null);
+  const [selectedEpisodeDownloadLink, setSelectedEpisodeDownloadLink] =
+    useState<string | null>(null);
+
+  const [filteredEpisodes, setFilteredEpisodes] = useState<datatype[] | null>(
+    null
+  );
 
   function fetchAnimeByTitle() {
-    if (supabasedata) {
-      const rez = supabasedata.find(
-        (bruh: datatype) => whichanime === bruh.tv_series_title
-      );
-      setFetchepisode(rez);
+    if (!fetchepsiode) {
+      if (supabasedata) {
+        const rez = supabasedata.filter(
+          (bruh: datatype) => whichanime === bruh.tv_series_title
+        );
+        setFetchepisode(rez);
+      }
     }
   }
 
   useEffect(() => {
     fetchAnimeByTitle();
   }, [supabasedata, whichanime]);
+
+  useEffect(() => {
+    if (selectedSeason !== null) {
+      const episodesInSelectedSeason = fetchepsiode?.filter(
+        (episode) => episode.season_number === selectedSeason
+      );
+      setFilteredEpisodes(episodesInSelectedSeason || null);
+    }
+  }, [selectedSeason, fetchepsiode]);
 
   const [gugudata, setGugudata] = useState<animedes | null>(null);
 
@@ -132,28 +154,57 @@ export default function Tv({ params }: { params: umrl }) {
                 <h5>{gugudata.totalEpisodes}</h5>
               </div>
 
-              <div className={Styles.infopageselectbtn}>
-                <select className={Styles.infopagedwnldselect}>
-                  <option value="0">Season</option>
-                  {fetchepsiode && (
-                    <option value={fetchepsiode.season_number}>
-                      Season {fetchepsiode.season_number}
-                    </option>
-                  )}
-                </select>
-                <select className={Styles.infopagedwnldselect}>
-                  <option value="0">Episode</option>
-                  {fetchepsiode && (
-                    <option value={fetchepsiode.episode_number}>
-                      Episode {fetchepsiode.episode_number}
-                    </option>
-                  )}
-                </select>
-              </div>
+              {fetchepsiode && (
+                <div className={Styles.infopageselectbtn}>
+                  <select
+                    onChange={(e) =>
+                      setSelectedSeason(parseInt(e.target.value))
+                    }
+                    className={Styles.infopagedwnldselect}
+                  >
+                    <option value="0">Season</option>
+                    {Array.from(
+                      new Set(
+                        fetchepsiode.map((episode) => episode.season_number)
+                      )
+                    ).map((seasonNumber) => (
+                      <option key={seasonNumber} value={seasonNumber}>
+                        Season {seasonNumber}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    onChange={(e) =>
+                      setSelectedEpisodeDownloadLink(
+                        filteredEpisodes?.find(
+                          (episode) =>
+                            episode.episode_number === parseInt(e.target.value)
+                        )?.episode_link || null
+                      )
+                    }
+                    className={Styles.infopagedwnldselect}
+                  >
+                    <option value="0">Episode</option>
+                    {filteredEpisodes?.map((episode) => (
+                      <option
+                        key={episode.episode_id}
+                        value={episode.episode_number}
+                      >
+                        Episode {episode.episode_number}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
+              {selectedEpisodeDownloadLink && (
               <div className={Styles.infopagedwnldbtn}>
+                <Link href={selectedEpisodeDownloadLink}>
                 <button>Download</button>
+                </Link>
               </div>
+              )}
+
               <div className={Styles.infopageabout}>
                 <p>{gugudata.description}</p>
               </div>

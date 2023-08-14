@@ -129,20 +129,38 @@ export default function CaroselSlider(props: Props) {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title} `,
+              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title}` ,
               { cache: "force-cache" }
             );
             const demta = await res.json();
             const { results } = demta;
 
+            // const accurate = results.find(
+            //   (bruh: any) => bruh.id === singlemovi
+            // );
+            
+            // if (accurate) {
+            //   const accurateId = accurate.id.replace("movie/", "")
+            //   console.log(accurateId)
+            //   const movieInfo = await fetch(
+            //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${accurateId}`,
+            //     { cache: "force-cache" }
+            //   );
+            //   const finalDemta = await movieInfo.json();
+            //   return finalDemta;
+            // }
+
             const closestMatch = closest(
               singlemovi,
-              results.map((move: any) => move.title)
+              results.map((move: any) => move.id || move.title)
             );
+
             const closestMovie = results.find(
-              (lmao: any) => lmao.title === closestMatch
+              (lmao: any) => lmao.id || lmao.title === closestMatch
             );
+
             const closestMovieId = closestMovie.id;
+            const closestMovieTitle = closestMovie.title;
 
             const movieInfo = await fetch(
               `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
@@ -175,7 +193,7 @@ export default function CaroselSlider(props: Props) {
         className="homesliderswiper"
       >
         {animeData?.map((animeinfo) => (
-          <SwiperSlide className="homesliderswiperslide">
+          <SwiperSlide className="homesliderswiperslide" key={animeinfo.id}>
             <Link href={pathname === "/Movies"
                   ? `/AniDojo/movie/${animeinfo.title}`
                   : `/AniDojo/anime/${animeinfo.id}`}>
