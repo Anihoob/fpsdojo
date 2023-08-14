@@ -188,10 +188,7 @@ export default function CaroselSlider(props: Props) {
               />
               <div className="homesliderswiperslide-info">
                 <h4 className="homesliderswiperslide-name">{animeinfo.title}</h4>
-                {pathname === "/" && (
-                  <hr />
-                  )}
-                <h4>{pathname === "/" && animeinfo.releaseDate}</h4>
+                {/* <h4>{pathname === "/" && animeinfo.releaseDate}</h4> */}
                 {/* <h4>{pathname === "/Movies" && animeinfo.duration}</h4> */}
               </div>
             </Link>
