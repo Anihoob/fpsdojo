@@ -73,8 +73,9 @@
   }
   
   .infopagetitle {
-    font-size: 2rem;
+    font-size: 1.4rem;
     color: white;
+    text-align: center;
   }
   
   .infopagegenre {

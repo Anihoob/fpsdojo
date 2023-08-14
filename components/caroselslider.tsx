@@ -176,7 +176,9 @@ export default function CaroselSlider(props: Props) {
       >
         {animeData?.map((animeinfo) => (
           <SwiperSlide className="homesliderswiperslide">
-            <Link href={`/Anidojo/${animeinfo.releaseDate}/${animeinfo.id}`}>
+            <Link href={pathname === "/Movies"
+                  ? `/AniDojo/movie/${animeinfo.title}`
+                  : `/AniDojo/anime/${animeinfo.id}`}>
               <img
                 src={pathname === "/" ? animeinfo.image : animeinfo.cover}
                 alt=""
