@@ -39,16 +39,21 @@ export default function Movie({params}:{params: umrl}) {
   // console.log(supabasedata)
 
   async function fetchsupabase(){
-    try {
-      const {data} = await superbase.rpc("get_movies");
-      setSupabasedata(data)
-    } catch (error) {
-      console.log(error)
+    if(supabasedata === null){
+
+      try {
+        const {data} = await superbase.rpc("get_movies");
+        setSupabasedata(data)
+      } catch (error) {
+        console.log(error)
+      }
+    }else {
+      return;
     }
   }
   useEffect(() => {
     fetchsupabase();
-  },[]);
+  });
 
   const [ fetchmovie, setFetchmovie] = useState<datatype | null>();
 
