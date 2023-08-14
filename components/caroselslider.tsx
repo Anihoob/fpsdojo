@@ -13,8 +13,11 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 type Props = {
-  section: string;
+  starting:number;
+  ending:number;
 };
+
+
 
 type animeslider = {
   id?: number;
@@ -50,6 +53,7 @@ export default function CaroselSlider(props: Props) {
           const { data: anime } = await superbase
             .from("tv_series")
             .select("*")
+            .range(props.starting, props.ending);
           if (anime === null) {
             setAnimecontainer([]);
           } else {
@@ -72,6 +76,7 @@ export default function CaroselSlider(props: Props) {
           const { data: movie } = await superbase
             .from("movies")
             .select("*")
+            .range(props.starting, props.ending);
           if (movie === null) {
             setAnimecontainer([]);
           } else {

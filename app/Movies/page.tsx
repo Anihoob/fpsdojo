@@ -7,7 +7,10 @@ export default function Movies() {
   return (
     <div className={Styles.moviesmain}>
         <MainSlider />
-        <CaroselSlider section='60FPS'/>
+        <CaroselSlider starting={6} ending={10}/>
+        <CaroselSlider starting={11} ending={15}/>
+        <CaroselSlider starting={16} ending={20}/>
+        <CaroselSlider starting={21} ending={25}/>
     </div>
   )
 }
