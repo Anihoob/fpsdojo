@@ -36,27 +36,23 @@ export default function Movie({params}:{params: umrl}) {
   const superbase = Supabase();
 
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
-  // console.log(supabasedata)
 
-  async function fetchsupabase(){
-    if(supabasedata === null){
-
+  async function fetchMoviesupabase(){
+    if(!supabasedata){
       try {
         const {data} = await superbase.rpc("get_movies");
         setSupabasedata(data)
       } catch (error) {
         console.log(error)
       }
-    }else {
-      return;
     }
   }
   useEffect(() => {
-    fetchsupabase();
+    fetchMoviesupabase();
   });
 
   const [ fetchmovie, setFetchmovie] = useState<datatype | null>();
-
+  // console.log(fetchmovie)
   function fetchMovieByTitle(){
     if(supabasedata){
       const rez = supabasedata.find((lmao: datatype)=> whichmovie === lmao.movies_title);
@@ -65,7 +61,7 @@ export default function Movie({params}:{params: umrl}) {
   }
  useEffect(()=>{
   fetchMovieByTitle()
- })
+ },[supabasedata])
 
  const { closest } = require("fastest-levenshtein");
 
