@@ -34,7 +34,6 @@ import Link from "next/link";
 
 export default function MainSlider() {
   const pathname = usePathname();
- 
 
   const superbase = Supabase();
 
@@ -44,49 +43,56 @@ export default function MainSlider() {
 
   async function fetchslideranime() {
     if (pathname === "/") {
-      try {
-        const { data: anime } = await superbase
-          .from("tv_series")
-          .select("*")
-          .limit(5);
-        if (anime === null) {
-          setAnimecontainer([]);
-        } else {
-          const mappedData: animeslider[] = anime.map((item: any) => ({
-            id: item.id,
-            title: item.title,
-            season: item.seasons,
-          }));
-          setAnimecontainer(mappedData);
-          // console.log(animecontainer)
+      if (animecontainer === null) {
+        try {
+          const { data: anime } = await superbase
+            .from("tv_series")
+            .select("*")
+            .limit(5);
+          if (anime === null) {
+            setAnimecontainer([]);
+          } else {
+            const mappedData: animeslider[] = anime.map((item: any) => ({
+              id: item.id,
+              title: item.title,
+              season: item.seasons,
+            }));
+            setAnimecontainer(mappedData);
+            // console.log(animecontainer)
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        return;
       }
     } else if (pathname === "/Movies") {
-      try {
-        const { data: movie } = await superbase
-          .from("movies")
-          .select("*")
-          .limit(5);
-        if (movie === null) {
-          setAnimecontainer([]);
-        } else {
-          const mappedData: animeslider[] = movie.map((item: any) => ({
-            id: item.id,
-            title: item.title,
-          }));
-          setAnimecontainer(mappedData);
+      if (animecontainer === null) {
+        try {
+          const { data: movie } = await superbase
+            .from("movies")
+            .select("*")
+            .limit(5);
+          if (movie === null) {
+            setAnimecontainer([]);
+          } else {
+            const mappedData: animeslider[] = movie.map((item: any) => ({
+              id: item.id,
+              title: item.title,
+            }));
+            setAnimecontainer(mappedData);
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
+      } else {
+        return;
       }
     }
   }
-
   useEffect(() => {
     fetchslideranime();
-  });
+  },);
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
   const { closest } = require("fastest-levenshtein");
@@ -94,51 +100,66 @@ export default function MainSlider() {
   async function fetchDetails() {
     if (!animecontainer) return;
     if (pathname === "/") {
-      try {
-        const animeDataPromise = animecontainer.map(async (singleanime) => {
-          const res = await fetch(
-            `https://ani-dojo-api.vercel.app/anime/gogoanime/info/` +
-              singleanime.title,
-            { cache: "force-cache" }
-          );
-          const demta = await res.json();
-          return { ...demta };
-        });
-        const animeData = await Promise.all(animeDataPromise);
-        setAnimeData(animeData);
-      } catch (error) {
-        console.error(error);
+      if (animeData === null) {
+        try {
+          const animeDataPromise = animecontainer.map(async (singleanime) => {
+            const res = await fetch(
+              `https://ani-dojo-api.vercel.app/anime/gogoanime/info/${singleanime.title}`,
+              { cache: "force-cache" }
+            );
+            const demta = await res.json();
+            return { ...demta };
+          });
+          const animeData = await Promise.all(animeDataPromise);
+          setAnimeData(animeData);
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        return;
       }
     } else if (pathname === "/Movies") {
-      try {
-        const movieDataPromise = animecontainer.map(async (singlemovie) => {
-          const singlemovi = singlemovie.title;
-          const res = await fetch(
-            `https://ani-dojo-api.vercel.app/movies/flixhq/ ` +
-              singlemovie.title,{ cache: "force-cache" }
-          );
-          const demta = await res.json();
-          const { results } = demta;
+      if (animeData === null) {
+        try {
+          const movieDataPromise = animecontainer.map(async (singlemovie) => {
+            const singlemovi = singlemovie.title;
+            const res = await fetch(
+              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title} `,
+              { cache: "force-cache" }
+            );
+            const demta = await res.json();
+            const { results } = demta;
 
-          const closestMatch = closest(singlemovi, results.map((move: any) => move.title));
-          const closestMovie = results.find((lmao :any) => lmao.title === closestMatch);
-          const closestMovieId = closestMovie.id;
+            const closestMatch = closest(
+              singlemovi,
+              results.map((move: any) => move.title)
+            );
+            const closestMovie = results.find(
+              (lmao: any) => lmao.title === closestMatch
+            );
+            const closestMovieId = closestMovie.id;
 
-          const movieInfo = await fetch (`https://ani-dojo-api.vercel.app/movies/flixhq/info?id=` + closestMovieId,{ cache: "force-cache" })
-          const finalDemta = await movieInfo.json()
-          return finalDemta
-        });
-        const MovieData = await Promise.all(movieDataPromise);
-        setAnimeData(MovieData)  
-      } catch (error) {
-
+            const movieInfo = await fetch(
+              `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
+              { cache: "force-cache" }
+            );
+            const finalDemta = await movieInfo.json();
+            return finalDemta;
+          });
+          const MovieData = await Promise.all(movieDataPromise);
+          setAnimeData(MovieData);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return;
       }
     }
   }
 
   useEffect(() => {
     fetchDetails();
-  });
+  },);
 
   return (
     <>
@@ -155,7 +176,11 @@ export default function MainSlider() {
             <img src={animedescription.image} alt="" />
             <Link
               className="homemainsliderinfo"
-              href={pathname === "/Movies" ? `/AniDojo/movie/${animedescription.title}` : `/AniDojo/anime/${animedescription.id}` }
+              href={
+                pathname === "/Movies"
+                  ? `/AniDojo/movie/${animedescription.title}`
+                  : `/AniDojo/anime/${animedescription.id}`
+              }
             >
               <h4 className="homemainsliderinfo-name">
                 {animedescription.title?.toUpperCase()}

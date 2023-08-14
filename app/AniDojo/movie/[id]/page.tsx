@@ -48,7 +48,7 @@ export default function Movie({params}:{params: umrl}) {
   }
   useEffect(() => {
     fetchsupabase();
-  });
+  },[]);
 
   const [ fetchmovie, setFetchmovie] = useState<datatype | null>();
 
@@ -60,31 +60,45 @@ export default function Movie({params}:{params: umrl}) {
   }
  useEffect(()=>{
   fetchMovieByTitle()
- },[supabasedata, whichmovie])
+ })
 
  const { closest } = require("fastest-levenshtein");
 
  const [flixData, setFlixdata] = useState<movides | null>(null);
 
- async function flixhq(){
-  try{
-    const res = await fetch(`https://ani-dojo-api.vercel.app/movies/flixhq/` + whichmovie)
-    const deta = await res.json()
-    const {results} = deta;
-    const closestMatch = closest( whichmovie, results.map((ayo: any) => ayo.title))
-    const closestMovie = results.find((lmo:any)=> lmo.title === closestMatch)
-    const closestMovieId = closestMovie.id;
-
-    const flixfind = await fetch(`https://ani-dojo-api.vercel.app/movies/flixhq/info?id=` + closestMovieId)
-    const finaldeta = await flixfind.json()
-    setFlixdata(finaldeta)
-  }catch(error){
-    console.log(error)
+ async function flixhq() {
+  if(flixData === null){
+    try {
+      const res = await fetch(`https://ani-dojo-api.vercel.app/movies/flixhq/${whichmovie}`);
+      const deta = await res.json();
+      const { results } = deta;
+      if (results.length === 0) {
+        console.log("No matching movies found");
+        return;
+      }
+      const closestMatch = closest(whichmovie, results.map((ayo: any) => ayo.title));
+      const closestMovie = results.find((lmo: any) => lmo.title === closestMatch);
+      if (!closestMovie) {
+        console.log("No closest match found");
+        return;
+      }
+      const flixfind = await fetch(
+        `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovie.id}`
+      );
+      const finaldeta = await flixfind.json();
+      setFlixdata(finaldeta);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }else{
+    return;
   }
- }
-useEffect(()=>{
-   flixhq()
-})
+}
+
+ useEffect(() => {
+  flixhq();
+},);
+
 
 
 

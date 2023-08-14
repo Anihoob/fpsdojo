@@ -38,22 +38,26 @@ export default function CaroselSlider(props: Props) {
   );
 
   async function fetchcarosel() {
-    try {
-      const { data: anime } = await superbase
-        .from("tv_series")
-        .select("*")
-      if (anime === null) {
-        setAnimecontainer([]);
-      } else {
-        const mappedData: animeslider[] = anime.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          season: item.seasons,
-        }));
-        setAnimecontainer(mappedData);
+    if(animecontainer === null){
+      try {
+        const { data: anime } = await superbase
+          .from("tv_series")
+          .select("*")
+        if (anime === null) {
+          setAnimecontainer([]);
+        } else {
+          const mappedData: animeslider[] = anime.map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            season: item.seasons,
+          }));
+          setAnimecontainer(mappedData);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    }else{
+      return;
     }
   }
 
@@ -65,20 +69,23 @@ export default function CaroselSlider(props: Props) {
 
   async function fetchDetails() {
     if (!animecontainer) return;
-
-    try {
-      const animeDataPromise = animecontainer.map(async (singleanime) => {
-        const res = await fetch(
-          `https://ani-dojo-api.vercel.app/anime/gogoanime/info/` + singleanime.title, {cache: 'force-cache'}
-        );
-        const demta = await res.json();
-        // console.log(demta)
-        return { ...demta };
-      });
-      const animeData = await Promise.all(animeDataPromise);
-      setAnimeData(animeData);
-    } catch (error) {
-      console.error(error);
+    if(animeData === null){
+      try {
+        const animeDataPromise = animecontainer.map(async (singleanime) => {
+          const res = await fetch(
+            `https://api.consumet.org/anime/gogoanime/info/` + singleanime.title, {cache: 'force-cache'}
+          );
+          const demta = await res.json();
+          // console.log(demta)
+          return { ...demta };
+        });
+        const animeData = await Promise.all(animeDataPromise);
+        setAnimeData(animeData);
+      } catch (error) {
+        console.error(error);
+      }
+    }else{
+      return;
     }
   }
 

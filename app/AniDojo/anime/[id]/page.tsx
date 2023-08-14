@@ -37,13 +37,17 @@ export default function Tv({ params }: { params: umrl }) {
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
 
   async function fetchsupabase() {
-    try {
-      const { data } = await superbase.rpc(
-        "fetch_tv_series_with_seasons_and_episodes"
-      );
-      setSupabasedata(data);
-    } catch (error) {
-      console.log(error);
+    if (supabasedata === null) {
+      try {
+        const { data } = await superbase.rpc(
+          "fetch_tv_series_with_seasons_and_episodes"
+        );
+        setSupabasedata(data);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return;
     }
   }
 
@@ -59,7 +63,6 @@ export default function Tv({ params }: { params: umrl }) {
         (bruh: datatype) => whichanime === bruh.tv_series_title
       );
       setFetchepisode(rez);
-      // console.log(rez)
     }
   }
 
@@ -70,20 +73,24 @@ export default function Tv({ params }: { params: umrl }) {
   const [gugudata, setGugudata] = useState<animedes | null>(null);
 
   async function gugu() {
-    try {
-      const gugufind = await fetch(
-        `https://ani-dojo-api.vercel.app/anime/gogoanime/info/` + whichanime
-      );
-      const demta: animedes = await gugufind.json();
-      setGugudata({ ...demta, id: whichanime.id });
-    } catch (error) {
-      console.log(error);
+    if (gugudata === null) {
+      try {
+        const gugufind = await fetch(
+          `https://api.consumet.org/anime/gogoanime/info/` + whichanime
+        );
+        const demta: animedes = await gugufind.json();
+        setGugudata({ ...demta, id: whichanime.id });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return;
     }
   }
 
   useEffect(() => {
     gugu();
-  });
+  }, []);
 
   return (
     <div className={Styles.infopagemain}>
@@ -124,24 +131,26 @@ export default function Tv({ params }: { params: umrl }) {
                 <hr />
                 <h5>{gugudata.totalEpisodes}</h5>
               </div>
-              
-                <div className={Styles.infopageselectbtn}>
-                  <select className={Styles.infopagedwnldselect}>
-                    <option value="0">Season</option>
-                    {fetchepsiode && (
+
+              <div className={Styles.infopageselectbtn}>
+                <select className={Styles.infopagedwnldselect}>
+                  <option value="0">Season</option>
+                  {fetchepsiode && (
                     <option value={fetchepsiode.season_number}>
                       Season {fetchepsiode.season_number}
                     </option>
-                       )}
-                  </select>
-                  <select className={Styles.infopagedwnldselect}>
-                    <option value="0">Episode</option>
-                    {fetchepsiode && (
-                    <option value={fetchepsiode.episode_number}>Episode {fetchepsiode.episode_number}</option>
-                    )}
-                  </select>
-                </div>
-           
+                  )}
+                </select>
+                <select className={Styles.infopagedwnldselect}>
+                  <option value="0">Episode</option>
+                  {fetchepsiode && (
+                    <option value={fetchepsiode.episode_number}>
+                      Episode {fetchepsiode.episode_number}
+                    </option>
+                  )}
+                </select>
+              </div>
+
               <div className={Styles.infopagedwnldbtn}>
                 <button>Download</button>
               </div>
