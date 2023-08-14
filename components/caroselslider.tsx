@@ -141,7 +141,7 @@ export default function CaroselSlider(props: Props) {
             );
 
             const closestMovie = results.find(
-              (lmao: any) => lmao.id || lmao.title === closestMatch
+              (lmao: any) => lmao.title === closestMatch
             );
 
             const closestMovieId = closestMovie.id;
