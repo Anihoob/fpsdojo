@@ -8,7 +8,6 @@ export default function Movies() {
     <div className={Styles.moviesmain}>
         <MainSlider />
         <CaroselSlider section='60FPS'/>
-        <CaroselSlider section='120FPS'/>
     </div>
   )
 }

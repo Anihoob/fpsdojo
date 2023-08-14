@@ -8,7 +8,6 @@ export default function Home() {
     <div className={Styles.homemain}>
         <MainSlider/>
         <CaroselSlider section='60FPS'/>
-        <CaroselSlider section='120FPS'/>
     </div>
   )
 }

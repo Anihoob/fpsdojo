@@ -142,7 +142,7 @@
 .homesliderswiperslide img {
   width: 250px;
   border-radius: 15px;
-  height: 150px;
+  height: 170px;
   object-fit: cover;
   filter: brightness(80%);
   object-position: center center;
@@ -155,15 +155,17 @@
   left: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
 }
 
 .homesliderswiperslide-info h4:last-child {
   font-weight: 400;
+  font-size: .6rem;
 }
 
 
 .homesliderswiperslide-name{
-  font-size: .8rem;
+  font-size: .6rem;
 }
 /* home slider end */
