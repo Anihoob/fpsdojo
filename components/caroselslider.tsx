@@ -135,24 +135,9 @@ export default function CaroselSlider(props: Props) {
             const demta = await res.json();
             const { results } = demta;
 
-            // const accurate = results.find(
-            //   (bruh: any) => bruh.id === singlemovi
-            // );
-            
-            // if (accurate) {
-            //   const accurateId = accurate.id.replace("movie/", "")
-            //   console.log(accurateId)
-            //   const movieInfo = await fetch(
-            //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${accurateId}`,
-            //     { cache: "force-cache" }
-            //   );
-            //   const finalDemta = await movieInfo.json();
-            //   return finalDemta;
-            // }
-
             const closestMatch = closest(
               singlemovi,
-              results.map((move: any) => move.id || move.title)
+              results.map((move: any) => move.title)
             );
 
             const closestMovie = results.find(
