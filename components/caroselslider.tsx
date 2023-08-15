@@ -26,7 +26,7 @@ type animeslider = {
   description?: string | undefined;
 };
 type animedes = {
-  id?: number;
+  id?: number | string | any;
   title?: string;
   description?: string | undefined;
   image?: string;
@@ -197,7 +197,7 @@ export default function CaroselSlider(props: Props) {
         {animeData?.map((animeinfo) => (
           <SwiperSlide className="homesliderswiperslide" key={animeinfo.id}>
             <Link href={pathname === "/Movies"
-                  ? `/AniDojo/movie/${animeinfo.title}`
+                  ? `/AniDojo/movie/${animeinfo.id.replace("movie/","")}`
                   : `/AniDojo/anime/${animeinfo.id}`}>
               <img
                 src={pathname === "/" ? animeinfo.image : animeinfo.cover}

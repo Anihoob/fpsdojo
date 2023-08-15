@@ -82,10 +82,10 @@ export default function Movie({ params }: { params: umrl }) {
         }
         const closestMatch = closest(
           whichmovie,
-          results.map((ayo: any) => ayo.title)
+          results.map((ayo: any) => ayo.id)
         );
         const closestMovie = results.find(
-          (lmo: any) => lmo.title === closestMatch
+          (lmo: any) => lmo.id === closestMatch
         );
         if (!closestMovie) {
           console.log("No closest match found");
