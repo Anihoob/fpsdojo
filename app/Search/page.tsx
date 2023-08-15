@@ -4,10 +4,9 @@ import Styles from "./search.module.css";
 import Supabase from "@/thirdparty_req/supabase";
 
 type searchCard = {
-  id?: number | string ;
-  title?: string;
-  season?: number;
-  description?: string ;
+  id: number | string;
+  title: string;
+  description?: string;
 };
 
 export default function page() {
@@ -22,20 +21,19 @@ export default function page() {
   async function fetchSupabase() {
     if (animecontainer === null) {
       try {
-        const { data: anime } = await superbase.from('tv_series').select('*');
-        const { data: movie } = await superbase.from('movies').select('*');
-        if(anime && movie){
+        const { data: anime } = await superbase.from("tv_series").select("*");
+        const { data: movie } = await superbase.from("movies").select("*");
+        if (anime && movie) {
+          const animeData: searchCard[] = anime.map((item: any) => ({
+            id: item.id,
+            title: item.title,
+          }));
 
-            const animeData: searchCard[] = anime.map((item: any) => ({
-                id: item.id,
-                title: item.title,
-            }));
-            
-            const movieData: searchCard[] = movie.map((item: any) => ({
-                id: item.id,
-                title: item.title,
-            }));
-            setAnimecontainer(animeData.concat(movieData));
+          const movieData: searchCard[] = movie.map((item: any) => ({
+            id: item.id,
+            title: item.title,
+          }));
+          setAnimecontainer(animeData.concat(movieData));
         }
       } catch (error) {
         console.error(error);
@@ -43,20 +41,26 @@ export default function page() {
     }
   }
 
-  useEffect(()=>{
-    fetchSupabase()
-  })
+  useEffect(() => {
+    fetchSupabase();
+  });
 
-  const [fetchedItem, setFetchedItem] = useState<searchCard[]>()
-  
-  function searchSupabase(){
-    if(!animecontainer)return;
-      if(!fetchedItem){
-        const searched = closest(searchItem, animecontainer.map((bruh:any)=> bruh.title))
-        setFetchedItem(searched)
-      }
+  const [fetchedItem, setFetchedItem] = useState<searchCard[]>();
+
+  function searchSupabase() {
+    if (!animecontainer) return;
+    if (!fetchedItem) {
+      const searchResults: searchCard[] = animecontainer.filter(
+        (item: searchCard) => {
+          const titleMatch = item.title
+            .toLowerCase()
+            .includes(searchItem.toLowerCase());
+          return titleMatch;
+        }
+      );
+      setFetchedItem(searchResults);
     }
-  
+  }
 
   return (
     <div className={Styles.searchmain}>
@@ -67,9 +71,13 @@ export default function page() {
           type="search"
           className={Styles.searchbar}
           placeholder="..."
+          value={searchItem}
         />
 
         <button onClick={searchSupabase}>bruh</button>
+        {/* {fetchedItem?.map((search)=> (
+          <p>{search.title}</p>
+        )) } */}
       </div>
     </div>
   );

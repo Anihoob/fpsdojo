@@ -190,8 +190,8 @@ export default function CaroselSlider(props: Props) {
     <>
       <h4 className="homesliderswiper-sec">60FPS</h4>
       <Swiper
-        spaceBetween={30}
-        slidesPerView={1.5}
+        spaceBetween={25}
+        slidesPerView={1.6}
         className="homesliderswiper"
       >
         {animeData?.map((animeinfo) => (
@@ -205,7 +205,7 @@ export default function CaroselSlider(props: Props) {
               />
               <div className="homesliderswiperslide-info">
                 <h4 className="homesliderswiperslide-name">{animeinfo.title}</h4>
-                {/* <h4>{pathname === "/" && animeinfo.releaseDate}</h4> */}
+                <h4>{pathname === "/" && animeinfo.releaseDate}</h4>
                 {/* <h4>{pathname === "/Movies" && animeinfo.duration}</h4> */}
               </div>
             </Link>

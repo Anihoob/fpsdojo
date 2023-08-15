@@ -52,6 +52,7 @@ body {
   background: black;
   position: relative;
   font-family: SF;
+  margin-bottom: 3rem;
 }
 
 /* A elements that don't have a class get default styles */

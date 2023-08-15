@@ -25,6 +25,7 @@ type animedes = {
   type?: string;
   releaseDate?: string;
   totalEpisodes: number;
+  cover: string;
 };
 
 import { usePathname } from "next/navigation";
@@ -186,7 +187,7 @@ export default function MainSlider() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            <img src={animedescription.image} alt="" />
+            <img src={pathname === "/" ? animedescription.image: animedescription.cover} alt="" />
             <Link
               className="homemainsliderinfo"
               href={
