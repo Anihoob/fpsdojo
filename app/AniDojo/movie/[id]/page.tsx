@@ -72,7 +72,7 @@ export default function Movie({ params }: { params: umrl }) {
     if (flixData === null) {
       try {
         const res = await fetch(
-          `https://ani-dojo-api.vercel.app/movies/flixhq/${whichmovie}`
+          `https://consument-rouge.vercel.app/movies/flixhq/${whichmovie}`
         );
         const deta = await res.json();
         const { results } = deta;
@@ -92,7 +92,7 @@ export default function Movie({ params }: { params: umrl }) {
         // if (exactMatch) {
         //   const movieId = exactMatch.id;
         //   const flixfind = await fetch(
-        //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${movieId}`,
+        //     `https://consument-rouge.vercel.app/movies/flixhq/info?id=${movieId}`,
         //     { cache: "force-cache" }
         //   );
         //   const finaldeta = await flixfind.json();
@@ -111,7 +111,7 @@ export default function Movie({ params }: { params: umrl }) {
           return;
         }
         const flixfind = await fetch(
-          `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovie.id}`
+          `https://consument-rouge.vercel.app/movies/flixhq/info?id=${closestMovie.id}`
         );
         const finaldeta = await flixfind.json();
         setFlixdata(finaldeta);

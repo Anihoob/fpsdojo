@@ -58,7 +58,6 @@ export default function MainSlider() {
               season: item.seasons,
             }));
             setAnimecontainer(mappedData);
-            // console.log(animecontainer)
           }
         } catch (error) {
           console.log(error);
@@ -104,7 +103,7 @@ export default function MainSlider() {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
             const res = await fetch(
-              `https://ani-dojo-api.vercel.app/anime/gogoanime/info/${singleanime.title}`,
+              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
               { cache: "force-cache" }
             );
             const demta = await res.json();
@@ -124,7 +123,7 @@ export default function MainSlider() {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title} `,
+              `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title} `,
               { cache: "force-cache" }
             );
             const demta = await res.json();
@@ -137,7 +136,7 @@ export default function MainSlider() {
             // if (exactMatch) {
             //   const movieId = exactMatch.id.replace("movie/", "");
             //   const movieInfo = await fetch(
-            //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${movieId}`,
+            //     `https://consument-rouge.vercel.app/movies/flixhq/info?id=${movieId}`,
             //     { cache: "force-cache" }
             //   );
             //   const finalDemta = await movieInfo.json();
@@ -154,7 +153,7 @@ export default function MainSlider() {
             const closestMovieId = closestMovie.id;
 
             const movieInfo = await fetch(
-              `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
+              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
               { cache: "force-cache" }
             );
             const finalDemta = await movieInfo.json();
