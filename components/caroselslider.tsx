@@ -129,11 +129,29 @@ export default function CaroselSlider(props: Props) {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title}` ,
+              `https://ani-dojo-api.vercel.app/movies/flixhq/${singlemovie.title?.replace("movie/","")}` ,
               { cache: "force-cache" }
             );
             const demta = await res.json();
             const { results } = demta;
+
+            const exactMatch = results.find(
+              (movie: any) => {
+                const formattedSinglemovi = singlemovi;
+                return movie.title === formattedSinglemovi || movie.id === formattedSinglemovi;
+              }
+            );
+        
+            if (exactMatch) {
+              const movieId = exactMatch.id;
+              const movieInfo = await fetch(
+                `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${movieId}`,
+                { cache: "force-cache" }
+              );
+              const finalDemta = await movieInfo.json();
+              return finalDemta;
+            }
+        
 
             const closestMatch = closest(
               singlemovi,
@@ -145,7 +163,6 @@ export default function CaroselSlider(props: Props) {
             );
 
             const closestMovieId = closestMovie.id;
-            const closestMovieTitle = closestMovie.title;
 
             const movieInfo = await fetch(
               `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${closestMovieId}`,

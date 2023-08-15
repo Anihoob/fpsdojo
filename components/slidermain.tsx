@@ -130,6 +130,20 @@ export default function MainSlider() {
             const demta = await res.json();
             const { results } = demta;
 
+            // const exactMatch = results.find(
+            //   (movie: any) => movie.title === singlemovi || movie.id === singlemovi
+            // );
+        
+            // if (exactMatch) {
+            //   const movieId = exactMatch.id.replace("movie/", "");
+            //   const movieInfo = await fetch(
+            //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${movieId}`,
+            //     { cache: "force-cache" }
+            //   );
+            //   const finalDemta = await movieInfo.json();
+            //   return finalDemta;
+            // }
+        
             const closestMatch = closest(
               singlemovi,
               results.map((move: any) => move.title)
