@@ -1,160 +1,184 @@
-
 .infopagemain {
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-  }
-  
-  .infopageoptions {
-    width: 100%;
-    position: fixed;
-    z-index: 2;
-  
-  }
-  
-  .infopageoptions span {
-    padding: 1rem;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-  .infopageoptions span a{
-    z-index: 2;
-  }
-  
-  .infopageoptions span svg {
-    width: 40px;
-    height: 40px;
-    padding: 10px;
-    background: rgba(41, 41, 41, 0.5);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border-radius: 50%;
-  }
-  
-  .infopageposter {
-    width: 100%;
-    height: 500px;
-    position: fixed;
-    top: 0;
-  }
-  
-  .infopageposter img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .infopageinfo {
-    top: 0%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.4) 0%,
-      rgba(0, 0, 0, 0.5) 40.47%,
-      #000000 55.64%,
-      #000000 100%
-    );
-  }
-  
-  .infopagecard {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    top: 45%;
-    position: absolute;
-    gap: 0.5rem;
-  }
-  
-  .infopagetitle {
-    font-size: 1.4rem;
-    color: white;
-    text-align: center;
-  }
-  
-  .infopagegenre {
-    display: flex;
-    color: white;
-    width: 100%;
-    justify-content: center;
-    gap: 0.5rem;
-    align-items: center;
-  }
-  
-  .infopagegenre hr {
-    height: 2px;
-    margin: 0;
-  }
-  
-  .infopageselectbtn {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    /* background: aqua; */
-  }
-  
-  .infopagedwnldselect {
-    background: url("https://api.iconify.design/material-symbols:arrow-drop-down.svg") no-repeat right #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 10px 30px;
-    font-weight: 700;
-    -moz-appearance: none; /* Firefox */
-    -webkit-appearance: none; /* Safari and Chrome */
-    appearance: none;
-    font-family: SF;
-    overflow-y: auto;
-    color: black;
-  }
-  
-  .infopagedwnldbtn{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .infopagedwnldbtn button{
-    background: white;
-    border: 0;
-    padding: 10px 30px;
-    border-radius: 10px;
-    font-weight: 700;
-    color: black;
-  
-  }
-  .infopageabout{
-    padding: 10px 20px;
-    text-align: justify;
-    color: white;
-    background: black;
-  }
-  
-  .infopageaquality{
-    width: 100%;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: left;
-    gap: .5rem;
-  }
-
-  .loading_main{
-    width: 100%;
-    height: 100%;
-    min-height: 100vh;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: black;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
-.loading{
-    width: 150px;
-    height: 150px;
+.infopageoptions {
+  width: 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+.infopageoptions span {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.infopageoptions span a {
+  z-index: 2;
+}
+
+.infopageoptions span svg {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background: rgba(41, 41, 41, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 50%;
+}
+
+.infopageposter {
+  width: 100%;
+  height: 500px;
+  position: fixed;
+  top: 0;
+}
+
+.infopageposter img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infopageinfo {
+  top: 0%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(0, 0, 0, 0.5) 40.47%,
+    #000000 55.64%,
+    #000000 100%
+  );
+}
+
+.infopagecard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  top: 45%;
+  position: absolute;
+  gap: 0.5rem;
+}
+
+.infopagetitle {
+  font-size: 1.4rem;
+  color: white;
+  text-align: center;
+}
+
+.infopagegenre {
+  display: flex;
+  color: white;
+  width: 100%;
+  justify-content: center;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.infopagegenre hr {
+  height: 2px;
+  margin: 0;
+}
+
+.infopageselectbtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 10px;
+  /* background: aqua; */
+}
+
+.infopagedwnldselect {
+  background: url("https://api.iconify.design/material-symbols:arrow-drop-down.svg")
+    no-repeat right #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 30px;
+  font-weight: 700;
+  -moz-appearance: none; /* Firefox */
+  -webkit-appearance: none; /* Safari and Chrome */
+  appearance: none;
+  font-family: SF;
+  overflow-y: auto;
+  color: black;
+}
+
+.infopagedwnldbtn {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.infopagedwnldbtn button {
+  background: white;
+  border: 0;
+  padding: 10px 30px;
+  border-radius: 10px;
+  font-weight: 700;
+  color: black;
+}
+
+.infopageabout {
+  padding: 0px 20px;
+  text-align: justify;
+  color: white;
+  background: black;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.infopageabout p{
+  transition: 1s ease-in-out;
+}
+
+.expanded {
+  padding: 10px 20px;
+  text-align: justify;
+  color: white;
+  background: black;
+}
+
+.showMoreButton {
+  display: block;
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.infopageaquality {
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: left;
+  gap: 0.5rem;
+}
+
+.loading_main {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+}
+
+.loading {
+  width: 150px;
+  height: 150px;
 }

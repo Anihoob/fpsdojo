@@ -12,13 +12,13 @@ import { Pagination } from "swiper";
 // type interface
 
 type animeslider = {
-  id?: number;
+  id?: number | string | any;
   title?: string;
   season?: number;
   description?: string | undefined;
 };
 type animedes = {
-  id?: number;
+  id?: number | string | any;
   title?: string;
   description?: string | undefined;
   image?: string;
@@ -192,7 +192,7 @@ export default function MainSlider() {
               className="homemainsliderinfo"
               href={
                 pathname === "/Movies"
-                  ? `/AniDojo/movie/${animedescription.title}`
+                  ? `/AniDojo/movie/${animedescription.id.replace("movie/","")}`
                   : `/AniDojo/anime/${animedescription.id}`
               }
             >

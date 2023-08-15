@@ -10,14 +10,14 @@ interface umrl {
 }
 
 interface datatype {
-  movies_id: number;
+  movies_id: number | string ;
   movies_title: string | any;
   download_id: string;
   download_link: string | any | null;
 }
 
 type movides = {
-  id?: number;
+  id?: number | string | any;
   title?: string;
   description?: string | undefined;
   image?: string | any;
@@ -55,7 +55,7 @@ export default function Movie({ params }: { params: umrl }) {
   function fetchMovieByTitle() {
     if (supabasedata) {
       const rez = supabasedata.find(
-        (lmao: datatype) => whichmovie === lmao.movies_title
+        (lmao: datatype) => lmao.movies_title ||  lmao.movies_id === whichmovie 
       );
       setFetchmovie(rez);
     }
@@ -80,6 +80,25 @@ export default function Movie({ params }: { params: umrl }) {
           console.log("No matching movies found");
           return;
         }
+        
+        // const exactMatch = results.find(
+        //   (movie: any) => {
+        //     const formattedSinglemovi = whichmovie;
+        //     console.log(formattedSinglemovi)
+        //     return movie.id === formattedSinglemovi;
+        //   }
+        // );
+    
+        // if (exactMatch) {
+        //   const movieId = exactMatch.id;
+        //   const flixfind = await fetch(
+        //     `https://ani-dojo-api.vercel.app/movies/flixhq/info?id=${movieId}`,
+        //     { cache: "force-cache" }
+        //   );
+        //   const finaldeta = await flixfind.json();
+        //   setFlixdata(finaldeta)
+        // }
+
         const closestMatch = closest(
           whichmovie,
           results.map((ayo: any) => ayo.id)

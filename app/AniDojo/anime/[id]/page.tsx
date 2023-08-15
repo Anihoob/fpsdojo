@@ -13,7 +13,7 @@ interface datatype {
   id: number;
   tv_series_title: string;
   season_number: number | any;
-  episode_number: number| any;
+  episode_number: number | any;
   episode_link: string;
   episode_id: string;
   season_id: string;
@@ -114,6 +114,12 @@ export default function Tv({ params }: { params: umrl }) {
     gugu();
   }, []);
 
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleDescription = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <div className={Styles.infopagemain}>
       <div className={Styles.infopageoptions}>
@@ -198,16 +204,24 @@ export default function Tv({ params }: { params: umrl }) {
               )}
 
               {selectedEpisodeDownloadLink && (
-              <div className={Styles.infopagedwnldbtn}>
-                <Link href={selectedEpisodeDownloadLink}>
-                <button>Download</button>
-                </Link>
-              </div>
+                <div className={Styles.infopagedwnldbtn}>
+                  <Link href={selectedEpisodeDownloadLink}>
+                    <button>Download</button>
+                  </Link>
+                </div>
               )}
 
-              <div className={Styles.infopageabout}>
-                <p>{gugudata.description}</p>
+              <div className={expanded ? Styles.expanded : Styles.infopageabout}>
+                <p className={Styles.infopagedes}>
+                  {gugudata.description}
+                </p>
               </div>
+              <button
+                className={Styles.showMoreButton}
+                onClick={toggleDescription}
+              >
+                {expanded ? "...Less" : "...More"}
+              </button>
               <div className={Styles.infopageaquality}>
                 <svg
                   fill="#fff"
