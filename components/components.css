@@ -159,7 +159,6 @@
   flex-direction: column;
   align-items: left;
   justify-content: center;
-  gap: 0.5rem;
 }
 
 .homesliderswiperslide-info h4:last-child {
