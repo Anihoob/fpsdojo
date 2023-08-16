@@ -9,6 +9,17 @@ type searchCard = {
   description?: string;
 };
 
+type animedes = {
+  id?: number | string | any;
+  title?: string;
+  description?: string | undefined;
+  image?: string;
+  type?: string;
+  releaseDate?: string;
+  totalEpisodes: number;
+  cover: string;
+};
+
 export default function page() {
   const superbase = Supabase();
   const [searchItem, setSearchItem] = useState<any>();
@@ -17,6 +28,7 @@ export default function page() {
   const [animecontainer, setAnimecontainer] = useState<searchCard[] | null>(
     null
   );
+  // console.log(animecontainer)
 
   async function fetchSupabase() {
     if (animecontainer === null) {
@@ -28,12 +40,15 @@ export default function page() {
             id: item.id,
             title: item.title,
           }));
-
           const movieData: searchCard[] = movie.map((item: any) => ({
             id: item.id,
             title: item.title,
           }));
-          setAnimecontainer(animeData.concat(movieData));
+          const merge = animeData.concat(movieData);
+          const searchResults: searchCard[] = merge.filter((item: searchCard) =>
+            item.title.toLowerCase().includes(searchItem.toLowerCase())
+          );
+          setAnimecontainer(searchResults);
         }
       } catch (error) {
         console.error(error);
@@ -44,23 +59,6 @@ export default function page() {
   useEffect(() => {
     fetchSupabase();
   });
-
-  const [fetchedItem, setFetchedItem] = useState<searchCard[]>();
-
-  function searchSupabase() {
-    if (!animecontainer) return;
-    if (!fetchedItem) {
-      const searchResults: searchCard[] = animecontainer.filter(
-        (item: searchCard) => {
-          const titleMatch = item.title
-            .toLowerCase()
-            .includes(searchItem.toLowerCase());
-          return titleMatch;
-        }
-      );
-      setFetchedItem(searchResults);
-    }
-  }
 
   return (
     <div className={Styles.searchmain}>
@@ -73,11 +71,9 @@ export default function page() {
           placeholder="..."
           value={searchItem}
         />
-
-        <button onClick={searchSupabase}>bruh</button>
-        {/* {fetchedItem?.map((search)=> (
-          <p>{search.title}</p>
-        )) } */}
+        {animecontainer?.map((lel) => (
+          <p>{lel.title}</p>
+        ))}
       </div>
     </div>
   );
