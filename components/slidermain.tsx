@@ -105,7 +105,7 @@ export default function MainSlider() {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
             const res = await fetch(
               `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
-              { cache: "force-cache" }
+              // { cache: "force-cache" }
             );
             const demta = await res.json();
             return { ...demta };
@@ -125,7 +125,7 @@ export default function MainSlider() {
             const singlemovi = singlemovie.title;
             const res = await fetch(
               `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title} `,
-              { cache: "force-cache" }
+              // { cache: "force-cache" }
             );
             const demta = await res.json();
             const { results } = demta;
