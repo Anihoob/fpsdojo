@@ -1,9 +1,9 @@
-import './globals.css'
+import Styles from "./home.module.css"
 
 export default function Loading() {
   return (
-    <div className="loading_main">
-        <img className="loading" src="/anime.gif"></img>
+    <div className={Styles.loading_main}>
+        <img className={Styles.loading}src="/anime.gif"></img>
     </div>
   )
 }
