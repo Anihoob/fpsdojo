@@ -185,10 +185,11 @@ export default function CaroselSlider(props: Props) {
   useEffect(() => {   
       fetchDetails();
   });
-
+  
   return (
+ 
     <>
-      <h4 className="homesliderswiper-sec">60FPS</h4>
+      <h4 className="homesliderswiper-sec">{animeData? "60FPS": ""}</h4>
       <Swiper
         spaceBetween={25}
         slidesPerView={1.6}
@@ -212,6 +213,6 @@ export default function CaroselSlider(props: Props) {
           </SwiperSlide>
         ))}
       </Swiper>
-    </>
+      </>
   );
 }

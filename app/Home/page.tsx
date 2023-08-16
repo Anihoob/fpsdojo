@@ -2,11 +2,14 @@
 import CaroselSlider from '@/components/caroselslider'
 import Styles from './home.module.css'
 import MainSlider from '@/components/slidermain'
+import { Suspense } from 'react'
 
 export default function Home() {
   return (
     <div className={Styles.homemain}>
+      <Suspense>
         <MainSlider/>
+      </Suspense>
         <CaroselSlider starting={6} ending={10}/>
         <CaroselSlider starting={11} ending={15}/>
         <CaroselSlider starting={16} ending={20}/>
