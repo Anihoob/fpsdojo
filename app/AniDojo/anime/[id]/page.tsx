@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Styles from "./tvseries.module.css";
+import "./tvseries.css";
 import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 
@@ -121,8 +121,8 @@ export default function Tv({ params }: { params: umrl }) {
   };
 
   return (
-    <div className={Styles.infopagemain}>
-      <div className={Styles.infopageoptions}>
+    <div className={"infopagemain"}>
+      <div className={"infopageoptions"}>
         <span>
           <Link href={"/"}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -144,15 +144,15 @@ export default function Tv({ params }: { params: umrl }) {
       </div>
       {gugudata && (
         <>
-          <div className={Styles.infopageposter}>
+          <div className={"infopageposter"}>
             <img src={gugudata.image} alt="" />
           </div>
-          <div className={Styles.infopageinfo}>
-            <div className={Styles.infopagecard}>
-              <h4 className={Styles.infopagetitle}>
+          <div className={"infopageinfo"}>
+            <div className={"infopagecard"}>
+              <h4 className={"infopagetitle"}>
                 {gugudata.title?.toUpperCase()}
               </h4>
-              <div className={Styles.infopagegenre}>
+              <div className={"infopagegenre"}>
                 <h5>{gugudata.genres[0]}</h5>
                 <hr />
                 <h5>{gugudata.releaseDate}</h5>
@@ -161,12 +161,12 @@ export default function Tv({ params }: { params: umrl }) {
               </div>
 
               {fetchepsiode && (
-                <div className={Styles.infopageselectbtn}>
+                <div className={"infopageselectbtn"}>
                   <select
                     onChange={(e) =>
                       setSelectedSeason(parseInt(e.target.value))
                     }
-                    className={Styles.infopagedwnldselect}
+                    className={"infopagedwnldselect"}
                   >
                     <option value="0">Season</option>
                     {Array.from(
@@ -188,7 +188,7 @@ export default function Tv({ params }: { params: umrl }) {
                         )?.episode_link || null
                       )
                     }
-                    className={Styles.infopagedwnldselect}
+                    className={"infopagedwnldselect"}
                   >
                     <option value="0">Episode</option>
                     {filteredEpisodes?.map((episode) => (
@@ -204,25 +204,20 @@ export default function Tv({ params }: { params: umrl }) {
               )}
 
               {selectedEpisodeDownloadLink && (
-                <div className={Styles.infopagedwnldbtn}>
+                <div className={"infopagedwnldbtn"}>
                   <Link href={selectedEpisodeDownloadLink}>
                     <button>Download</button>
                   </Link>
                 </div>
               )}
 
-              <div className={expanded ? Styles.expanded : Styles.infopageabout}>
-                <p className={Styles.infopagedes}>
-                  {gugudata.description}
-                </p>
+              <div className={expanded ? "expanded" : "infopageabout"}>
+                <p className={"infopagedes"}>{gugudata.description}</p>
               </div>
-              <button
-                className={Styles.showMoreButton}
-                onClick={toggleDescription}
-              >
+              <button className={"showMoreButton"} onClick={toggleDescription}>
                 {expanded ? "...Less" : "...More"}
               </button>
-              <div className={Styles.infopageaquality}>
+              <div className={"infopageaquality"}>
                 <svg
                   fill="#fff"
                   height="32px"

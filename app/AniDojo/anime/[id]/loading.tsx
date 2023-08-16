@@ -1,10 +1,9 @@
-import Styles from "./tvseries.module.css";
+import "./tvseries.css";
 
 export default function loading() {
-    return (
-      <div className={Styles.loading_main}>
-          <img className={Styles.loading} src="/anime.gif"></img>
-      </div>
-    )
-  }
-  
+  return (
+    <div className={"loading_main"}>
+      <img className={"loading"} src="/anime.gif"></img>
+    </div>
+  );
+}
