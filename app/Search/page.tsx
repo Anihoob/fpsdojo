@@ -146,7 +146,7 @@ export default function page() {
                   <h4 className={Styles.fetchedTitle}>
                     {lol.title}
                   </h4>
-                  <h4 className={Styles.fetchedTitle}>{lol.releaseDate}</h4>
+                  <h4 className={Styles.fetchedTitle}>{lol.releaseDate?.substring(0,4)}</h4>
                 </span>
               </div>
               <hr className={Styles.fetcheddivider} />

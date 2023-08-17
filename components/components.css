@@ -161,13 +161,14 @@
   justify-content: center;
 }
 
-.homesliderswiperslide-info h4:last-child {
-  font-size: .6rem;
-}
 
 
 .homesliderswiperslide-name{
   font-weight: 600;
   font-size: .85rem;
+}
+
+.homesliderswiperslide-datentime{
+  font-size: .6rem;
 }
 /* home slider end */
