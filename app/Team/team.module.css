@@ -1,0 +1,17 @@
+.Teammain{
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.Teamabout{
+    width: 100%;
+    height: 500px;
+}
+
+.Teamaboutimg{
+    width: 100%;
+    height: 60%;
+    object-fit: cover;
+    filter: brightness(60%);
+}

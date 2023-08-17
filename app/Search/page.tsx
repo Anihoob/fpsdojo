@@ -48,7 +48,6 @@ export default function page() {
                     `https://consument-rouge.vercel.app/anime/gogoanime/info/${result.title}`
                   );
                   const data = await res.json();
-
                   if (data.id === result.title) {
                     return {
                       ...result,
