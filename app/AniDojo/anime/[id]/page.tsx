@@ -1,5 +1,5 @@
 "use client";
-import "./tvseries.css";
+import "../../../globals.css";
 import Link from "next/link";
 import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
