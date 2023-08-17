@@ -14,6 +14,7 @@ export default function Movies() {
         <CaroselSlider starting={21} ending={25}/>
         <CaroselSlider starting={26} ending={30}/>
         <CaroselSlider starting={31} ending={35}/>
+        {/* <CaroselSlider starting={36} ending={40}/> */}
     </div>
   )
 }

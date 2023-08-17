@@ -107,7 +107,7 @@ export default function MainSlider() {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
             const res = await fetch(
               `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
-              // { cache: "force-cache" }
+              { cache: "force-cache" }
             );
             const demta = await res.json();
             return { ...demta };
@@ -126,31 +126,18 @@ export default function MainSlider() {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title} `,
-              // { cache: "force-cache" }
+              `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title?.replace("movie/","")} `,
+              { cache: "force-cache" }
             );
             const demta = await res.json();
             const { results } = demta;
+            const containMovie = results.filter((wow :any)=> wow.type === "Movie")
 
-            // const exactMatch = results.find(
-            //   (movie: any) => movie.title === singlemovi || movie.id === singlemovi
-            // );
-        
-            // if (exactMatch) {
-            //   const movieId = exactMatch.id.replace("movie/", "");
-            //   const movieInfo = await fetch(
-            //     `https://consument-rouge.vercel.app/movies/flixhq/info?id=${movieId}`,
-            //     { cache: "force-cache" }
-            //   );
-            //   const finalDemta = await movieInfo.json();
-            //   return finalDemta;
-            // }
-        
             const closestMatch = closest(
               singlemovi,
-              results.map((move: any) => move.title)
+              containMovie.map((move: any) => move.title)
             );
-            const closestMovie = results.find(
+            const closestMovie = containMovie.find(
               (lmao: any) => lmao.title === closestMatch
             );
             const closestMovieId = closestMovie.id;
@@ -207,7 +194,7 @@ export default function MainSlider() {
                 {animedescription.totalEpisodes > 1 && (
                   <h6>{animedescription.totalEpisodes}</h6>
                 )}
-                <h6>{animedescription.releaseDate}</h6>
+                <h6>{animedescription.releaseDate?.substring(0,4)}</h6>
               </span>
               <p className="about">{animedescription.description}</p>
             </Link>
