@@ -51,7 +51,7 @@ export default function CaroselSlider(props: Props) {
           const { data: anime } = await superbase
             .from("tv_series")
             .select("*")
-            .range(props.starting, props.ending);
+            .range(props.starting, props.ending - 5);
           if (anime === null) {
             setAnimecontainer([]);
           } else {
@@ -74,7 +74,7 @@ export default function CaroselSlider(props: Props) {
           const { data: movie } = await superbase
             .from("movies")
             .select("*")
-            .range(props.starting, props.ending);
+            .range(props.starting, props.ending - 5);
           if (movie === null) {
             setAnimecontainer([]);
           } else {

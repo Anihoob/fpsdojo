@@ -49,6 +49,7 @@ export default function MainSlider() {
           const { data: anime } = await superbase
             .from("tv_series")
             .select("*")
+            .order("id" ,{ascending: false})
             .limit(5);
           if (anime === null) {
             setAnimecontainer([]);
@@ -72,6 +73,7 @@ export default function MainSlider() {
           const { data: movie } = await superbase
             .from("movies")
             .select("*")
+            .order("id" ,{ascending: false})
             .limit(5);
           if (movie === null) {
             setAnimecontainer([]);
