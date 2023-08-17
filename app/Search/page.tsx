@@ -75,11 +75,11 @@ export default function page() {
                   if (deta) {
                     return {
                       ...result,
-                      id:data.id.replace("movie/", ""),
-                      image: data.image,
-                      name: data.name,
-                      releaseDate: data.releaseDate,
-                      cover: data.cover,
+                      id:deta.id.replace("movie/", ""),
+                      image: deta.image,
+                      name: deta.name,
+                      releaseDate: deta.releaseDate,
+                      cover: deta.cover,
                       type:"movie"
                     };
                   } else {
