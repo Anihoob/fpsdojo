@@ -11,7 +11,7 @@
     padding: 10px 20px;
 }
 
-.search h4{
+.searchTitle{
     font-size: 2rem;
 }
 
@@ -27,4 +27,50 @@
 .searchbar:focus{
     border: none;
     outline: none;
+}
+
+.searched{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.fetchedItem{
+    width: 100%;
+    height: 150px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.fetchedspan{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items:center;
+    gap: 1rem;
+    padding: 10px;
+}
+
+.fetchedImg{
+    width: 100px;
+    height: 80px;
+    border-radius: 15px;
+    overflow: hidden;
+    object-fit: cover;
+}
+
+.fetchedTitle{
+    font-size: 1rem;
+}
+
+.fetcheddivider{
+    width: 100%;
+    height: 1px;
+    background: white;
 }
