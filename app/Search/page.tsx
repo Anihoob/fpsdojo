@@ -145,21 +145,24 @@ export default function page() {
           placeholder="..."
           value={searchItem}
         />
-        <div className={Styles.searched}>
+        {isLoading ? (
+          <p>Loading....</p>
+        ) :(
+          <div className={Styles.searched}>
           {animecontainer?.map((lol) => (
             <Link
-              href={
-                lol.type === "anime"
-                  ? `/AniDojo/anime/${lol.id}`
-                  : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
-              }
-              className={Styles.fetchedItem}
+            href={
+              lol.type === "anime"
+              ? `/AniDojo/anime/${lol.id}`
+              : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
+            }
+            className={Styles.fetchedItem}
             >
               <div className={Styles.fetchedspan}>
                 <img
                   className={Styles.fetchedImg}
                   src={lol.image || lol.cover}
-                />
+                  />
                 <span>
                   <h4 className={Styles.fetchedTitle}>
                     {lol.title}
@@ -171,6 +174,7 @@ export default function page() {
             </Link>
           ))}
         </div>
+          )}
       </div>
     </div>
   );
