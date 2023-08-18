@@ -11,6 +11,7 @@ import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 type Props = {
   starting:number;
@@ -25,7 +26,7 @@ type animeslider = {
 };
 type animedes = {
   id?: number | string | any;
-  title?: string;
+  title: string;
   description?: string | undefined;
   image?: string;
   type?: string;
@@ -160,9 +161,17 @@ export default function CaroselSlider(props: Props) {
             <Link href={pathname === "/Movies"
                   ? `/AniDojo/movie/${animeinfo.id.replace("movie/","")}`
                   : `/AniDojo/anime/${animeinfo.id}`}>
-              <img
+              <Image
+              fill={true}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              quality={70}
                 src={pathname === "/" ? animeinfo.image : animeinfo.cover}
-                alt=""
+                alt={animeinfo.title}
               />
               <div className="homesliderswiperslide-info">
                 <h4 className="homesliderswiperslide-name">{animeinfo.title}</h4>
