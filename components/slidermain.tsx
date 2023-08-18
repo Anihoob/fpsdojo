@@ -125,7 +125,6 @@ export default function MainSlider() {
             const singlemovi = singlemovie.title;
             const res = await fetch(
               `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
-              { cache: "force-cache" }
             );
             const demta = await res.json();
             return { ...demta };
