@@ -162,7 +162,8 @@ export default function CaroselSlider(props: Props) {
                   ? `/AniDojo/movie/${animeinfo.id.replace("movie/","")}`
                   : `/AniDojo/anime/${animeinfo.id}`}>
               <Image
-              fill={true}
+              width={100}
+              height={100}
               style={{
                 width: "210px",
                 height: "130px",
