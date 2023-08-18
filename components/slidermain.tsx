@@ -158,6 +158,7 @@ export default function MainSlider() {
             className="homemainsliderswiperslide"
           >
             <Image
+            fill={true}
               style={{
                 width: "100%",
                 height: "100%",
