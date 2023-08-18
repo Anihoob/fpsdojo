@@ -1,4 +1,4 @@
-.infopagemain {
+.movieinfopagemain {
   width: 100%;
   height: 100%;
   min-height: 100vh;
@@ -6,23 +6,23 @@
   overflow-x: hidden;
 }
 
-.infopageoptions {
+.movieinfopageoptions {
   width: 100%;
   position: fixed;
   z-index: 2;
 }
 
-.infopageoptions span {
+.movieinfopageoptions span {
   padding: 1rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
-.infopageoptions span a {
+.movieinfopageoptions span a {
   z-index: 2;
 }
 
-.infopageoptions span .icons {
+.movieinfopageoptions span .icons {
   width: 40px;
   height: 40px;
   padding: 10px;
@@ -37,20 +37,20 @@
   justify-content: center;
 }
 
-.infopageposter {
+.movieinfopageposter {
   width: 100%;
   height: 500px;
   position: fixed;
   top: 0;
 }
 
-.infopageposter img {
+.movieinfopageposter img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.infopageinfo {
+.movieinfopageinfo {
   top: 0%;
   position: absolute;
   width: 100%;
@@ -64,7 +64,7 @@
   );
 }
 
-.infopagecard {
+.movieinfopagecard {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,13 +74,13 @@
   gap: 0.5rem;
 }
 
-.infopagetitle {
+.movieinfopagetitle {
   font-size: 1.4rem;
   color: white;
   text-align: center;
 }
 
-.infopagegenre {
+.movieinfopagegenre {
   display: flex;
   color: white;
   width: 100%;
@@ -89,12 +89,12 @@
   align-items: center;
 }
 
-.infopagegenre hr {
+.movieinfopagegenre hr {
   height: 2px;
   margin: 0;
 }
 
-.infopageselectbtn {
+.movieinfopageselectbtn {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -103,7 +103,7 @@
   /* background: aqua; */
 }
 
-.infopagedwnldselect {
+.movieinfopagedwnldselect {
   background: url("https://api.iconify.design/material-symbols:arrow-drop-down.svg")
     no-repeat right #fff;
   border: none;
@@ -118,12 +118,12 @@
   color: black;
 }
 
-.infopagedwnldbtn {
+.movieinfopagedwnldbtn {
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.infopagedwnldbtn button {
+.movieinfopagedwnldbtn button {
   background: white;
   border: 0;
   padding: 10px 30px;
@@ -132,7 +132,7 @@
   color: black;
 }
 
-.infopageabout {
+.movieinfopageabout {
   padding: 0px 20px;
   text-align: justify;
   color: white;
@@ -143,7 +143,7 @@
   overflow: hidden;
 }
 
-.infopageabout p{
+.movieinfopageabout p{
   transition: 1s ease-in-out;
 }
 
@@ -163,7 +163,7 @@
   cursor: pointer;
 }
 
-.infopageaquality {
+.movieinfopageaquality {
   width: 100%;
   padding: 10px 20px;
   display: flex;

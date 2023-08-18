@@ -126,28 +126,11 @@ export default function MainSlider() {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title?.replace("movie/","")} `,
+              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
               { cache: "force-cache" }
             );
             const demta = await res.json();
-            const { results } = demta;
-            const containMovie = results.filter((wow :any)=> wow.type === "Movie")
-
-            const closestMatch = closest(
-              singlemovi,
-              containMovie.map((move: any) => move.title)
-            );
-            const closestMovie = containMovie.find(
-              (lmao: any) => lmao.title === closestMatch
-            );
-            const closestMovieId = closestMovie.id;
-
-            const movieInfo = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
-              { cache: "force-cache" }
-            );
-            const finalDemta = await movieInfo.json();
-            return finalDemta;
+            return {...demta}
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);

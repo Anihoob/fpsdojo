@@ -98,7 +98,6 @@ export default function CaroselSlider(props: Props) {
   });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
-  const { closest } = require("fastest-levenshtein");
 
   async function fetchDetails() {
     if (!animecontainer) return;
@@ -127,47 +126,11 @@ export default function CaroselSlider(props: Props) {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
             const singlemovi = singlemovie.title;
             const res = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/${singlemovie.title?.replace("movie/","")}` ,
+              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi}` ,
               { cache: "force-cache" }
             );
             const demta = await res.json();
-            const { results } = demta;
-
-            const exactMatch = results.find(
-              (movie: any) => {
-                const formattedSinglemovi = singlemovi;
-                return movie.title === formattedSinglemovi || movie.id === formattedSinglemovi;
-              }
-            );
-        
-            if (exactMatch) {
-              const movieId = exactMatch.id;
-              const movieInfo = await fetch(
-                `https://consument-rouge.vercel.app/movies/flixhq/info?id=${movieId}`,
-                { cache: "force-cache" }
-              );
-              const finalDemta = await movieInfo.json();
-              return finalDemta;
-            }
-        
-
-            const closestMatch = closest(
-              singlemovi,
-              results.map((move: any) => move.title)
-            );
-
-            const closestMovie = results.find(
-              (lmao: any) => lmao.title === closestMatch
-            );
-
-            const closestMovieId = closestMovie.id;
-
-            const movieInfo = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${closestMovieId}`,
-              { cache: "force-cache" }
-            );
-            const finalDemta = await movieInfo.json();
-            return finalDemta;
+            return {...demta}
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
