@@ -37,7 +37,7 @@ export default function page() {
           }));
           
           const movieData: searchCard[] = movie.map((item: any) => ({
-            title: item.title.replace("movie/", ""),
+            title: item.title,
           }));
           
           const merge = animeData.concat(movieData);
@@ -51,7 +51,7 @@ export default function page() {
               try {
                 const res = await fetch(
                   `https://consument-rouge.vercel.app/anime/gogoanime/info/${result.title}`
-                );
+                , {cache :"force-cache"});
                 const data = await res.json();
                 
                 if (data.id === result.title) {
@@ -66,27 +66,9 @@ export default function page() {
                   };
                 } else {
                   const res = await fetch(
-                    `https://consument-rouge.vercel.app/movies/flixhq/${result.title}`
-                  );
-                  const data = await res.json();
-                  const { results } = data;
-                  const bruh = results.filter((br0: any) => br0.type === "Movie");
-                  
-                  const closestMatch = closest(
-                    result.title,
-                    bruh.map((lao: any) => lao.title || lao.id)
-                  );
-                  
-                  const closestMovie = bruh.find(
-                    (bruh: any) => bruh.title || bruh.id === closestMatch
-                  );
-                  
-                  if (closestMovie) {
-                    const closestMovieId = closestMovie.id;
-                    const rez = await fetch(
-                      `https://consument-rouge.vercel.app/movies/flixhq/info?id=${closestMovieId}`
-                    );
-                    const deta = await rez.json();
+                    `https://consument-rouge.vercel.app/movies/flixhq/info?id=${result.title}`
+                  ,{cache:"force-cache"});
+                  const deta = await res.json();
 
                     if (deta) {
                       return {
@@ -102,9 +84,7 @@ export default function page() {
                     } else {
                       return result;
                     }
-                  } else {
-                    return result;
-                  }
+                
                 }
               } catch (error) {
                 console.error(error);
@@ -154,7 +134,7 @@ export default function page() {
             href={
               lol.type === "anime"
               ? `/AniDojo/anime/${lol.id}`
-              : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
+              : `/AniDojo/movie/${lol.id}`
             }
             className={Styles.fetchedItem}
             >

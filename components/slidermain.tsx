@@ -97,7 +97,6 @@ export default function MainSlider() {
   },);
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
-  const { closest } = require("fastest-levenshtein");
 
   async function fetchDetails() {
     if (!animecontainer) return;
@@ -127,7 +126,7 @@ export default function MainSlider() {
             const singlemovi = singlemovie.title;
             const res = await fetch(
               `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
-              { cache: "force-cache" }
+              { cache: "default" }
             );
             const demta = await res.json();
             return {...demta}
@@ -145,7 +144,7 @@ export default function MainSlider() {
 
   useEffect(() => {
     fetchDetails();
-  },);
+  });
 
   return (
     <>
