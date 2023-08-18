@@ -164,8 +164,8 @@ export default function CaroselSlider(props: Props) {
               <Image
               fill={true}
               style={{
-                width: "100%",
-                height: "100%",
+                width: "210px",
+                height: "130px",
                 objectFit: "cover",
                 objectPosition: "center",
               }}
