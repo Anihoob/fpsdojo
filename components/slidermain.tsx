@@ -164,6 +164,7 @@ export default function MainSlider() {
                 objectFit: "cover",
                 objectPosition: "center",
               }}
+              quality={70}
               src={
                 pathname === "/"
                   ? animedescription.image
