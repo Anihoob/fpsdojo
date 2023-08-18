@@ -5,6 +5,7 @@ import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 
+
 interface umrl {
   title: string | undefined | any;
   id: string | any;

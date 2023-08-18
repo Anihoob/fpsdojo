@@ -47,7 +47,6 @@ body {
   line-height: 1.5;
   background: black;
   position: relative;
-  font-family: SF;
   margin-bottom: 3rem;
 }
 
@@ -202,7 +201,6 @@ select {
   -moz-appearance: none; /* Firefox */
   -webkit-appearance: none; /* Safari and Chrome */
   appearance: none;
-  font-family: SF;
   overflow-y: auto;
   color: black;
 }
@@ -392,7 +390,6 @@ select {
   -moz-appearance: none; /* Firefox */
   -webkit-appearance: none; /* Safari and Chrome */
   appearance: none;
-  font-family: SF;
   overflow-y: auto;
   color: black;
 }
