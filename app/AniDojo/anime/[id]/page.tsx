@@ -99,10 +99,10 @@ export default function Tv({ params }: { params: umrl }) {
     if (gugudata === null) {
       try {
         const gugufind = await fetch(
-          `https://api.consumet.org/anime/gogoanime/info/` + whichanime
+          `https://api.consumet.org/anime/gogoanime/info/${whichanime}`
         );
         const demta: animedes = await gugufind.json();
-        setGugudata({ ...demta, id: whichanime.id });
+        setGugudata({ ...demta});
       } catch (error) {
         console.log(error);
       }

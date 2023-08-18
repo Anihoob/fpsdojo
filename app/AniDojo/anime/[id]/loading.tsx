@@ -1,4 +1,4 @@
-import "./tvseries.css";
+import "../../../globals.css";
 
 export default function loading() {
   return (

@@ -64,9 +64,7 @@ export default function MainSlider() {
         } catch (error) {
           console.log(error);
         }
-      } else {
-        return;
-      }
+      } 
     } else if (pathname === "/Movies") {
       if (animecontainer === null) {
         try {
@@ -94,7 +92,7 @@ export default function MainSlider() {
   }
   useEffect(() => {
     fetchslideranime();
-  },);
+  });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
 
@@ -126,7 +124,7 @@ export default function MainSlider() {
             const singlemovi = singlemovie.title;
             const res = await fetch(
               `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
-              { cache: "default" }
+              { cache: "force-cache" }
             );
             const demta = await res.json();
             return {...demta}

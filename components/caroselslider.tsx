@@ -109,7 +109,6 @@ export default function CaroselSlider(props: Props) {
               `https://api.consumet.org/anime/gogoanime/info/${singleanime.title}` , {cache: 'force-cache'}
             );
             const demta = await res.json();
-            // console.log(demta)
             return { ...demta };
           });
           const animeData = await Promise.all(animeDataPromise);
