@@ -1,11 +1,12 @@
 import Navbar from '@/components/navbar'
 import './globals.css'
-import localFont from 'next/font/local'
-
-const myFont = localFont({
-  src: './fonts/SF-Pro.ttf',
+import { Inter } from 'next/font/google'
+ 
+const inter = Inter({
+  subsets: ['latin'],
   display: 'swap',
 })
+ 
 
 export default function RootLayout({
   children,
@@ -14,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={myFont.className}>{children}
+      <body className={inter.className}>{children}
       <Navbar/>
       </body>
     </html>
