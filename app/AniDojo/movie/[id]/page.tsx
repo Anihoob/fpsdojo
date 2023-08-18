@@ -86,6 +86,12 @@ export default function Movie({ params }: { params: umrl }) {
   useEffect(() => {
     flixhq();
   });
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleDescription = () => {
+    setExpanded(!expanded);
+  };
+
 
   return (
     <div className={"movieinfopagemain"}>
@@ -127,9 +133,12 @@ export default function Movie({ params }: { params: umrl }) {
                   </Link>
                 </div>
               )}
-              <div className={"movieinfopageabout"}>
+              <div className={expanded ? "expanded" : "movieinfopageabout"}>
                 <p>{flixData.description}</p>
               </div>
+              <button className={"showMoreButton"} onClick={toggleDescription}>
+                {expanded ? "...Less" : "...More"}
+              </button>
               <div className={"movieinfopageaquality"}>
                 <svg
                   fill="#fff"
