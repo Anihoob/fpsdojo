@@ -1,10 +1,6 @@
 :root{
   --bg:#121212;
 }
-@font-face{
-  font-family: SF;
-  src: url('/SF-Pro.ttf');
-}
 *,
 *::before,
 *::after {
