@@ -64,12 +64,7 @@
   background: linear-gradient(rgba(0, 0, 0, 0.1), rgb(0, 0, 0));
 }
 
-.homemainsliderswiperslide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
+
 
 .homemainsliderinfo {
   position: absolute;

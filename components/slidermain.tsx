@@ -9,6 +9,7 @@ import "./components.css";
 // import swiper modules
 import { Pagination } from "swiper";
 
+import Image from "next/image";
 // type interface
 
 type animeslider = {
@@ -21,7 +22,7 @@ type animedes = {
   id?: number | string | any;
   title?: string;
   description?: string | undefined;
-  image?: string;
+  image: string;
   type?: string;
   releaseDate?: string;
   totalEpisodes: number;
@@ -49,7 +50,7 @@ export default function MainSlider() {
           const { data: anime } = await superbase
             .from("tv_series")
             .select("*")
-            .order("id" ,{ascending: false})
+            .order("id", { ascending: false })
             .limit(5);
           if (anime === null) {
             setAnimecontainer([]);
@@ -64,14 +65,14 @@ export default function MainSlider() {
         } catch (error) {
           console.log(error);
         }
-      } 
+      }
     } else if (pathname === "/Movies") {
       if (animecontainer === null) {
         try {
           const { data: movie } = await superbase
             .from("movies")
             .select("*")
-            .order("id" ,{ascending: false})
+            .order("id", { ascending: false })
             .limit(5);
           if (movie === null) {
             setAnimecontainer([]);
@@ -127,7 +128,7 @@ export default function MainSlider() {
               { cache: "force-cache" }
             );
             const demta = await res.json();
-            return {...demta}
+            return { ...demta };
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -156,12 +157,28 @@ export default function MainSlider() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            <img src={pathname === "/" ? animedescription.image: animedescription.cover} alt="" />
+            <Image
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                objectPosition: "center",
+              }}
+              src={
+                pathname === "/"
+                  ? animedescription.image
+                  : animedescription.cover
+              }
+              alt=""
+            />
             <Link
               className="homemainsliderinfo"
               href={
                 pathname === "/Movies"
-                  ? `/AniDojo/movie/${animedescription.id.replace("movie/","")}`
+                  ? `/AniDojo/movie/${animedescription.id.replace(
+                      "movie/",
+                      ""
+                    )}`
                   : `/AniDojo/anime/${animedescription.id}`
               }
             >
@@ -174,7 +191,7 @@ export default function MainSlider() {
                 {animedescription.totalEpisodes > 1 && (
                   <h6>{animedescription.totalEpisodes}</h6>
                 )}
-                <h6>{animedescription.releaseDate?.substring(0,4)}</h6>
+                <h6>{animedescription.releaseDate?.substring(0, 4)}</h6>
               </span>
               <p className="about">{animedescription.description}</p>
             </Link>
