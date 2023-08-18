@@ -7,6 +7,12 @@ const nextConfig = {
             hostname: 'gogocdn.net',
             port: '',
           },
+          {
+            protocol: 'https',
+            hostname: 'img.flixhq.to',
+            port: '',
+          },
+
         ],
       },
 }
