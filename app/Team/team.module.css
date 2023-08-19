@@ -1,17 +1,64 @@
-.Teammain{
+.Teammain {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+.Teamlogo {
+  width: 100%;
+  height: 500px;
+  position: relative;
+}
+
+.Teamlogoimg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(50%);
+}
+
+.Teamlogotitle {
+  width: 100%;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  /* color: transparent; */
+  color: white;
+  font-size: 5rem;
+  text-align: center;
+  /* -webkit-text-stroke-color: white;
+  -webkit-text-stroke-width: 2px; */
+}
+.Teamlogopara {
+  width: 100%;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 10px;
+}
+
+.Teamchads{
     width: 100%;
     height: 100%;
-    min-height: 100vh;
+    padding: 10px;
 }
 
-.Teamabout{
+.Teamchadstitle{
     width: 100%;
-    height: 500px;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
 }
 
-.Teamaboutimg{
-    width: 100%;
-    height: 60%;
-    object-fit: cover;
-    filter: brightness(60%);
+.Teamrandom{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
 }
