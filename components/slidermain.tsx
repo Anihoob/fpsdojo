@@ -20,13 +20,13 @@ type animeslider = {
 };
 type animedes = {
   id?: number | string | any;
-  title?: string;
+  title?: string | any;
   description?: string | undefined;
   image?: string | any;
   type?: string;
-  releaseDate?: string;
+  releaseDate?: string | any;
   totalEpisodes?: number | any;
-  cover: string;
+  cover?: string;
   genres?: string | any;
 };
 
@@ -105,10 +105,20 @@ export default function MainSlider() {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
             const res = await fetch(
-              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`
+              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
+              { cache: "force-cache" }
             );
             const demta = await res.json();
-            return { ...demta };
+            return { 
+              id: demta.id,
+              title: demta.title,
+              image:demta.image,
+              totalEpisodes:demta.totalEpisodes,
+              releaseDate: demta.releaseDate,
+              description:demta.description,
+              genres:demta.genres,
+              type: "Anime"
+             };
           });
           const animeData = await Promise.all(animeDataPromise);
           setAnimeData(animeData);
