@@ -109,16 +109,16 @@ export default function MainSlider() {
               { cache: "force-cache" }
             );
             const demta = await res.json();
-            return { 
+            return {
               id: demta.id,
               title: demta.title,
-              image:demta.image,
-              totalEpisodes:demta.totalEpisodes,
+              image: demta.image,
+              totalEpisodes: demta.totalEpisodes,
               releaseDate: demta.releaseDate,
-              description:demta.description,
-              genres:demta.genres,
-              type: "Anime"
-             };
+              description: demta.description,
+              genres: demta.genres,
+              type: "Anime",
+            };
           });
           const animeData = await Promise.all(animeDataPromise);
           setAnimeData(animeData);
@@ -138,15 +138,15 @@ export default function MainSlider() {
               { cache: "force-cache" }
             );
             const demta = await res.json();
-              return {
-                id: demta.id.replace("movie/", ""),
-                title: demta.title,
-                releaseDate: demta.releaseDate,
-                cover: demta.cover,
-                description:demta.description,
-                genres:demta.genres,
-                type: "Movie"
-              };
+            return {
+              id: demta.id.replace("movie/", ""),
+              title: demta.title,
+              releaseDate: demta.releaseDate,
+              cover: demta.cover,
+              description: demta.description,
+              genres: demta.genres,
+              type: "Movie",
+            };
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -189,7 +189,7 @@ export default function MainSlider() {
                   ? animedescription.image
                   : animedescription.cover
               }
-              alt=""
+              alt={animedescription.title}
             />
             <Link
               className="homemainsliderinfo"
@@ -206,12 +206,9 @@ export default function MainSlider() {
                 {animedescription.title?.toUpperCase()}
               </h4>
               <span>
-                {animedescription.totalEpisodes > 1 && <h6>Tv</h6>}
+                {animedescription.type === "Anime" && <h6>Tv</h6>}
                 {animedescription.type === "Movie" && <h6>Movie</h6>}
-                {animedescription.type === "Movie" && <h6>{animedescription.genres[0]}</h6>}
-                {animedescription.totalEpisodes > 1 && (
-                  <h6>{animedescription.totalEpisodes}</h6>
-                )}
+                <h6>{animedescription.genres[0]}</h6>
                 <h6>{animedescription.releaseDate?.substring(0, 4)}</h6>
               </span>
               <p className="about">{animedescription.description}</p>

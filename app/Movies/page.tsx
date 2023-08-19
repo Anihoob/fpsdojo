@@ -7,7 +7,6 @@ export default function Movies() {
   return (
     <div className={Styles.moviesmain}>
         <MainSlider />
-        {/* <CaroselSlider starting={1} ending={5}/> */}
         <CaroselSlider starting={6} ending={10}/>
         <CaroselSlider starting={11} ending={15}/>
         <CaroselSlider starting={16} ending={20}/>
