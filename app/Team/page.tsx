@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Styles from "./team.module.css";
 import { Icon } from "@iconify-icon/react";
+import Link from "next/link";
 
 export default function page() {
   const [benenecount, setBenenecount] = useState(0);
@@ -24,15 +25,21 @@ export default function page() {
         <h4 className={Styles.Teamchadstitle}>THE GIGA CHADS</h4>
         <div className={Styles.Teamchad}>
           <span>
+            <Link href={"https://t.me/Kuroski_Ichigo"}>
             <img className={Styles.chadimg} src="/ichigo.gif" alt="" />
+            </Link>
             <h5>Ichigo</h5>
           </span>
           <span>
-            <img className={Styles.chadimg} src="/qewerty.jpg" alt="" />
+            <Link href={"https://t.me/Qewertyy"}>
+            <img className={Styles.chadimg} src="/qewerty.gif" alt="" />
+            </Link>
             <h5>Qewerty</h5>
           </span>
           <span>
+            <Link href={"https://t.me/sad_sensei"}>
             <img className={Styles.chadimg} src="/hinata.gif" alt="" />
+            </Link>
             <h5>Hinata</h5>
           </span>
         </div>
