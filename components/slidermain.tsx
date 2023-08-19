@@ -97,7 +97,6 @@ export default function MainSlider() {
   });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
-  console.log(animeData)
 
   async function fetchDetails() {
     if (!animecontainer) return;
@@ -106,8 +105,7 @@ export default function MainSlider() {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
             const res = await fetch(
-              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
-              { cache: "force-cache" }
+              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`
             );
             const demta = await res.json();
             return { ...demta };
