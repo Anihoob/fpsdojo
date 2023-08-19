@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import Styles from "./search.module.css";
 import Supabase from "@/thirdparty_req/supabase";
 import Link from "next/link";
+import animereq from "@/thirdparty_req/animereq";
+import moviereq from "@/thirdparty_req/moviereq";
 
 type searchCard = {
-  id?: number | string | any ;
+  id?: number | string | any;
   title: string;
   description?: string;
   image?: string;
@@ -30,61 +32,33 @@ export default function page() {
       try {
         const { data: anime } = await superbase.from("tv_series").select("*");
         const { data: movie } = await superbase.from("movies").select("*");
-        
+
         if (anime && movie) {
           const animeData: searchCard[] = anime.map((item: any) => ({
             title: item.title,
           }));
-          
+
           const movieData: searchCard[] = movie.map((item: any) => ({
             title: item.title,
           }));
-          
+
           const merge = animeData.concat(movieData);
-          
-          const filteredResults: searchCard[] = merge.filter((item: searchCard) =>
-            item.title.toLowerCase().includes(searchItem.toLowerCase())
+
+          const filteredResults: searchCard[] = merge.filter(
+            (item: searchCard) =>
+              item.title.toLowerCase().includes(searchItem.toLowerCase())
           );
-          
+
           const updatedSearchResults: searchCard[] = await Promise.all(
             filteredResults.map(async (result) => {
               try {
-                const res = await fetch(
-                  `https://consument-rouge.vercel.app/anime/gogoanime/info/${result.title}`
-                , {cache :"force-cache"});
-                const data = await res.json();
-                
-                if (data.id === result.title) {
-                  return {
-                    ...result,
-                    id: data.id,
-                    image: data.image,
-                    title: data.title,
-                    name: data.title,
-                    releaseDate: data.releaseDate,
-                    type: "anime",
-                  };
-                } else {
-                  const res = await fetch(
-                    `https://consument-rouge.vercel.app/movies/flixhq/info?id=${result.title}`
-                  ,{cache:"force-cache"});
-                  const deta = await res.json();
+                const animeFetch = await animereq({ id: result.title });
 
-                    if (deta) {
-                      return {
-                        ...result,
-                        id: deta.id.replace("movie/", ""),
-                        image: deta.image,
-                        title: deta.title,
-                        name: deta.name,
-                        releaseDate: deta.releaseDate,
-                        cover: deta.cover,
-                        type: "movie",
-                      };
-                    } else {
-                      return result;
-                    }
-                
+                if (animeFetch.id === result.title) {
+                  return animeFetch;
+                } else {
+                  const movieFetch = moviereq({ id: result.title });
+                  return movieFetch;
                 }
               } catch (error) {
                 console.error(error);
@@ -92,7 +66,7 @@ export default function page() {
               }
             })
           );
-          
+
           setAnimecontainer(updatedSearchResults);
           setIsLoading(false);
         }
@@ -110,7 +84,7 @@ export default function page() {
     setIsLoading(true);
     const timeoutId = setTimeout(() => {
       fetchSupabase();
-    }, 500); 
+    }, 500);
     return () => clearTimeout(timeoutId);
   }, [searchItem]);
 
@@ -127,34 +101,34 @@ export default function page() {
         />
         {isLoading ? (
           <p>Loading....</p>
-        ) :(
+        ) : (
           <div className={Styles.searched}>
-          {animecontainer?.map((lol) => (
-            <Link
-            href={
-              lol.type === "anime"
-              ? `/AniDojo/anime/${lol.id}`
-              : `/AniDojo/movie/${lol.id}`
-            }
-            className={Styles.fetchedItem}
-            >
-              <div className={Styles.fetchedspan}>
-                <img
-                  className={Styles.fetchedImg}
-                  src={lol.image || lol.cover}
+            {animecontainer?.map((lol) => (
+              <Link
+                href={
+                  lol.type === "anime"
+                    ? `/AniDojo/anime/${lol.id}`
+                    : `/AniDojo/movie/${lol.id}`
+                }
+                className={Styles.fetchedItem}
+              >
+                <div className={Styles.fetchedspan}>
+                  <img
+                    className={Styles.fetchedImg}
+                    src={lol.image || lol.cover}
                   />
-                <span>
-                  <h4 className={Styles.fetchedTitle}>
-                    {lol.title}
-                  </h4>
-                  <h4 className={Styles.fetchedTitle}>{lol.releaseDate?.substring(0,4)}</h4>
-                </span>
-              </div>
-              <hr className={Styles.fetcheddivider} />
-            </Link>
-          ))}
-        </div>
-          )}
+                  <span>
+                    <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
+                    <h4 className={Styles.fetchedTitle}>
+                      {lol.releaseDate?.substring(0, 4)}
+                    </h4>
+                  </span>
+                </div>
+                <hr className={Styles.fetcheddivider} />
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
