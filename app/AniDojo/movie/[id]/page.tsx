@@ -4,6 +4,7 @@ import "../../../globals.css"
 import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
+import moviereq from "@/thirdparty_req/moviereq";
 
 interface umrl {
   title: string | undefined | any;
@@ -24,7 +25,6 @@ type movides = {
   image?: string | any;
   type?: string;
   releaseDate?: string;
-  totalEpisodes: number;
   genres?: string | any;
   duration: string | any;
   cover: string;
@@ -32,8 +32,7 @@ type movides = {
 
 export default function Movie({ params }: { params: umrl }) {
   const whichmovie = params.id;
-  // console.log(whichmovie)
-
+  
   const superbase = Supabase();
 
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
@@ -70,11 +69,8 @@ export default function Movie({ params }: { params: umrl }) {
   async function flixhq() {
     if (flixData === null) {
       try {
-        const res = await fetch(
-          `https://consument-rouge.vercel.app/movies/flixhq/info?id=${fetchmovie?.movies_title}`
-        );
-        const deta:movides = await res.json();
-        setFlixdata({...deta});
+        const movieFetch = await moviereq({id: "movie/" + whichmovie})
+        setFlixdata(movieFetch);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -85,7 +81,8 @@ export default function Movie({ params }: { params: umrl }) {
 
   useEffect(() => {
     flixhq();
-  });
+  },[]);
+
   const [expanded, setExpanded] = useState(false);
 
   const toggleDescription = () => {

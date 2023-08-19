@@ -9,10 +9,12 @@ export default async function moviereq(props:Props) {
     return {
         id: deta.id.replace("movie/", ""),
         title: deta.title,
+        image:deta.image,
         releaseDate: deta.releaseDate,
         cover: deta.cover,
         description: deta.description,
         genres: deta.genres,
+        duration:deta.duration,
         type: "Movie",
     }
 }

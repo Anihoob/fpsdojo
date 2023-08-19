@@ -4,7 +4,7 @@ import Link from "next/link";
 import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
-
+import animereq from "@/thirdparty_req/animereq";
 
 interface umrl {
   title: string | undefined | any;
@@ -99,11 +99,8 @@ export default function Tv({ params }: { params: umrl }) {
   async function gugu() {
     if (gugudata === null) {
       try {
-        const gugufind = await fetch(
-          `https://api.consumet.org/anime/gogoanime/info/${whichanime}`
-        );
-        const demta: animedes = await gugufind.json();
-        setGugudata({ ...demta});
+        const animeFetch = await animereq({id:whichanime})
+        setGugudata(animeFetch);
       } catch (error) {
         console.log(error);
       }
