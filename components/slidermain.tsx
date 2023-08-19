@@ -22,11 +22,12 @@ type animedes = {
   id?: number | string | any;
   title?: string;
   description?: string | undefined;
-  image: string;
+  image?: string | any;
   type?: string;
   releaseDate?: string;
-  totalEpisodes: number;
+  totalEpisodes?: number | any;
   cover: string;
+  genres?: string | any;
 };
 
 import { usePathname } from "next/navigation";
@@ -96,6 +97,7 @@ export default function MainSlider() {
   });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
+  console.log(animeData)
 
   async function fetchDetails() {
     if (!animecontainer) return;
@@ -125,9 +127,18 @@ export default function MainSlider() {
             const singlemovi = singlemovie.title;
             const res = await fetch(
               `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
+              { cache: "force-cache" }
             );
             const demta = await res.json();
-            return { ...demta };
+              return {
+                id: demta.id.replace("movie/", ""),
+                title: demta.title,
+                releaseDate: demta.releaseDate,
+                cover: demta.cover,
+                description:demta.description,
+                genres:demta.genres,
+                type: "Movie"
+              };
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -157,7 +168,7 @@ export default function MainSlider() {
             className="homemainsliderswiperslide"
           >
             <Image
-            fill={true}
+              fill={true}
               style={{
                 width: "100%",
                 height: "100%",
@@ -189,6 +200,7 @@ export default function MainSlider() {
               <span>
                 {animedescription.totalEpisodes > 1 && <h6>Tv</h6>}
                 {animedescription.type === "Movie" && <h6>Movie</h6>}
+                {animedescription.type === "Movie" && <h6>{animedescription.genres[0]}</h6>}
                 {animedescription.totalEpisodes > 1 && (
                   <h6>{animedescription.totalEpisodes}</h6>
                 )}
