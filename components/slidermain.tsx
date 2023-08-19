@@ -33,12 +33,15 @@ type animedes = {
 import { usePathname } from "next/navigation";
 // supabase
 import Supabase from "@/thirdparty_req/supabase";
+import animereq from "@/thirdparty_req/animereq";
+import moviereq from "@/thirdparty_req/moviereq";
 import Link from "next/link";
 
 export default function MainSlider() {
   const pathname = usePathname();
 
   const superbase = Supabase();
+  
 
   const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
     null
@@ -97,28 +100,14 @@ export default function MainSlider() {
   });
 
   const [animeData, setAnimeData] = useState<animedes[] | null>(null);
-
   async function fetchDetails() {
     if (!animecontainer) return;
     if (pathname === "/") {
       if (animeData === null) {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const res = await fetch(
-              `https://consument-rouge.vercel.app/anime/gogoanime/info/${singleanime.title}`,
-              { cache: "force-cache" }
-            );
-            const demta = await res.json();
-            return {
-              id: demta.id,
-              title: demta.title,
-              image: demta.image,
-              totalEpisodes: demta.totalEpisodes,
-              releaseDate: demta.releaseDate,
-              description: demta.description,
-              genres: demta.genres,
-              type: "Anime",
-            };
+            const animeFetch = animereq({id: singleanime.title})
+            return animeFetch
           });
           const animeData = await Promise.all(animeDataPromise);
           setAnimeData(animeData);
@@ -132,21 +121,8 @@ export default function MainSlider() {
       if (animeData === null) {
         try {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            const singlemovi = singlemovie.title;
-            const res = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi} `,
-              { cache: "force-cache" }
-            );
-            const demta = await res.json();
-            return {
-              id: demta.id.replace("movie/", ""),
-              title: demta.title,
-              releaseDate: demta.releaseDate,
-              cover: demta.cover,
-              description: demta.description,
-              genres: demta.genres,
-              type: "Movie",
-            };
+           const movieFetch = moviereq({id: singlemovie.title})
+           return movieFetch
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -176,7 +152,8 @@ export default function MainSlider() {
             className="homemainsliderswiperslide"
           >
             <Image
-              fill={true}
+              width={100}
+              height={100}
               style={{
                 width: "100%",
                 height: "100%",

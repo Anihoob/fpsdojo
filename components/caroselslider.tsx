@@ -8,6 +8,8 @@ import "swiper/css/pagination";
 import "./components.css";
 import Link from "next/link";
 import Supabase from "@/thirdparty_req/supabase";
+import animereq from "@/thirdparty_req/animereq";
+import moviereq from "@/thirdparty_req/moviereq";
 import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
@@ -31,15 +33,15 @@ type animedes = {
   image?: string;
   type?: string;
   releaseDate?: string;
-  totalEpisodes: number;
-  duration:string | any;
-  cover: string | any;
+  duration?:string | any;
+  cover?: string | any;
 };
 
 export default function CaroselSlider(props: Props) {
 
   const pathname = usePathname();
   const superbase = Supabase();
+
 
   const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
     null
@@ -107,11 +109,8 @@ export default function CaroselSlider(props: Props) {
       if(animeData === null){
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const res = await fetch(
-              `https://api.consumet.org/anime/gogoanime/info/${singleanime.title}` , {cache: 'force-cache'}
-            );
-            const demta = await res.json();
-            return { ...demta };
+            const animeFetch = animereq({id: singleanime.title})
+            return animeFetch
           });
           const animeData = await Promise.all(animeDataPromise);
           setAnimeData(animeData);
@@ -125,13 +124,8 @@ export default function CaroselSlider(props: Props) {
       if (animeData === null) {
         try {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            const singlemovi = singlemovie.title;
-            const res = await fetch(
-              `https://consument-rouge.vercel.app/movies/flixhq/info?id=${singlemovi}` ,
-              { cache: "force-cache" }
-            );
-            const demta = await res.json();
-            return {...demta}
+           const movieFetch = moviereq({id: singlemovie.title})
+           return movieFetch
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
