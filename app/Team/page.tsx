@@ -60,9 +60,6 @@ export default function page() {
           </span>
         </div>
         <div className={Styles.Teambenene}>
-              {benenecount < 20 ? (
-                
-                <>
               <h4>Give Benene</h4>
               <svg
                 onClick={benene}
@@ -104,11 +101,6 @@ export default function page() {
                   />
               </svg>
               <p>{benenecount}</p>
-            </>
-                  ):(
-                    <img src="/team.gif" alt="" />
-                  )}
-          
         </div>
       </div>
     </div>
