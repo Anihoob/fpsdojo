@@ -35,7 +35,6 @@ type animedes = {
 
 export default function Tv({ params }: { params: umrl }) {
   const whichanime = params.id;
-  // console.log(whichanime)
 
   const superbase = Supabase();
 
@@ -183,7 +182,8 @@ export default function Tv({ params }: { params: umrl }) {
                     className={"infopagedwnldselect"}
                   >
                     <option value="0">Episode</option>
-                    {filteredEpisodes?.map((episode) => (
+                    {filteredEpisodes
+                    ?.sort((a, b) => a.episode_number - b.episode_number).map((episode) => (
                       <option
                         key={episode.episode_id}
                         value={episode.episode_number}
@@ -194,7 +194,6 @@ export default function Tv({ params }: { params: umrl }) {
                   </select>
                 </div>
               )}
-
               {selectedEpisodeDownloadLink && (
                 <div className={"infopagedwnldbtn"}>
                   <Link href={selectedEpisodeDownloadLink}>
@@ -202,7 +201,6 @@ export default function Tv({ params }: { params: umrl }) {
                   </Link>
                 </div>
               )}
-
               <div className={expanded ? "expanded" : "infopageabout"}>
                 <p className={"infopagedes"}>{gugudata.description}</p>
               </div>
