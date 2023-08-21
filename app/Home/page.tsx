@@ -6,8 +6,9 @@ export default function Home() {
   return (
     <div className={Styles.homemain}>
         <MainSlider/>
-        <CaroselSlider starting={1} ending={5}/>
-        <CaroselSlider starting={6} ending={10}/>
+        <CaroselSlider starting={0} ending={4}/>
+        <CaroselSlider starting={5} ending={9}/>
+        <CaroselSlider starting={10} ending={14}/>
     </div>
   )
 }
