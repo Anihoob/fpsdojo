@@ -150,6 +150,16 @@ export default function CaroselSlider(props: Props) {
       <Swiper
         spaceBetween={25}
         slidesPerView={1.6}
+        breakpoints={{
+          1024:{
+            spaceBetween: 25,
+            slidesPerView: 4
+          },
+          1440:{
+            spaceBetween: 25,
+            slidesPerView: 5
+          }
+        }}
         className="homesliderswiper"
       >
         {animeData?.map((animeinfo) => (

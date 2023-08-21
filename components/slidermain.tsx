@@ -41,7 +41,6 @@ export default function MainSlider() {
   const pathname = usePathname();
 
   const superbase = Supabase();
-  
 
   const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
     null
@@ -106,8 +105,8 @@ export default function MainSlider() {
       if (animeData === null) {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const animeFetch = animereq({id: singleanime.title})
-            return animeFetch
+            const animeFetch = animereq({ id: singleanime.title });
+            return animeFetch;
           });
           const animeData = await Promise.all(animeDataPromise);
           setAnimeData(animeData);
@@ -121,8 +120,8 @@ export default function MainSlider() {
       if (animeData === null) {
         try {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
-           const movieFetch = moviereq({id: singlemovie.title})
-           return movieFetch
+            const movieFetch = moviereq({ id: singlemovie.title });
+            return movieFetch;
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -151,7 +150,7 @@ export default function MainSlider() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            <Image
+            {/* <Image
               width={100}
               height={100}
               style={{
@@ -162,6 +161,14 @@ export default function MainSlider() {
               }}
               quality={100}
               src={animedescription.image }
+              alt={animedescription.title}
+            /> */}
+            <img
+              src={
+                pathname === "/"
+                  ? animedescription.image
+                  : animedescription.cover
+              }
               alt={animedescription.title}
             />
             <Link

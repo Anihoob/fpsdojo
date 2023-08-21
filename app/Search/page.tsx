@@ -96,7 +96,7 @@ export default function page() {
           onChange={(e) => setSearchItem((e.target as HTMLInputElement).value)}
           type="search"
           className={Styles.searchbar}
-          placeholder="..."
+          placeholder="Search Anime/Movies"
           value={searchItem}
         />
         {isLoading ? (
