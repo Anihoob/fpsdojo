@@ -127,7 +127,7 @@ select {
 
 .infopageposter {
   width: 100%;
-  height: 500px;
+  height: 600px;
   position: fixed;
   top: 0;
 }
@@ -147,7 +147,7 @@ select {
     180deg,
     rgba(0, 0, 0, 0.4) 0%,
     rgba(0, 0, 0, 0.5) 40.47%,
-    #000000 55.64%,
+    #000000 50.64%,
     #000000 100%
   );
 }
@@ -181,6 +181,7 @@ select {
   height: 2px;
   margin: 0;
 }
+
 
 .infopageselectbtn {
   width: 100%;
@@ -316,7 +317,7 @@ select {
 
 .movieinfopageposter {
   width: 100%;
-  height: 500px;
+  height: 600px;
   position: fixed;
   top: 0;
 }
@@ -335,8 +336,8 @@ select {
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.5) 40.47%,
-    #000000 55.64%,
+    rgba(0, 0, 0, 0.5) 50.47%,
+    #000000 60.64%,
     #000000 100%
   );
 }
