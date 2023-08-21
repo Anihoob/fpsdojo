@@ -37,9 +37,14 @@
 }
 
 .nav-links svg {
+  width: 30px;
+  height: 30px;
   color: white;
 }
 
+.nav-links li a h6{
+  font-size: .6rem;
+}
 
 @media screen and (min-width:1024px) {
   .nav-main {
@@ -48,6 +53,7 @@
     left: 50%;
     transform: translate(-50%, -0%);
     width: 40%;
+    height: 50px;
     border-radius: 20px;
   }
 }
