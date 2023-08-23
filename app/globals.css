@@ -136,6 +136,7 @@ select {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
 .infopageinfo {
@@ -222,12 +223,12 @@ select {
 
 .infopageabout {
   padding: 0px 20px;
-  text-align: justify;
   color: white;
   background: black;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  text-align: justify;
   overflow: hidden;
 }
 
@@ -258,6 +259,45 @@ select {
   justify-content: left;
   gap: 0.5rem;
 }
+
+@media screen and (min-width:1024px) {
+
+  .infopageoptions span .icons{
+    width: 50px;
+    height: 50px;
+  }
+
+  .infopageposter{
+    height: 600px;
+  }
+
+  .infopagetitle {
+    font-size: 3rem;
+  }
+
+  .infopagecard {
+    top: 40%;
+  }
+
+  .infopageabout{
+    width: 70%;
+  }
+
+  .expanded{
+    width: 70%;
+  }
+
+}
+
+@media screen and (min-width:1440px) {
+  .infopageposter{
+    height: 650px;
+  }
+
+}
+
+
+/*  */
 
 .loading_main {
   width: 100%;
@@ -322,11 +362,17 @@ select {
   top: 0;
 }
 
-.movieinfopageposter img {
+.movieinfopageposter .mobileimg {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
+.movieinfopageposter .deskimg{
+  display: none;
+}
+
+
 
 .movieinfopageinfo {
   top: 0%;
@@ -336,7 +382,7 @@ select {
   background: linear-gradient(
     180deg,
     rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.5) 50.47%,
+    rgba(0, 0, 0, 0.5) 40.47%,
     #000000 60.64%,
     #000000 100%
   );
@@ -378,7 +424,6 @@ select {
   justify-content: center;
   gap: 1.5rem;
   padding: 10px;
-  /* background: aqua; */
 }
 
 .movieinfopagedwnldselect {
@@ -448,6 +493,40 @@ select {
   gap: 0.5rem;
 }
 
+@media screen and (min-width:1024px) {
+  .movieinfopageposter .mobileimg {
+    display: none;
+  }
+  
+  .movieinfopageposter .deskimg{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .movieinfopageoptions span .icons{
+    width: 50px;
+    height: 50px;
+  }
+
+  .movieinfopageposter{
+    height: 600px;
+  }
+
+  .movieinfopagetitle {
+    font-size: 3rem;
+  }
+
+  .movieinfopagecard {
+    top: 40%;
+  }
+
+  
+}
+
+
+/*  */
 .loading_main {
   width: 100%;
   height: 100%;

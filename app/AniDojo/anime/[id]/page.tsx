@@ -196,7 +196,7 @@ export default function Tv({ params }: { params: umrl }) {
               )}
               {selectedEpisodeDownloadLink && (
                 <div className={"infopagedwnldbtn"}>
-                  <Link href={selectedEpisodeDownloadLink}>
+                  <Link href={selectedEpisodeDownloadLink} target="_blank">
                     <button>Download</button>
                   </Link>
                 </div>

@@ -10,6 +10,8 @@ import Link from "next/link";
 import Supabase from "@/thirdparty_req/supabase";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
+import anilistapi2 from "@/thirdparty_req/anilistapi2";
+import anilistapi from "@/thirdparty_req/anilistapi";
 import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
@@ -148,15 +150,23 @@ export default function CaroselSlider(props: Props) {
     <>
       <h4 className="homesliderswiper-sec">{animeData? "60FPS": ""}</h4>
       <Swiper
-        spaceBetween={25}
+        spaceBetween={20}
         slidesPerView={1.6}
         breakpoints={{
+          425:{
+            spaceBetween: 10,
+            slidesPerView: 1.7
+          },
+          768:{
+            spaceBetween: 15,
+            slidesPerView: 3
+          },
           1024:{
-            spaceBetween: 25,
+            spaceBetween: 20,
             slidesPerView: 4
           },
           1440:{
-            spaceBetween: 25,
+            spaceBetween: 20,
             slidesPerView: 5
           }
         }}
