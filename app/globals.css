@@ -164,6 +164,14 @@ select {
   top: 45%;
   position: absolute;
   gap: 0.5rem;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 50%,
+    rgba(0, 0, 0, 0.1) 20%,
+    #000000 80%,
+    #000000 100%
+  );
+  padding-bottom: 2rem;
 }
 
 .infopagetitle {

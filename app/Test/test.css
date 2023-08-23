@@ -46,4 +46,10 @@
     #000000 50.64%,
     #000000 100%
   );
+  position: relative;
+}
+
+.singlePage-details{
+    position: absolute;
+    top:45%;
 }

@@ -42,7 +42,6 @@ export default function page() {
           </div>
           <div className="singlePage-card">
             <div className="singlePage-details">
-              
             </div>
           </div>
         </div>
