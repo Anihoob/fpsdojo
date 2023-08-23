@@ -213,13 +213,40 @@ export default function Tv({ params }: { params: umrl }) {
                 ) && (
                   <div className={"infopageaquality"}>
                     <Icon
-                      icon={"bi:badge-4k"}
+                      icon={"iconoir:modern-tv-4k"}
                       style={{ fontSize: "30px", color: "white" }}
                     />
                     <Icon
                       icon={"fluent:fps-60-24-filled"}
                       style={{ fontSize: "30px", color: "white" }}
                     />
+                  </div>
+                )}
+              {fetchepsiode &&
+                fetchepsiode.some(
+                  (episode) => episode.season_quality === "1080p60fps"
+                ) && (
+                  <div className={"infopageaquality"}>
+                    <Icon
+                      icon={"material-symbols:full-hd-outline-rounded"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                    <Icon
+                      icon={"fluent:fps-60-24-filled"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                  </div>
+                )}
+              {fetchepsiode &&
+                fetchepsiode.some(
+                  (episode) => episode.season_quality === "1080p144fps"
+                ) && (
+                  <div className={"infopageaquality"}>
+                    <Icon
+                      icon={"material-symbols:full-hd-outline-rounded"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                    <p>144fps</p>
                   </div>
                 )}
             </div>
