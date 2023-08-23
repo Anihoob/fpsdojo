@@ -35,6 +35,7 @@ type animedes = {
 };
 
 export default function Tv({ params }: { params: umrl }) {
+
   const whichanime = params.id;
 
   const superbase = Supabase();
@@ -117,6 +118,25 @@ export default function Tv({ params }: { params: umrl }) {
     setExpanded(!expanded);
   };
 
+  const [copied, setCopied] = useState(false);
+
+  const shareOrCopyUrl = () => {
+    const currentUrl = window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Share this url',
+        text: 'url: ',
+        url: currentUrl
+      });
+    } else {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  };
+
   return (
     <div className={"infopagemain"}>
       <div className={"infopageoptions"}>
@@ -127,11 +147,13 @@ export default function Tv({ params }: { params: umrl }) {
               className={"icons"}
             />
           </Link>
-          <Link href={"/"}>
+          <div onClick={shareOrCopyUrl} className="a">
             <Icon icon={"iconoir:share-ios"} className={"icons"} />
-          </Link>
+          </div>
         </span>
       </div>
+      {copied && <p className={'copiedpopup'}>Url Copied</p>}
+
       {gugudata && (
         <>
           <div className={"infopageposter"}>

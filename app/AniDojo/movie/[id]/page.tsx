@@ -89,6 +89,26 @@ export default function Movie({ params }: { params: umrl }) {
     setExpanded(!expanded);
   };
 
+  const [copied, setCopied] = useState(false);
+
+  const shareOrCopyUrl = () => {
+    const currentUrl = window.location.href;
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Share this url',
+        text: 'url: ',
+        url: currentUrl
+      });
+    } else {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  };
+
+
 
   return (
     <div className={"movieinfopagemain"}>
@@ -100,11 +120,12 @@ export default function Movie({ params }: { params: umrl }) {
               className={"icons"}
             />
           </Link>
-          <Link href={"/Movies"}>
+          <div className="a" onClick={shareOrCopyUrl}>
           <Icon icon={"iconoir:share-ios"} className={"icons"} />
-          </Link>
+          </div>
         </span>
       </div>
+      {copied && <p className={'copiedpopup'}>Url Copied</p>}
       {flixData && (
         <>
           <div className={"movieinfopageposter"}>

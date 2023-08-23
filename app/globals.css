@@ -106,7 +106,14 @@ select {
   display: flex;
   justify-content: space-between;
 }
+
 .infopageoptions span a {
+  cursor: pointer;
+  z-index: 2;
+}
+
+.infopageoptions span .a {
+  cursor: pointer;
   z-index: 2;
 }
 
@@ -123,6 +130,24 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.copiedpopup{
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -10%);
+  width: 50%;
+  height: 40px;
+  color: white;
+  background: red;
+  z-index: 2;
+  display: flex;
+  font-weight: 600;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .infopageposter {
@@ -357,6 +382,7 @@ select {
   justify-content: space-between;
 }
 .movieinfopageoptions span a {
+  cursor: pointer;
   z-index: 2;
 }
 
