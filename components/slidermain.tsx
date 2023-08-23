@@ -28,6 +28,7 @@ type animedes = {
   totalEpisodes?: number | any;
   cover?: string;
   genres?: string | any;
+  otherName?: string | any;
 };
 
 import { usePathname } from "next/navigation";
@@ -138,6 +139,9 @@ export default function MainSlider() {
     fetchDetails();
   });
 
+  const japanesRegex =
+    /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}ー,]/gu;
+
   return (
     <>
       <Swiper
@@ -150,27 +154,18 @@ export default function MainSlider() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            {/* <Image
-              width={100}
-              height={100}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "center",
-              }}
-              quality={100}
-              src={animedescription.image }
-              alt={animedescription.title}
-            /> */}
-            <img
+            <Image
+            width={200}
+            height={200}
               src={
                 pathname === "/"
                   ? animedescription.image
                   : animedescription.cover
               }
+              quality={75}
               alt={animedescription.title}
             />
+
             <Link
               className="homemainsliderinfo"
               href={
@@ -183,7 +178,11 @@ export default function MainSlider() {
               }
             >
               <h4 className="homemainsliderinfo-name">
-                {animedescription.title?.toUpperCase()}
+                {animedescription.otherName
+                  ? animedescription.otherName
+                      ?.replace(japanesRegex, "")
+                      .toUpperCase()
+                  : animedescription.title?.toUpperCase()}
               </h4>
               <span>
                 {animedescription.type === "Anime" && <h6>Tv</h6>}

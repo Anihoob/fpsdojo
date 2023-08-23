@@ -37,6 +37,7 @@ type animedes = {
   releaseDate?: string;
   duration?:string | any;
   cover?: string | any;
+  otherName?:string| any;
 };
 
 export default function CaroselSlider(props: Props) {

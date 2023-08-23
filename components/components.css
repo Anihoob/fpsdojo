@@ -74,7 +74,7 @@
 
 
 .homemainsliderswiperslide {
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   position: relative;
@@ -220,7 +220,6 @@
   border-radius: 15px;
   height: 130px;
   object-fit: cover;
-  filter: brightness(80%);
   object-position: center center;
   position: relative;
   z-index: 3;
@@ -229,8 +228,9 @@
 
 
 .homesliderswiperslide-info {
+  width: 90%;
   color: white;
-  padding: 10px 0px 0px 0px;
+  padding: 5px 0px 0px 0px;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -240,8 +240,12 @@
 
 
 .homesliderswiperslide-name{
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-weight: 600;
-  font-size: .8rem;
+  font-size: .75rem;
 }
 
 .homesliderswiperslide-datentime{
