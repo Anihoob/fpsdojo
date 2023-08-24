@@ -26,7 +26,7 @@ type animedes = {
   type?: string;
   releaseDate?: string | any;
   totalEpisodes?: number | any;
-  cover?: string;
+  cover?: string | any;
   genres?: string | any;
   otherName?: string | any;
 };
@@ -155,13 +155,26 @@ export default function MainSlider() {
             className="homemainsliderswiperslide"
           >
             <Image
-            width={200}
-            height={200}
-              src={
-                pathname === "/"
-                  ? animedescription.image
-                  : animedescription.cover
-              }
+            className="normalimg"
+              width={200}
+              height={200}
+              src={pathname === "/" && animedescription.image}
+              quality={75}
+              alt={animedescription.title}
+            />
+            <Image
+              className="mobileimg"
+              width={200}
+              height={200}
+              src={pathname === "/Movies" && animedescription.image}
+              quality={75}
+              alt={animedescription.title}
+            />
+            <Image
+            className="deskimg"
+              width={200}
+              height={200}
+              src={pathname === "/Movies" && animedescription.cover}
               quality={75}
               alt={animedescription.title}
             />
