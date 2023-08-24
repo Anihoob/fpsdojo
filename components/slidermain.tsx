@@ -154,31 +154,35 @@ export default function MainSlider() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            <Image
-            className="normalimg"
+            {pathname === "/" && (
+              <Image
               width={200}
               height={200}
-              src={pathname === "/" && animedescription.image}
+              src={animedescription.image}
               quality={75}
               alt={animedescription.title}
-            />
-            <Image
+              />
+              )}
+            {pathname === "/Movies" && (
+              <>
+              <Image
               className="mobileimg"
               width={200}
               height={200}
-              src={pathname === "/Movies" && animedescription.image}
+              src={animedescription.image}
               quality={75}
               alt={animedescription.title}
-            />
-            <Image
-            className="deskimg"
+              />
+              <Image
+              className="deskimg"
               width={200}
               height={200}
-              src={pathname === "/Movies" && animedescription.cover}
+              src={animedescription.cover}
               quality={75}
               alt={animedescription.title}
-            />
-
+              />
+              </>
+              )}
             <Link
               className="homemainsliderinfo"
               href={
