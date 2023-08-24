@@ -23,7 +23,7 @@ export default function page() {
         </p>
       </div>
       <div className={Styles.Teamchads}>
-        <h4 className={Styles.Teamchadstitle}>THE GIGA CHADS</h4>
+        <h4 className={Styles.Teamchadstitle}>THE G'S</h4>
         <div className={Styles.Teamchad}>
           <span>
             <Link href={"https://t.me/Kuroski_Ichigo"}>

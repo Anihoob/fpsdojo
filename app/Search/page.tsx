@@ -20,7 +20,6 @@ type searchCard = {
 export default function page() {
   const superbase = Supabase();
   const [searchItem, setSearchItem] = useState<any>();
-  const { closest } = require("fastest-levenshtein");
 
   const [animecontainer, setAnimecontainer] = useState<searchCard[] | null>(
     null
@@ -46,7 +45,7 @@ export default function page() {
 
           const filteredResults: searchCard[] = merge.filter(
             (item: searchCard) =>
-              item.title.toLowerCase().includes(searchItem.toLowerCase())
+              item.title.toLowerCase().includes(searchItem.trim().toLowerCase())
           );
 
           const updatedSearchResults: searchCard[] = await Promise.all(
@@ -57,7 +56,7 @@ export default function page() {
                 if (animeFetch.id === result.title) {
                   return animeFetch;
                 } else {
-                  const movieFetch = moviereq({ id: result.title });
+                  const movieFetch = await moviereq({ id: result.title });
                   return movieFetch;
                 }
               } catch (error) {
@@ -106,9 +105,9 @@ export default function page() {
             {animecontainer?.map((lol) => (
               <Link
                 href={
-                  lol.type === "anime"
+                  lol.type === "Anime"
                     ? `/AniDojo/anime/${lol.id}`
-                    : `/AniDojo/movie/${lol.id}`
+                    : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
                 }
                 className={Styles.fetchedItem}
               >
