@@ -15,6 +15,7 @@ type searchCard = {
   releaseDate?: string;
   cover?: string;
   type?: string;
+  otherName?: string | any;
 };
 
 export default function page() {
@@ -50,9 +51,9 @@ export default function page() {
 
           const updatedSearchResults: searchCard[] = await Promise.all(
             filteredResults.map(async (result) => {
+              console.log(result)
               try {
                 const animeFetch = await animereq({ id: result.title });
-
                 if (animeFetch.id === result.title) {
                   return animeFetch;
                 } else {
@@ -65,7 +66,7 @@ export default function page() {
               }
             })
           );
-
+          console.log(updatedSearchResults)
           setAnimecontainer(updatedSearchResults);
           setIsLoading(false);
         }
@@ -98,36 +99,39 @@ export default function page() {
           placeholder="Search Anime/Movies"
           value={searchItem}
         />
-        {isLoading ? (
+        {isLoading && (
           <p>Loading....</p>
-        ) : (
-          <div className={Styles.searched}>
-            {animecontainer?.map((lol) => (
-              <Link
-                href={
-                  lol.type === "Anime"
-                    ? `/AniDojo/anime/${lol.id}`
-                    : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
-                }
-                className={Styles.fetchedItem}
-              >
-                <div className={Styles.fetchedspan}>
-                  <img
-                    className={Styles.fetchedImg}
-                    src={lol.image || lol.cover}
-                  />
-                  <span>
-                    <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
-                    <h4 className={Styles.fetchedTitle}>
-                      {lol.releaseDate?.substring(0, 4)}
-                    </h4>
-                  </span>
-                </div>
-                <hr className={Styles.fetcheddivider} />
-              </Link>
-            ))}
-          </div>
         )}
+          <div className={Styles.searched}>
+          {animecontainer && animecontainer.length > 0 ? (
+            animecontainer.map((lol) => (
+              <Link
+              href={
+                lol.type === "Anime"
+                  ? `/AniDojo/anime/${lol.id}`
+                  : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
+              }
+              className={Styles.fetchedItem}
+            >
+              <div className={Styles.fetchedspan}>
+                <img
+                  className={Styles.fetchedImg}
+                  src={lol.image || lol.cover}
+                />
+                <span>
+                  <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
+                  <h4 className={Styles.fetchedTitle}>
+                    {lol.releaseDate?.substring(0, 4)}
+                  </h4>
+                </span>
+              </div>
+              <hr className={Styles.fetcheddivider} />
+            </Link>
+            ))
+          ) : searchItem ? (
+            <p>No results found.</p>
+          ) : null}
+          </div>
       </div>
     </div>
   );

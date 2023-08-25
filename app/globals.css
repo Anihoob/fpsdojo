@@ -567,6 +567,15 @@ select {
   .movieinfopagecard {
     top: 40%;
   }
+  
+  .movieinfopageabout{
+    width: 70%;
+  }
+
+  .expanded{
+    width: 70%;
+  }
+
 
   
 }

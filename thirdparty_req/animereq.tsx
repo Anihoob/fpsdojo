@@ -4,7 +4,7 @@ interface Props {
 
 export default async function animereq(props: Props) {
   const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${props.id}`,
+    `https://consument-rouge.vercel.app/anime/gogoanime/info/${props.id}`,
     { cache: "force-cache" }
   );
   const data = await res.json();
