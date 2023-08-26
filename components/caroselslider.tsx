@@ -10,8 +10,6 @@ import Link from "next/link";
 import Supabase from "@/thirdparty_req/supabase";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
-import anilistapi2 from "@/thirdparty_req/anilistapi2";
-import anilistapi from "@/thirdparty_req/anilistapi";
 import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
