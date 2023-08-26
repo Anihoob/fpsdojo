@@ -19,48 +19,46 @@ import moviereq from "@/thirdparty_req/moviereq";
 
 export default function page() {
   const superbase = Supabase();
-
-  const [searchitem, setSearchitem] = useState<any>();
+  const [searchitem, setSearchitem] = useState<string>('');
   const [searchResults, setSearchResults] = useState<dataType[]>([]);
-
-async function fetch() {
-  if (!searchitem) {
-    setSearchResults([]);
-    return;
+  
+  async function fetchResults() {
+    if (searchitem === "") {
+      setSearchResults([]);
+      return;
+    }
+  
+    const { data: movies } = await superbase.from("movies").select("title");
+    const { data: animeData } = await superbase.from("tv_series").select("title");
+  
+    const movieTitles = movies?.map((movie) => movie.title);
+    const animeTitles = animeData?.map((anime) => anime.title);
+  
+    const searchMovieResults = await searchMovie({ title: searchitem });
+    const searchAnimeResults = await searchAnime({ title: searchitem });
+  
+    const updatedSearchResults: dataType[] = [];
+  
+    for (const title of searchMovieResults) {
+      if (movieTitles?.includes(title)) {
+        const movieFetch = await moviereq({ id: title });
+        updatedSearchResults.push(movieFetch);
+      }
+    }
+  
+    for (const title of searchAnimeResults) {
+      if (animeTitles?.includes(title)) {
+        const animeFetch = await animereq({ id: title });
+        updatedSearchResults.push(animeFetch);
+      }
+    }
+  
+    setSearchResults(updatedSearchResults);
   }
-
-  const getMovie = await searchMovie({ title: searchitem });
-  const { data: movies } = await superbase.from("movies").select("title");
-  const movieTitles = movies?.map((movie) => movie.title);
-  const foundMovies = getMovie.filter((title: any) =>
-    movieTitles?.includes(title)
-  );
-
-  const getAnime = await searchAnime({ title: searchitem });
-  const { data: animeData } = await superbase.from("tv_series").select("title");
-  const animeTitles = animeData?.map((anime) => anime.title);
-  const foundAnime = getAnime.filter((title: any) =>
-    animeTitles?.includes(title)
-  );
-
-  const updatedSearchResults: dataType[] = [];
-
-  for (const foundTitle of foundMovies) {
-    const movieFetch = await moviereq({ id: foundTitle });
-    updatedSearchResults.push(movieFetch);
-  }
-
-  for (const foundTitle of foundAnime) {
-    const animeFetch = await animereq({ id: foundTitle });
-    updatedSearchResults.push(animeFetch);
-  }
-
-  setSearchResults(updatedSearchResults);
-}
-
-useEffect(() => {
-  fetch();
-}, [searchitem]);
+  
+  useEffect(() => {
+    fetchResults();
+  }, [searchitem]);
 
   return (
     <>
@@ -69,7 +67,7 @@ useEffect(() => {
       onChange={(e) => setSearchitem(e.target.value)}
       value={searchitem}
     />
-    {searchResults.length > 0 ? (
+    {searchResults.length > 0 && searchitem ? (
       searchResults.map((searchResult, index) => (
         <div key={index} className="testing">
           <img
