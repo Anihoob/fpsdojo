@@ -5,6 +5,8 @@ import Supabase from "@/thirdparty_req/supabase";
 import Link from "next/link";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
+import { searchAnime, searchMovie } from "@/thirdparty_req/search";
+import { debounce } from "lodash";
 
 type searchCard = {
   id?: number | string | any;
@@ -20,91 +22,133 @@ type searchCard = {
 
 export default function page() {
   const superbase = Supabase();
-  const [searchItem, setSearchItem] = useState<any>();
+  // const [searchItem, setSearchItem] = useState<any>();
 
-  const [animecontainer, setAnimecontainer] = useState<searchCard[] | null>(
-    null
-  );
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [animecontainer, setAnimecontainer] = useState<searchCard[] | null>(
+  //   null
+  // );
+  // const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  async function fetchSupabase() {
-    if (searchItem) {
-      try {
-        const { data: anime } = await superbase.from("tv_series").select("*");
-        const { data: movie } = await superbase.from("movies").select("*");
+  // async function fetchSupabase() {
+  //   if (searchItem) {
+  //     try {
+  //       const { data: anime } = await superbase.from("tv_series").select("*");
+  //       const { data: movie } = await superbase.from("movies").select("*");
 
-        if (anime && movie) {
-          const animeData: searchCard[] = anime.map((item: any) => ({
-            title: item.title,
-          }));
+  //       if (anime && movie) {
+  //         const animeData: searchCard[] = anime.map((item: any) => ({
+  //           title: item.title,
+  //         }));
 
-          const movieData: searchCard[] = movie.map((item: any) => ({
-            title: item.title,
-          }));
+  //         const movieData: searchCard[] = movie.map((item: any) => ({
+  //           title: item.title,
+  //         }));
 
-          const merge = animeData.concat(movieData);
+  //         const merge = animeData.concat(movieData);
 
-          const filteredResults: searchCard[] = merge.filter(
-            (item: searchCard) =>
-              item.title.toLowerCase().includes(searchItem.trim().toLowerCase())
-          );
+  //         const filteredResults: searchCard[] = merge.filter(
+  //           (item: searchCard) =>
+  //             item.title.toLowerCase().includes(searchItem.trim().toLowerCase())
+  //         );
 
-          const updatedSearchResults: searchCard[] = await Promise.all(
-            filteredResults.map(async (result) => {
-              console.log(result)
-              try {
-                const animeFetch = await animereq({ id: result.title });
-                if (animeFetch.id === result.title) {
-                  return animeFetch;
-                } else {
-                  const movieFetch = await moviereq({ id: result.title });
-                  return movieFetch;
-                }
-              } catch (error) {
-                console.error(error);
-                return result;
-              }
-            })
-          );
-          console.log(updatedSearchResults)
-          setAnimecontainer(updatedSearchResults);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-      }
-    } else {
-      setAnimecontainer([]);
-      setIsLoading(false);
+  //         const updatedSearchResults: searchCard[] = await Promise.all(
+  //           filteredResults.map(async (result) => {
+  //             console.log(result)
+  //             try {
+  //               const animeFetch = await animereq({ id: result.title });
+  //               if (animeFetch.id === result.title) {
+  //                 return animeFetch;
+  //               } else {
+  //                 const movieFetch = await moviereq({ id: result.title });
+  //                 return movieFetch;
+  //               }
+  //             } catch (error) {
+  //               console.error(error);
+  //               return result;
+  //             }
+  //           })
+  //         );
+  //         console.log(updatedSearchResults)
+  //         setAnimecontainer(updatedSearchResults);
+  //         setIsLoading(false);
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //       setIsLoading(false);
+  //     }
+  //   } else {
+  //     setAnimecontainer([]);
+  //     setIsLoading(false);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const timeoutId = setTimeout(() => {
+  //     fetchSupabase();
+  //   }, 500);
+  //   return () => clearTimeout(timeoutId);
+  // }, [searchItem]);
+
+  const [searchitem, setSearchitem] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<searchCard[]>([]);
+
+
+  const debouncedFetchResults = debounce(fetchResults, 600); 
+
+  async function fetchResults() {
+    if (searchitem === "") {
+      setSearchResults([]);
+      return;
     }
+  
+    const { data: movies } = await superbase.from("movies").select("title");
+    const { data: animeData } = await superbase.from("tv_series").select("title");
+  
+    const movieTitles = movies?.map((movie) => movie.title);
+    const animeTitles = animeData?.map((anime) => anime.title);
+  
+    const searchMovieResults = await searchMovie({ title: searchitem });
+    const searchAnimeResults = await searchAnime({ title: searchitem });
+  
+    const updatedSearchResults: searchCard[] = [];
+  
+    for (const title of searchMovieResults) {
+      if (movieTitles?.includes(title)) {
+        const movieFetch = await moviereq({ id: title });
+        updatedSearchResults.push(movieFetch);
+      }
+    }
+  
+    for (const title of searchAnimeResults) {
+      if (animeTitles?.includes(title)) {
+        const animeFetch = await animereq({ id: title });
+        updatedSearchResults.push(animeFetch);
+      }
+    }
+  
+    setSearchResults(updatedSearchResults);
   }
-
+  
   useEffect(() => {
-    setIsLoading(true);
-    const timeoutId = setTimeout(() => {
-      fetchSupabase();
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [searchItem]);
+    // fetchResults()
+    debouncedFetchResults()
+  }, [searchitem]);
 
   return (
     <div className={Styles.searchmain}>
       <div className={Styles.search}>
         <h4 className={Styles.searchTitle}>Search</h4>
         <input
-          onChange={(e) => setSearchItem((e.target as HTMLInputElement).value)}
+          onChange={(e) => setSearchitem((e.target as HTMLInputElement).value)}
           type="search"
           className={Styles.searchbar}
           placeholder="Search Anime/Movies"
-          value={searchItem}
+          value={searchitem}
         />
-        {isLoading && (
-          <p>Loading....</p>
-        )}
           <div className={Styles.searched}>
-          {animecontainer && animecontainer.length > 0 ? (
-            animecontainer.map((lol) => (
+          {searchResults && searchResults.length > 0 && searchitem ? (
+            searchResults.map((lol) => (
               <Link
               href={
                 lol.type === "Anime"
@@ -128,7 +172,7 @@ export default function page() {
               <hr className={Styles.fetcheddivider} />
             </Link>
             ))
-          ) : searchItem ? (
+          ) : searchitem ? (
             <p>No results found.</p>
           ) : null}
           </div>
