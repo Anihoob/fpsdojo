@@ -16,12 +16,17 @@ import { searchAnime, searchMovie } from "@/thirdparty_req/search";
 import Supabase from "@/thirdparty_req/supabase";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
+import {debounce} from 'lodash'
+
 
 export default function page() {
   const superbase = Supabase();
   const [searchitem, setSearchitem] = useState<string>('');
   const [searchResults, setSearchResults] = useState<dataType[]>([]);
-  
+
+
+  const debouncedFetchResults = debounce(fetchResults, 600); 
+
   async function fetchResults() {
     if (searchitem === "") {
       setSearchResults([]);
@@ -57,7 +62,8 @@ export default function page() {
   }
   
   useEffect(() => {
-    fetchResults();
+    // fetchResults()
+    debouncedFetchResults()
   }, [searchitem]);
 
   return (
