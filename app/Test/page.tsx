@@ -1,51 +1,88 @@
 "use client";
-import malapi from "@/thirdparty_req/anilistapi";
-import anilistapi2 from "@/thirdparty_req/anilistapi2";
+
 import { useEffect, useState } from "react";
 
 import "./test.css";
 
 interface dataType {
-  id: string;
-  title: string;
-  image: string;
-  cover: string;
-  releaseDate: string;
-  description: string;
-  genres: string;
+  id?: string;
+  title?: string | any;
+  image?:string | any;
+  cover?:string | any;
+  type?:string;
 }
 
+import { searchAnime, searchMovie } from "@/thirdparty_req/search";
+import Supabase from "@/thirdparty_req/supabase";
+import animereq from "@/thirdparty_req/animereq";
+import moviereq from "@/thirdparty_req/moviereq";
+
 export default function page() {
-  const [fetchedanime, setFetchedanime] = useState<dataType | null>(null);
-  const tempTitle = "BLEACH: Thousand-Year Blood War";
-  async function fetchMal() {
-    const results = await malapi({ title: tempTitle });
-    const findId = results.find((bruh: any) => bruh.title === tempTitle);
-    const getId = findId.id;
-    const getDetails = await anilistapi2({ id: getId });
-    setFetchedanime(getDetails);
+  const superbase = Supabase();
+
+  const [searchitem, setSearchitem] = useState<any>();
+  const [searchResults, setSearchResults] = useState<dataType[]>([]);
+
+async function fetch() {
+  if (!searchitem) {
+    setSearchResults([]);
+    return;
   }
 
-  useEffect(() => {
-    fetchMal();
-  }, []);
+  const getMovie = await searchMovie({ title: searchitem });
+  const { data: movies } = await superbase.from("movies").select("title");
+  const movieTitles = movies?.map((movie) => movie.title);
+  const foundMovies = getMovie.filter((title: any) =>
+    movieTitles?.includes(title)
+  );
+
+  const getAnime = await searchAnime({ title: searchitem });
+  const { data: animeData } = await superbase.from("tv_series").select("title");
+  const animeTitles = animeData?.map((anime) => anime.title);
+  const foundAnime = getAnime.filter((title: any) =>
+    animeTitles?.includes(title)
+  );
+
+  const updatedSearchResults: dataType[] = [];
+
+  for (const foundTitle of foundMovies) {
+    const movieFetch = await moviereq({ id: foundTitle });
+    updatedSearchResults.push(movieFetch);
+  }
+
+  for (const foundTitle of foundAnime) {
+    const animeFetch = await animereq({ id: foundTitle });
+    updatedSearchResults.push(animeFetch);
+  }
+
+  setSearchResults(updatedSearchResults);
+}
+
+useEffect(() => {
+  fetch();
+}, [searchitem]);
 
   return (
-    <div className="singlePage-main">
-      <div className="singlePage-options">
-        <span>bruh</span>
-      </div>
-      {fetchedanime && (
-        <div className="singlePage-info">
-          <div className="singlePage-poster">
-            <img src={fetchedanime.image} alt="" />
-          </div>
-          <div className="singlePage-card">
-            <div className="singlePage-details">
-            </div>
-          </div>
+    <>
+      <input
+      type="search"
+      onChange={(e) => setSearchitem(e.target.value)}
+      value={searchitem}
+    />
+    {searchResults.length > 0 ? (
+      searchResults.map((searchResult, index) => (
+        <div key={index} className="testing">
+          <img
+            style={{ width: '150px', height: '150px' }}
+            src={searchResult.type === "Anime" ? searchResult.image : searchResult.cover}
+            alt=""
+          />
+          <h4 style={{ color: 'white' }}>{searchResult.title}</h4>
         </div>
-      )}
-    </div>
+      ))
+    ) : (
+      <p>No results found.</p>
+    )}
+    </>
   );
 }

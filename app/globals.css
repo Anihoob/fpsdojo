@@ -230,6 +230,7 @@ select {
 }
 
 .infopagedwnldselect {
+  display: flex;
   background: url("https://api.iconify.design/material-symbols:arrow-drop-down.svg")
     no-repeat right #fff;
   border: none;
@@ -237,7 +238,7 @@ select {
   padding: 10px 30px;
   font-weight: 700;
   -moz-appearance: none; /* Firefox */
-  -webkit-appearance: none; /* Safari and Chrome */
+  -webkit-appearance: none; 
   appearance: none;
   overflow-y: auto;
   color: black;
