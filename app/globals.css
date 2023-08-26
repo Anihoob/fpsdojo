@@ -386,6 +386,10 @@ select {
   cursor: pointer;
   z-index: 2;
 }
+.movieinfopageoptions span .a {
+  cursor: pointer;
+  z-index: 2;
+}
 
 .movieinfopageoptions span .icons {
   width: 40px;

@@ -137,16 +137,20 @@ export default function Tv({ params }: { params: umrl }) {
     }
   };
 
+  function backUrl(){
+    history.back()
+  }
+
   return (
     <div className={"infopagemain"}>
       <div className={"infopageoptions"}>
         <span>
-          <Link href={"/"}>
+          <div className="a" onClick={backUrl}>
             <Icon
               icon={"material-symbols:arrow-back-ios-new-rounded"}
               className={"icons"}
             />
-          </Link>
+          </div>
           <div onClick={shareOrCopyUrl} className="a">
             <Icon icon={"iconoir:share-ios"} className={"icons"} />
           </div>

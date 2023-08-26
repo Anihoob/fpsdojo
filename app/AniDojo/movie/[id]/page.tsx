@@ -108,18 +108,21 @@ export default function Movie({ params }: { params: umrl }) {
     }
   };
 
+  function backUrl(){
+    history.back()
+  }
 
 
   return (
     <div className={"movieinfopagemain"}>
       <div className={"movieinfopageoptions"}>
         <span>
-          <Link href={"/Movies"}>
+          <div className="a" onClick={backUrl}>
           <Icon
               icon={"material-symbols:arrow-back-ios-new-rounded"}
               className={"icons"}
             />
-          </Link>
+          </div>
           <div className="a" onClick={shareOrCopyUrl}>
           <Icon icon={"iconoir:share-ios"} className={"icons"} />
           </div>
