@@ -27,7 +27,7 @@
   transform: translate(-50%, 0%);
   /* color: transparent; */
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
   text-align: center;
   /* -webkit-text-stroke-color: white;
   -webkit-text-stroke-width: 2px; */
@@ -170,4 +170,10 @@
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 0%);
+}
+
+@media screen and (min-width:1024px) {
+  .Teamlogotitle {
+    font-size: 5rem;
+  }
 }

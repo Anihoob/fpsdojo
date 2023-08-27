@@ -94,7 +94,7 @@ export default function page() {
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
 
 
-  const debouncedFetchResults = debounce(fetchResults, 1000); 
+  const debouncedFetchResults = debounce(fetchResults, 850); 
 
   async function fetchResults() {
     if (searchitem === "") {
@@ -131,7 +131,6 @@ export default function page() {
   }
   
   useEffect(() => {
-    // fetchResults()
     debouncedFetchResults()
   }, [searchitem]);
 
