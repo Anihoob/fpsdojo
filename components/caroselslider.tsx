@@ -30,7 +30,7 @@ type animedes = {
   id?: number | string | any;
   title: string;
   description?: string | undefined;
-  image?: string;
+  image?: string | any;
   type?: string;
   releaseDate?: string;
   duration?:string | any;
@@ -143,6 +143,10 @@ export default function CaroselSlider(props: Props) {
   useEffect(() => {   
       fetchDetails();
   });
+
+  const loaderProp =({ src }:any) => {
+    return src;
+}
   
   return (
  
@@ -179,6 +183,7 @@ export default function CaroselSlider(props: Props) {
               <Image
               width={150}
               height={150}
+              loader={loaderProp}
               style={{
                 width: "210px",
                 height: "130px",

@@ -106,7 +106,7 @@ export default function MainSlider() {
       if (animeData === null) {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const animeFetch = animereq({ id: singleanime.title });
+            const animeFetch = await animereq({ id: singleanime.title });
             return animeFetch;
           });
           const animeData = await Promise.all(animeDataPromise);
@@ -142,6 +142,9 @@ export default function MainSlider() {
   const japanesRegex =
     /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}ー,]/gu;
 
+  const loaderProp = ({ src }: any) => {
+    return src;
+  };
   return (
     <>
       <Swiper
@@ -156,33 +159,36 @@ export default function MainSlider() {
           >
             {pathname === "/" && (
               <Image
-              width={300}
-              height={300}
-              src={animedescription.image}
-              quality={75}
-              alt={animedescription.title}
+                loader={loaderProp}
+                width={300}
+                height={300}
+                src={decodeURI(animedescription.image)}
+                quality={75}
+                alt={animedescription.title}
               />
-              )}
+            )}
             {pathname === "/Movies" && (
               <>
-              <Image
-              className="mobileimg"
-              width={300}
-              height={300}
-              src={animedescription.image}
-              quality={75}
-              alt={animedescription.title}
-              />
-              <Image
-              className="deskimg"
-              width={300}
-              height={300}
-              src={animedescription.cover}
-              quality={75}
-              alt={animedescription.title}
-              />
+                <Image
+                  loader={loaderProp}
+                  className="mobileimg"
+                  width={300}
+                  height={300}
+                  src={decodeURI(animedescription.image)}
+                  quality={75}
+                  alt={animedescription.title}
+                />
+                <Image
+                  loader={loaderProp}
+                  className="deskimg"
+                  width={300}
+                  height={300}
+                  src={decodeURI(animedescription.cover)}
+                  quality={75}
+                  alt={animedescription.title}
+                />
               </>
-              )}
+            )}
             <Link
               className="homemainsliderinfo"
               href={

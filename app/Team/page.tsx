@@ -30,19 +30,19 @@ export default function page() {
         <div className={Styles.Teamchad}>
           <span>
             <Link href={"https://t.me/Kuroski_Ichigo"}>
-              <img className={Styles.chadimg} src="/ichigo.gif" alt="" />
+              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/ichigo.gif" alt="" />
             </Link>
             <h5>Ichigo</h5>
           </span>
           <span>
             <Link href={"https://t.me/Qewertyy"}>
-              <img className={Styles.chadimg} src="/qewerty.gif" alt="" />
+              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/qewerty.gif" alt="" />
             </Link>
             <h5>Qewerty</h5>
           </span>
           <span>
             <Link href={"https://t.me/sad_sensei"}>
-              <img className={Styles.chadimg} src="/hinata.gif" alt="" />
+              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/hinata.gif" alt="" />
             </Link>
             <h5>Hinata</h5>
           </span>
