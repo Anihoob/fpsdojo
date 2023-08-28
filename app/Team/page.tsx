@@ -13,6 +13,10 @@ export default function page() {
     setBenenecount(benenecount + 1);
   }
 
+  const loaderProp = ({ src }: any) => {
+    return src;
+  };
+
   return (
     <div className={Styles.Teammain}>
       <div className={Styles.Teamlogo}>
@@ -30,19 +34,43 @@ export default function page() {
         <div className={Styles.Teamchad}>
           <span>
             <Link href={"https://t.me/Kuroski_Ichigo"}>
-              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/ichigo.gif" alt="" />
+              <Image
+                loader={loaderProp}
+                width={80}
+                height={80}
+                quality={75}
+                className={Styles.chadimg}
+                src="/ichigo.gif"
+                alt=""
+              />
             </Link>
             <h5>Ichigo</h5>
           </span>
           <span>
             <Link href={"https://t.me/Qewertyy"}>
-              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/qewerty.gif" alt="" />
+              <Image
+                loader={loaderProp}
+                width={80}
+                height={80}
+                quality={75}
+                className={Styles.chadimg}
+                src="/qewerty.gif"
+                alt=""
+              />
             </Link>
             <h5>Qewerty</h5>
           </span>
           <span>
             <Link href={"https://t.me/sad_sensei"}>
-              <Image width={80} height={80} quality={75} className={Styles.chadimg} src="/hinata.gif" alt="" />
+              <Image
+                loader={loaderProp}
+                width={80}
+                height={80}
+                quality={75}
+                className={Styles.chadimg}
+                src="/hinata.gif"
+                alt=""
+              />
             </Link>
             <h5>Hinata</h5>
           </span>
