@@ -16,6 +16,7 @@ interface datatype {
   movies_title: string | any;
   download_id: string;
   download_link: string | any | null;
+  movies_quality: string | any;
 }
 
 type movides = {
@@ -166,8 +167,56 @@ export default function Movie({ params }: { params: umrl }) {
               <button className={"showMoreButton"} onClick={toggleDescription}>
                 {expanded ? "...Less" : "...More"}
               </button>
-              <div className={"movieinfopageaquality"}>
-              </div>
+              {fetchmovie && (
+                fetchmovie.movies_quality === "1080p60fps" && (
+                  <div className={"movieinfopageaquality"}>
+                    <Icon
+                      icon={"material-symbols:full-hd-outline-rounded"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                    <Icon
+                      icon={"fluent:fps-60-24-filled"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                  </div>
+                )
+              )}
+              {fetchmovie && (
+                fetchmovie.movies_quality === "4k60fps" && (
+                  <div className={"movieinfopageaquality"}>
+                  <Icon
+                    icon={"iconoir:modern-tv-4k"}
+                    style={{ fontSize: "30px", color: "white" }}
+                  />
+                  <Icon
+                    icon={"fluent:fps-60-24-filled"}
+                    style={{ fontSize: "30px", color: "white" }}
+                  />
+                </div>
+                )
+              )}
+              {fetchmovie && (
+                fetchmovie.movies_quality === "1080p144fps" && (
+                  <div className={"movieinfopageaquality"}>
+                  <Icon
+                    icon={"material-symbols:full-hd-outline-rounded"}
+                    style={{ fontSize: "30px", color: "white" }}
+                  />
+                  <p>144fps</p>
+                </div>
+                )
+              )}
+              {fetchmovie && (
+                fetchmovie.movies_quality === "1080p120fps" && (
+                  <div className={"movieinfopageaquality"}>
+                    <Icon
+                      icon={"material-symbols:full-hd-outline-rounded"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                    <p>120fps</p>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </>

@@ -540,8 +540,16 @@ select {
   width: 100%;
   padding: 10px 20px;
   display: flex;
+  align-items: center;
   justify-content: left;
   gap: 0.5rem;
+  color: white;
+  font-weight: bolder;
+}
+.movieinfopageaquality p{
+  border: 1px white solid;
+  font-size: .7rem;
+  padding: 2px;
 }
 
 @media screen and (min-width:1024px) {

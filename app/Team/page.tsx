@@ -4,6 +4,7 @@ import Styles from "./team.module.css";
 import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import Image from "next/image";
+import Dropdown from "@/components/dropdown";
 
 export default function page() {
   const [benenecount, setBenenecount] = useState(0);
@@ -47,15 +48,32 @@ export default function page() {
           </span>
         </div>
         <div className={Styles.Teamchannels}>
-          <h4>Telegram Channels</h4>
-          <span>
-            <Link href={"https://t.me/fpsdojo"}>
-              <Image width={100} height={100} src="/fpslogo.png" alt="" />
-            </Link>
-            <Link href={"https://t.me/+SQt_SRqJm484OWM1"}>
-            <Image width={100} height={100} src="/anihublogo.jpg" alt="" />
-            </Link>
-          </span>
+          <h4 className={Styles.teamfaq}>F. A. Q</h4>
+          <Dropdown
+            dropdown={"one"}
+            question="1. Who Are We?"
+            answer="dojoverse is a pioneering platform dedicated to enhancing your entertainment experience. We specialize in offering upscaled and frame interpolated movies and anime, bringing you content that's enriched with stunning visual quality and smoothness."
+          />
+          <Dropdown
+            dropdown={"two"}
+            question="2. What is Frame Interpolation?"
+            answer="Frame interpolation is a sophisticated technology that calculates and inserts additional frames between existing ones to create a higher frame rate. This process results in smoother motion and heightened realism, enriching your viewing experience."
+          />
+          <Dropdown
+            dropdown={"three"}
+            question="3. What is the Difference Between 30fps and 60fps?"
+            answer="Frames per second (fps) directly impact the smoothness and realism of motion in videos. While 30fps delivers a standard level of fluidity, 60fps doubles the frame rate, resulting in exceptionally smoother visuals. This difference is especially noticeable during fast-paced action sequences."
+          />
+          <Dropdown
+            dropdown={"four"}
+            question="4. Does My Device Support 60fps?"
+            answer="To determine if your device supports 60fps, check its specifications or settings. Most modern devices, including smartphones, tablets, smart TVs, and computers, are equipped to handle 60fps content. However, for the best experience, ensure that your device meets the recommended requirements."
+          />
+          <Dropdown
+            dropdown={"five"}
+            question="5. What Media Player Should I Use?"
+            answer="We recommend using media players that support high frame rates for optimal viewing our content. For windows we recommend using MPC-HC (https://sourceforge.net/projects/mpc-hc/), while android users can use OPlayer."
+          />
         </div>
         <div className={Styles.TeamSupport}>
           <h4>Support Group</h4>

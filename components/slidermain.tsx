@@ -156,8 +156,8 @@ export default function MainSlider() {
           >
             {pathname === "/" && (
               <Image
-              width={200}
-              height={200}
+              width={300}
+              height={300}
               src={animedescription.image}
               quality={75}
               alt={animedescription.title}
@@ -167,16 +167,16 @@ export default function MainSlider() {
               <>
               <Image
               className="mobileimg"
-              width={200}
-              height={200}
+              width={300}
+              height={300}
               src={animedescription.image}
               quality={75}
               alt={animedescription.title}
               />
               <Image
               className="deskimg"
-              width={200}
-              height={200}
+              width={300}
+              height={300}
               src={animedescription.cover}
               quality={75}
               alt={animedescription.title}

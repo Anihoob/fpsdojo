@@ -147,7 +147,7 @@ export default function CaroselSlider(props: Props) {
   return (
  
     <>
-      <h4 className="homesliderswiper-sec">{animeData? "60FPS": ""}</h4>
+      {/* <h4 className="homesliderswiper-sec">{animeData? "60FPS": ""}</h4> */}
       <Swiper
         spaceBetween={20}
         slidesPerView={1.6}
@@ -177,15 +177,15 @@ export default function CaroselSlider(props: Props) {
                   ? `/AniDojo/movie/${animeinfo.id.replace("movie/","")}`
                   : `/AniDojo/anime/${animeinfo.id}`}>
               <Image
-              width={100}
-              height={100}
+              width={150}
+              height={150}
               style={{
                 width: "210px",
                 height: "130px",
                 objectFit: "cover",
                 objectPosition: "center",
               }}
-              quality={70}
+              quality={75}
                 src={pathname === "/" ? animeinfo.image : animeinfo.cover}
                 alt={animeinfo.title}
               />

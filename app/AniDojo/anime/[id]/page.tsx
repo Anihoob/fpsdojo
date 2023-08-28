@@ -275,6 +275,18 @@ export default function Tv({ params }: { params: umrl }) {
                     <p>144fps</p>
                   </div>
                 )}
+              {fetchepsiode &&
+                fetchepsiode.some(
+                  (episode) => episode.season_quality === "1080p120fps"
+                ) && (
+                  <div className={"infopageaquality"}>
+                    <Icon
+                      icon={"material-symbols:full-hd-outline-rounded"}
+                      style={{ fontSize: "30px", color: "white" }}
+                    />
+                    <p>120fps</p>
+                  </div>
+                )}
             </div>
           </div>
         </>
