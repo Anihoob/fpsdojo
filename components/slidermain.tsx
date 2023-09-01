@@ -145,6 +145,7 @@ export default function MainSlider() {
   const loaderProp = ({ src }: any) => {
     return src;
   };
+
   return (
     <>
       <Swiper
@@ -159,7 +160,6 @@ export default function MainSlider() {
           >
             {pathname === "/" && (
               <Image
-                loader={loaderProp}
                 width={300}
                 height={300}
                 src={decodeURI(animedescription.image)}
@@ -170,7 +170,6 @@ export default function MainSlider() {
             {pathname === "/Movies" && (
               <>
                 <Image
-                  loader={loaderProp}
                   className="mobileimg"
                   width={300}
                   height={300}
@@ -179,7 +178,6 @@ export default function MainSlider() {
                   alt={animedescription.title}
                 />
                 <Image
-                  loader={loaderProp}
                   className="deskimg"
                   width={300}
                   height={300}

@@ -107,8 +107,11 @@
 
 
 .homemainsliderinfo {
+  width: 100%;
   position: absolute;
   bottom: 5%;
+  left:50%;
+  transform: translate(-50%,0%);
   color: white;
   z-index: 3;
   display: flex;

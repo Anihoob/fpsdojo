@@ -4,7 +4,7 @@ interface Props{
 }
 
 export default async function moviereq(props:Props) {
-    const rez = await fetch(`https://consument-rouge.vercel.app/movies/flixhq/info?id=${props.id}`, {cache : "force-cache"})
+    const rez = await fetch(`https://api-dojoverse.vercel.app/movies/flixhq/info?id=${props.id}`, {cache : "force-cache"})
     const deta = await rez.json()
     return {
         id: deta.id.replace("movie/", ""),
