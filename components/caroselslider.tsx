@@ -144,10 +144,6 @@ export default function CaroselSlider(props: Props) {
       fetchDetails();
   });
 
-  const loaderProp =({ src }:any) => {
-    return src;
-}
-  
   return (
  
     <>
@@ -183,7 +179,6 @@ export default function CaroselSlider(props: Props) {
               <Image
               width={100}
               height={100}
-              loader={loaderProp}
               style={{
                 width: "210px",
                 height: "130px",
