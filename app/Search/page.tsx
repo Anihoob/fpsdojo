@@ -92,31 +92,33 @@ export default function page() {
 
   const [searchitem, setSearchitem] = useState<string>("");
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
-  const[errorMsg, setErrorMsg] = useState("")
+  const [errorMsg, setErrorMsg] = useState("");
 
   async function fetchResults() {
     if (searchitem === "") {
       setSearchResults([]);
-      setErrorMsg("Search Something")
+      setErrorMsg("Search Something");
       return;
     }
-  
+
     const { data: movies } = await superbase.from("movies").select("title");
-    const { data: animeData } = await superbase.from("tv_series").select("title");
-  
+    const { data: animeData } = await superbase
+      .from("tv_series")
+      .select("title");
+
     const movieTitles = movies?.map((movie) => movie.title);
     const animeTitles = animeData?.map((anime) => anime.title);
-  
+
     const searchMovieResults = await searchMovie({ title: searchitem });
     const searchAnimeResults = await searchAnime({ title: searchitem });
-  
+
     const updatedSearchResults: searchCard[] = [];
-  
+
     if (movieTitles && animeTitles) {
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
-          setErrorMsg("loading...")
+          setErrorMsg("loading...");
           updatedSearchResults.push(movieFetch);
         }
       }
@@ -125,24 +127,25 @@ export default function page() {
         for (const title of searchAnimeResults) {
           if (animeTitles?.includes(title)) {
             const animeFetch = await animereq({ id: title });
-            setErrorMsg("loading...")
+            setErrorMsg("loading...");
             updatedSearchResults.push(animeFetch);
           }
         }
-      }if (updatedSearchResults.length === 0) {
-        setErrorMsg("No Result Found")
+      }
+      if (updatedSearchResults.length === 0) {
+        setErrorMsg("No Result Found");
       }
     }
-  
+
     setSearchResults(updatedSearchResults);
   }
 
   useEffect(() => {
-    const Search = setTimeout(()=> {
-      fetchResults()
-    },800) 
+    const Search = setTimeout(() => {
+      fetchResults();
+    }, 800);
 
-    return () => clearTimeout(Search)
+    return () => clearTimeout(Search);
   }, [searchitem]);
 
   return (
@@ -184,7 +187,7 @@ export default function page() {
             ))
           ) : (
             <p>{errorMsg}</p>
-          ) }
+          )}
         </div>
       </div>
     </div>
