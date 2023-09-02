@@ -90,48 +90,51 @@ export default function page() {
   //   return () => clearTimeout(timeoutId);
   // }, [searchItem]);
 
-  const [searchitem, setSearchitem] = useState<string>('');
+  const [searchitem, setSearchitem] = useState<string>("");
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
-
-  const debouncedFetchResults = debounce(fetchResults, 850); 
+  const debouncedFetchResults = debounce(fetchResults, 900);
 
   async function fetchResults() {
     if (searchitem === "") {
       setSearchResults([]);
       return;
     }
-  
+
     const { data: movies } = await superbase.from("movies").select("title");
-    const { data: animeData } = await superbase.from("tv_series").select("title");
-  
+    const { data: animeData } = await superbase
+      .from("tv_series")
+      .select("title");
+
     const movieTitles = movies?.map((movie) => movie.title);
     const animeTitles = animeData?.map((anime) => anime.title);
-  
+
     const searchMovieResults = await searchMovie({ title: searchitem });
     const searchAnimeResults = await searchAnime({ title: searchitem });
-  
+
     const updatedSearchResults: searchCard[] = [];
-  
-    for (const title of searchMovieResults) {
-      if (movieTitles?.includes(title)) {
-        const movieFetch = await moviereq({ id: title });
-        updatedSearchResults.push(movieFetch);
+
+    if (movieTitles && animeTitles) {
+      for (const title of searchAnimeResults) {
+        if (animeTitles?.includes(title)) {
+          const animeFetch = await animereq({ id: title });
+          updatedSearchResults.push(animeFetch);
+        }
       }
-    }
-  
-    for (const title of searchAnimeResults) {
-      if (animeTitles?.includes(title)) {
-        const animeFetch = await animereq({ id: title });
-        updatedSearchResults.push(animeFetch);
+      for (const title of searchMovieResults) {
+        if (movieTitles?.includes(title)) {
+          const movieFetch = await moviereq({ id: title });
+          updatedSearchResults.push(movieFetch);
+        }
       }
-    }
-  
+    } 
+
     setSearchResults(updatedSearchResults);
   }
-  
+
   useEffect(() => {
-    debouncedFetchResults()
+    debouncedFetchResults();
   }, [searchitem]);
 
   return (
@@ -145,36 +148,36 @@ export default function page() {
           placeholder="Search Anime/Movies"
           value={searchitem}
         />
-          <div className={Styles.searched}>
+        <div className={Styles.searched}>
           {searchResults && searchResults.length > 0 && searchitem ? (
             searchResults.map((lol) => (
               <Link
-              href={
-                lol.type === "Anime"
-                  ? `/AniDojo/anime/${lol.id}`
-                  : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
-              }
-              className={Styles.fetchedItem}
-            >
-              <div className={Styles.fetchedspan}>
-                <img
-                  className={Styles.fetchedImg}
-                  src={lol.image || lol.cover}
-                />
-                <span>
-                  <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
-                  <h4 className={Styles.fetchedTitle}>
-                    {lol.releaseDate?.substring(0, 4)}
-                  </h4>
-                </span>
-              </div>
-              <hr className={Styles.fetcheddivider} />
-            </Link>
+                href={
+                  lol.type === "Anime"
+                    ? `/AniDojo/anime/${lol.id}`
+                    : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
+                }
+                className={Styles.fetchedItem}
+              >
+                <div className={Styles.fetchedspan}>
+                  <img
+                    className={Styles.fetchedImg}
+                    src={lol.image || lol.cover}
+                  />
+                  <span>
+                    <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
+                    <h4 className={Styles.fetchedTitle}>
+                      {lol.releaseDate?.substring(0, 4)}
+                    </h4>
+                  </span>
+                </div>
+                <hr className={Styles.fetcheddivider} />
+              </Link>
             ))
           ) : searchitem ? (
-            <p>No results found.</p>
+            <p>{"No Result"}</p>
           ) : null}
-          </div>
+        </div>
       </div>
     </div>
   );
