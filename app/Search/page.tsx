@@ -6,7 +6,6 @@ import Link from "next/link";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
 import { searchAnime, searchMovie } from "@/thirdparty_req/search";
-import { debounce } from "lodash";
 
 type searchCard = {
   id?: number | string | any;
