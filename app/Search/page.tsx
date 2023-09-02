@@ -114,6 +114,7 @@ export default function page() {
     const updatedSearchResults: searchCard[] = [];
 
     if (movieTitles && animeTitles) {
+      setErrorMsg("loading...");
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
@@ -142,7 +143,7 @@ export default function page() {
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    }, 600);
+    }, 400);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
