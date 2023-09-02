@@ -147,7 +147,7 @@ export default function CaroselSlider(props: Props) {
   return (
  
     <>
-      {/* <h4 className="homesliderswiper-sec">{animeData? "60FPS": ""}</h4> */}
+    {animeData !== null? 
       <Swiper
         spaceBetween={20}
         slidesPerView={1.6}
@@ -197,6 +197,7 @@ export default function CaroselSlider(props: Props) {
           </SwiperSlide>
         ))}
       </Swiper>
+      :null}
       </>
   );
 }
