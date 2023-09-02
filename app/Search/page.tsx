@@ -6,15 +6,16 @@ import Link from "next/link";
 import animereq from "@/thirdparty_req/animereq";
 import moviereq from "@/thirdparty_req/moviereq";
 import { searchAnime, searchMovie } from "@/thirdparty_req/search";
+import Image from "next/image";
 
 type searchCard = {
   id?: number | string | any;
   title: string;
   description?: string;
-  image?: string;
+  image?: string | any;
   name?: string;
   releaseDate?: string;
-  cover?: string;
+  cover?: string | any;
   type?: string;
   otherName?: string | any;
 };
@@ -171,9 +172,13 @@ export default function page() {
                 className={Styles.fetchedItem}
               >
                 <div className={Styles.fetchedspan}>
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
+                    quality={75}
                     className={Styles.fetchedImg}
-                    src={lol.image || lol.cover}
+                    src={lol.image ? lol.image : lol.cover}
+                    alt={lol.title}
                   />
                   <span>
                     <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
