@@ -27,12 +27,14 @@ export default function SearchPage() {
   const [errorMsg, setErrorMsg] = useState("");
 
   async function fetchResults() {
-    if (searchitem === "") {
+    if (searchitem.trim() === "" || searchitem === "") {
       setSearchResults([]);
       setErrorMsg("Search Something");
       return;
-    }else{
-      const { data: movies } = await superbase.from("movies").select("title");
+    }
+
+    const updatedSearchResults: searchCard[] = [];
+    const { data: movies } = await superbase.from("movies").select("title");
     const { data: animeData } = await superbase
       .from("tv_series")
       .select("title");
@@ -43,9 +45,7 @@ export default function SearchPage() {
     const searchMovieResults = await searchMovie({ title: searchitem });
     const searchAnimeResults = await searchAnime({ title: searchitem });
 
-    const updatedSearchResults: searchCard[] = [];
-
-    if (movieTitles && animeTitles) {
+    if (movieTitles && animeTitles && searchitem.length > 2) {
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
@@ -66,17 +66,14 @@ export default function SearchPage() {
         }
       }
 
+      setSearchResults(updatedSearchResults);
     }
-
-    setSearchResults(updatedSearchResults);
-    }
-
   }
 
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    }, 200);
+    }, 300);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
