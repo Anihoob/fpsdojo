@@ -69,7 +69,7 @@ export default function SearchPage() {
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    },200);
+    },350);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
