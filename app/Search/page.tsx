@@ -46,6 +46,7 @@ export default function SearchPage() {
     const searchAnimeResults = await searchAnime({ title: searchitem });
 
     if (movieTitles && animeTitles && searchitem.length > 1) {
+      setErrorMsg("loading....")
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
