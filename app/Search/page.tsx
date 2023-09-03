@@ -24,15 +24,14 @@ export default function SearchPage() {
   const superbase = Supabase();
   const [searchitem, setSearchitem] = useState<string>("");
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function fetchResults() {
     if (searchitem.trim() === "" || searchitem.length < 1) {
       setSearchResults([]);
-      setErrorMsg("Search Something");
       return;
     }
-
+    setIsLoading(true);
     const updatedSearchResults: searchCard[] = [];
     const { data: movies } = await superbase.from("movies").select("title");
     const { data: animeData } = await superbase
@@ -49,7 +48,6 @@ export default function SearchPage() {
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
-          setErrorMsg("loading...");
           updatedSearchResults.push(movieFetch);
         }
       }
@@ -58,24 +56,19 @@ export default function SearchPage() {
         for (const title of searchAnimeResults) {
           if (animeTitles?.includes(title)) {
             const animeFetch = await animereq({ id: title });
-            setErrorMsg("loading...");
             updatedSearchResults.push(animeFetch);
           }
         }
       }
-
-      if (searchitem.length > 1 && updatedSearchResults.length === 0) {
-        setErrorMsg("No Result");
-      }
-
       setSearchResults(updatedSearchResults);
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    },200);
+    }, 200);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
@@ -92,7 +85,9 @@ export default function SearchPage() {
           value={searchitem}
         />
         <div className={Styles.searched}>
-          {searchResults && searchResults.length > 0 && searchitem ? (
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : searchResults && searchResults.length > 0 && searchitem ? (
             searchResults.map((lol) => (
               <Link
                 href={
@@ -121,9 +116,9 @@ export default function SearchPage() {
                 <hr className={Styles.fetcheddivider} />
               </Link>
             ))
-          ) : (
-            <p>{errorMsg}</p>
-          )}
+          ) : searchitem.length > 1 && searchResults.length === 0 ? (
+            <p>No Results</p>
+          ) : "Search Something"}
         </div>
       </div>
     </div>
