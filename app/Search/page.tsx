@@ -20,76 +20,8 @@ type searchCard = {
   otherName?: string | any;
 };
 
-export default function page() {
+export default function SearchPage() {
   const superbase = Supabase();
-  // const [searchItem, setSearchItem] = useState<any>();
-
-  // const [animecontainer, setAnimecontainer] = useState<searchCard[] | null>(
-  //   null
-  // );
-  // const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // async function fetchSupabase() {
-  //   if (searchItem) {
-  //     try {
-  //       const { data: anime } = await superbase.from("tv_series").select("*");
-  //       const { data: movie } = await superbase.from("movies").select("*");
-
-  //       if (anime && movie) {
-  //         const animeData: searchCard[] = anime.map((item: any) => ({
-  //           title: item.title,
-  //         }));
-
-  //         const movieData: searchCard[] = movie.map((item: any) => ({
-  //           title: item.title,
-  //         }));
-
-  //         const merge = animeData.concat(movieData);
-
-  //         const filteredResults: searchCard[] = merge.filter(
-  //           (item: searchCard) =>
-  //             item.title.toLowerCase().includes(searchItem.trim().toLowerCase())
-  //         );
-
-  //         const updatedSearchResults: searchCard[] = await Promise.all(
-  //           filteredResults.map(async (result) => {
-  //             console.log(result)
-  //             try {
-  //               const animeFetch = await animereq({ id: result.title });
-  //               if (animeFetch.id === result.title) {
-  //                 return animeFetch;
-  //               } else {
-  //                 const movieFetch = await moviereq({ id: result.title });
-  //                 return movieFetch;
-  //               }
-  //             } catch (error) {
-  //               console.error(error);
-  //               return result;
-  //             }
-  //           })
-  //         );
-  //         console.log(updatedSearchResults)
-  //         setAnimecontainer(updatedSearchResults);
-  //         setIsLoading(false);
-  //       }
-  //     } catch (error) {
-  //       console.error(error);
-  //       setIsLoading(false);
-  //     }
-  //   } else {
-  //     setAnimecontainer([]);
-  //     setIsLoading(false);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   const timeoutId = setTimeout(() => {
-  //     fetchSupabase();
-  //   }, 500);
-  //   return () => clearTimeout(timeoutId);
-  // }, [searchItem]);
-
   const [searchitem, setSearchitem] = useState<string>("");
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
@@ -130,11 +62,10 @@ export default function page() {
             const animeFetch = await animereq({ id: title });
             setErrorMsg("loading...");
             updatedSearchResults.push(animeFetch);
+          } else {
+            setErrorMsg("No Result Found");
           }
         }
-      }
-      if (updatedSearchResults.length === 0) {
-        setErrorMsg("No Result Found");
       }
     }
 
@@ -144,7 +75,7 @@ export default function page() {
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    }, 400);
+    }, 200);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
