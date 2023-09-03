@@ -27,7 +27,7 @@ export default function SearchPage() {
   const [errorMsg, setErrorMsg] = useState("");
 
   async function fetchResults() {
-    if (searchitem.trim() === "" || searchitem === "") {
+    if (searchitem.trim() === "" || searchitem.length < 1) {
       setSearchResults([]);
       setErrorMsg("Search Something");
       return;
@@ -64,7 +64,7 @@ export default function SearchPage() {
         }
       }
 
-      if (searchitem.length >= 1 && updatedSearchResults.length === 0) {
+      if (searchitem.length > 1 && updatedSearchResults.length === 0) {
         setErrorMsg("No Result");
       }
 
@@ -75,7 +75,7 @@ export default function SearchPage() {
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    }, 300);
+    },200);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
