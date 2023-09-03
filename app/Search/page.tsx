@@ -31,9 +31,8 @@ export default function SearchPage() {
       setSearchResults([]);
       setErrorMsg("Search Something");
       return;
-    }
-
-    const { data: movies } = await superbase.from("movies").select("title");
+    }else{
+      const { data: movies } = await superbase.from("movies").select("title");
     const { data: animeData } = await superbase
       .from("tv_series")
       .select("title");
@@ -66,9 +65,12 @@ export default function SearchPage() {
           }
         }
       }
+
     }
 
     setSearchResults(updatedSearchResults);
+    }
+
   }
 
   useEffect(() => {
