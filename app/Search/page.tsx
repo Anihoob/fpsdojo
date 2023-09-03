@@ -45,7 +45,7 @@ export default function SearchPage() {
     const searchMovieResults = await searchMovie({ title: searchitem });
     const searchAnimeResults = await searchAnime({ title: searchitem });
 
-    if (movieTitles && animeTitles && searchitem.length > 2) {
+    if (movieTitles && animeTitles && searchitem.length > 1) {
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
