@@ -47,7 +47,6 @@ export default function SearchPage() {
     const updatedSearchResults: searchCard[] = [];
 
     if (movieTitles && animeTitles) {
-      setErrorMsg("loading...");
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
