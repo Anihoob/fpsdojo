@@ -1,21 +1,10 @@
-"use client";
-import { useState } from "react";
+
 import Styles from "./team.module.css";
-import { Icon } from "@iconify-icon/react";
 import Link from "next/link";
 import Image from "next/image";
 import Dropdown from "@/components/dropdown";
 
 export default function page() {
-  const [benenecount, setBenenecount] = useState(0);
-
-  function benene() {
-    setBenenecount(benenecount + 1);
-  }
-
-  const loaderProp = ({ src }: any) => {
-    return src;
-  };
 
   return (
     <div className={Styles.Teammain}>
@@ -34,11 +23,7 @@ export default function page() {
         <div className={Styles.Teamchad}>
           <span>
             <Link href={"https://t.me/Kuroski_Ichigo"}>
-              <Image
-                loader={loaderProp}
-                width={80}
-                height={80}
-                quality={75}
+              <img
                 className={Styles.chadimg}
                 src="/ichigo.gif"
                 alt=""
@@ -48,11 +33,7 @@ export default function page() {
           </span>
           <span>
             <Link href={"https://t.me/Qewertyy"}>
-              <Image
-                loader={loaderProp}
-                width={80}
-                height={80}
-                quality={75}
+              <img
                 className={Styles.chadimg}
                 src="/qewerty.gif"
                 alt=""
@@ -62,11 +43,7 @@ export default function page() {
           </span>
           <span>
             <Link href={"https://t.me/sad_sensei"}>
-              <Image
-                loader={loaderProp}
-                width={80}
-                height={80}
-                quality={75}
+              <img
                 className={Styles.chadimg}
                 src="/hinata.gif"
                 alt=""

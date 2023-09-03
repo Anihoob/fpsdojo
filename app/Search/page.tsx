@@ -26,8 +26,9 @@ export default function SearchPage() {
   const [searchResults, setSearchResults] = useState<searchCard[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+
   async function fetchResults() {
-    if (searchitem.trim() === "" || searchitem.length < 1) {
+    if (searchitem.trim() === "" || searchitem.length < 2) {
       setSearchResults([]);
       return;
     }
@@ -68,7 +69,7 @@ export default function SearchPage() {
   useEffect(() => {
     const Search = setTimeout(() => {
       fetchResults();
-    }, 200);
+    },200);
 
     return () => clearTimeout(Search);
   }, [searchitem]);
@@ -116,7 +117,7 @@ export default function SearchPage() {
                 <hr className={Styles.fetcheddivider} />
               </Link>
             ))
-          ) : searchitem.length > 1 && searchResults.length === 0 ? (
+          ) : !isLoading && searchitem.length > 1 && searchResults.length === 0  ? (
             <p>No Results</p>
           ) : "Search Something"}
         </div>
