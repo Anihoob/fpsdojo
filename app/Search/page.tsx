@@ -46,7 +46,6 @@ export default function SearchPage() {
     const searchAnimeResults = await searchAnime({ title: searchitem });
 
     if (movieTitles && animeTitles && searchitem.length > 1) {
-      setErrorMsg("loading....")
       for (const title of searchMovieResults) {
         if (movieTitles?.includes(title)) {
           const movieFetch = await moviereq({ id: title });
@@ -61,10 +60,12 @@ export default function SearchPage() {
             const animeFetch = await animereq({ id: title });
             setErrorMsg("loading...");
             updatedSearchResults.push(animeFetch);
-          } else {
-            setErrorMsg("No Result Found");
           }
         }
+      }
+
+      if (searchitem.length >= 1 && updatedSearchResults.length === 0) {
+        setErrorMsg("No Result");
       }
 
       setSearchResults(updatedSearchResults);
