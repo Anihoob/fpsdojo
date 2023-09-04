@@ -5,6 +5,7 @@ import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import moviereq from "@/thirdparty_req/moviereq";
+import Image from "next/image";
 
 interface umrl {
   title: string | undefined | any;
@@ -21,7 +22,7 @@ interface datatype {
 
 type movides = {
   id?: number | string | any;
-  title?: string;
+  title?: string | any;
   description?: string | undefined;
   image?: string | any;
   type?: string;
@@ -133,12 +134,16 @@ export default function Movie({ params }: { params: umrl }) {
       {flixData && (
         <>
           <div className={"movieinfopageposter"}>
-            <img
+            <Image
+            width={100}
+            height={100}
             className="mobileimg"
               src={flixData.image}
               alt={flixData.title}
             />
-            <img
+            <Image
+              width={100}
+              height={100}
             className="deskimg"
               src={flixData.cover}
               alt={flixData.title}
