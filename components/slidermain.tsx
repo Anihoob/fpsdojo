@@ -15,8 +15,7 @@ import Image from "next/image";
 type animeslider = {
   id?: number | string | any;
   title?: string;
-  season?: number;
-  description?: string | undefined;
+  movies_quality?: string | any;
 };
 type animedes = {
   id?: number | string | any;
@@ -29,6 +28,7 @@ type animedes = {
   cover?: string | any;
   genres?: string | any;
   otherName?: string | any;
+  movie_quality?: string | any;
 };
 
 import { usePathname } from "next/navigation";
@@ -84,6 +84,7 @@ export default function MainSlider() {
             const mappedData: animeslider[] = movie.map((item: any) => ({
               id: item.id,
               title: item.title,
+              movies_quality: item.movies_quality,
             }));
             setAnimecontainer(mappedData);
           }
@@ -121,8 +122,13 @@ export default function MainSlider() {
       if (animeData === null) {
         try {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            const movieFetch = moviereq({ id: singlemovie.title });
-            return movieFetch;
+            const movieFetch = await moviereq({ id: singlemovie.title });
+            const moviQuality = singlemovie.movies_quality;
+            const withMovieQuality = {
+              ...movieFetch,
+              movie_quality: moviQuality,
+            };
+            return withMovieQuality;
           });
           const MovieData = await Promise.all(movieDataPromise);
           setAnimeData(MovieData);
@@ -201,12 +207,20 @@ export default function MainSlider() {
               <h4 className="homemainsliderinfo-name">
                 {animedescription.title?.toUpperCase()}
               </h4>
+
               <span>
                 {animedescription.type === "Anime" && <h6>Tv</h6>}
                 {animedescription.type === "Movie" && <h6>Movie</h6>}
                 <h6>{animedescription.genres[0]}</h6>
                 <h6>{animedescription.releaseDate?.substring(0, 4)}</h6>
               </span>
+              {
+                animedescription.movie_quality && (
+                  <span>
+                  <h6>{animedescription.movie_quality}</h6>
+                </span>
+                  )
+                }
               <p className="about">{animedescription.description}</p>
             </Link>
           </SwiperSlide>
