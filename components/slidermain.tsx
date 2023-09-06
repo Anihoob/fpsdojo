@@ -139,12 +139,12 @@ export default function MainSlider() {
     fetchDetails();
   });
 
-  const japanesRegex =
-    /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}ー,]/gu;
+  // const japanesRegex =
+  //   /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}ー,]/gu;
 
-  const loaderProp = ({ src }: any) => {
-    return src;
-  };
+  // const loaderProp = ({ src }: any) => {
+  //   return src;
+  // };
 
   return (
     <>
@@ -199,11 +199,7 @@ export default function MainSlider() {
               }
             >
               <h4 className="homemainsliderinfo-name">
-                {animedescription.otherName
-                  ? animedescription.otherName
-                      ?.replace(japanesRegex, "")
-                      .toUpperCase()
-                  : animedescription.title?.toUpperCase()}
+                {animedescription.title?.toUpperCase()}
               </h4>
               <span>
                 {animedescription.type === "Anime" && <h6>Tv</h6>}
