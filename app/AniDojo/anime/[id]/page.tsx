@@ -184,7 +184,7 @@ export default function Tv({ params }: { params: umrl }) {
                     }
                     className={"infopagedwnldselect"}
                   >
-                    <option value="0">Season</option>
+                    <option value="0" hidden>Season</option>
                     {Array.from(
                       new Set(
                         fetchepsiode.map((episode) => episode.season_number)
@@ -206,7 +206,7 @@ export default function Tv({ params }: { params: umrl }) {
                     }
                     className={"infopagedwnldselect"}
                   >
-                    <option value="0">Episode</option>
+                    <option value="0" hidden>Episode</option>
                     {filteredEpisodes
                       ?.sort((a, b) => a.episode_number - b.episode_number)
                       .map((episode) => (
