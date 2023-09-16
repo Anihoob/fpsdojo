@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Bot from '@/components/bot'
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -28,6 +29,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body>{children}
+      <Bot/>
       <Navbar/>
       </body>
     </html>
