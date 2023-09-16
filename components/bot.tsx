@@ -1,5 +1,5 @@
-'use client'
-import React, { Component, MouseEvent, TouchEvent } from 'react';
+"use client";
+import React, { Component, MouseEvent, TouchEvent, useState } from "react";
 
 interface State {
   isDragging: boolean;
@@ -7,7 +7,10 @@ interface State {
   initialMouseY: number;
   initialDivX: number;
   initialDivY: number;
+  popup:boolean
 }
+
+
 
 class Bot extends Component<{}, State> {
   divRef: HTMLDivElement | null = null;
@@ -18,6 +21,7 @@ class Bot extends Component<{}, State> {
     initialMouseY: 0,
     initialDivX: 0,
     initialDivY: 0,
+    popup:false
   };
 
   handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
@@ -45,13 +49,13 @@ class Bot extends Component<{}, State> {
         initialDivY: divY,
       });
 
-      document.addEventListener('mousemove', this.handleMouseMove as any);
-      document.addEventListener('mouseup', this.handleMouseUp as any);
+      document.addEventListener("mousemove", this.handleMouseMove as any);
+      document.addEventListener("mouseup", this.handleMouseUp as any);
 
-      document.addEventListener('touchmove', this.handleTouchMove as any, {
+      document.addEventListener("touchmove", this.handleTouchMove as any, {
         passive: false,
       });
-      document.addEventListener('touchend', this.handleTouchEnd as any);
+      document.addEventListener("touchend", this.handleTouchEnd as any);
     }
   };
 
@@ -88,15 +92,25 @@ class Bot extends Component<{}, State> {
 
   endDrag = () => {
     this.setState({ isDragging: false });
-    document.removeEventListener('mousemove', this.handleMouseMove as any);
-    document.removeEventListener('mouseup', this.handleMouseUp as any);
+    document.removeEventListener("mousemove", this.handleMouseMove as any);
+    document.removeEventListener("mouseup", this.handleMouseUp as any);
 
-    document.removeEventListener('touchmove', this.handleTouchMove as any);
-    document.removeEventListener('touchend', this.handleTouchEnd as any);
+    document.removeEventListener("touchmove", this.handleTouchMove as any);
+    document.removeEventListener("touchend", this.handleTouchEnd as any);
+  };
+
+  handleButtonClick = () => {
+    this.setState({ popup: true }); 
+    setTimeout(() => {
+      this.setState({ popup: false }); 
+    }, 1500);
   };
 
   render() {
-    const { initialDivX, initialDivY } = this.state;
+    const { initialDivX, initialDivY, popup } = this.state;
+    
+
+
 
     return (
       <div
@@ -105,16 +119,14 @@ class Bot extends Component<{}, State> {
         style={{
           left: `${initialDivX}px`,
           top: `${initialDivY}px`,
-          zIndex: `5`,
-          position: `absolute`,
-          width: `100px`,
-          height: `100px`,
-          cursor: `grab`,
         }}
         onMouseDown={this.handleMouseDown}
         onTouchStart={this.handleTouchStart}
       >
-        <img src="/pikachuBot.gif" alt="" />
+        <button onClick={this.handleButtonClick}>
+          <img src="/pikachuBot.gif" alt="" />
+          {popup && <p>pika!</p>}
+        </button>
       </div>
     );
   }
