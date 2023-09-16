@@ -1,5 +1,5 @@
 'use client'
-import React, { Component, MouseEvent } from 'react';
+import React, { Component, MouseEvent, TouchEvent } from 'react';
 
 interface State {
   isDragging: boolean;
@@ -22,48 +22,77 @@ class Bot extends Component<{}, State> {
 
   handleMouseDown = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
+    this.initiateDrag(e.clientX, e.clientY);
+  };
 
+  handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const touch = e.touches[0];
+    this.initiateDrag(touch.clientX, touch.clientY);
+  };
+
+  initiateDrag = (clientX: number, clientY: number) => {
     if (this.divRef) {
       const divRect = this.divRef.getBoundingClientRect();
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
       const divX = divRect.left;
       const divY = divRect.top;
 
       this.setState({
         isDragging: true,
-        initialMouseX: mouseX,
-        initialMouseY: mouseY,
+        initialMouseX: clientX,
+        initialMouseY: clientY,
         initialDivX: divX,
         initialDivY: divY,
       });
 
       document.addEventListener('mousemove', this.handleMouseMove as any);
       document.addEventListener('mouseup', this.handleMouseUp as any);
+
+      document.addEventListener('touchmove', this.handleTouchMove as any, {
+        passive: false,
+      });
+      document.addEventListener('touchend', this.handleTouchEnd as any);
     }
   };
 
   handleMouseMove = (e: MouseEvent) => {
+    this.handleDrag(e.clientX, e.clientY);
+  };
+
+  handleTouchMove = (e: TouchEvent) => {
+    const touch = e.touches[0];
+    this.handleDrag(touch.clientX, touch.clientY);
+  };
+
+  handleDrag = (clientX: number, clientY: number) => {
     if (!this.state.isDragging) return;
 
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-
-    const deltaX = mouseX - this.state.initialMouseX;
-    const deltaY = mouseY - this.state.initialMouseY;
+    const deltaX = clientX - this.state.initialMouseX;
+    const deltaY = clientY - this.state.initialMouseY;
 
     this.setState((prevState) => ({
       initialDivX: prevState.initialDivX + deltaX,
       initialDivY: prevState.initialDivY + deltaY,
-      initialMouseX: mouseX,
-      initialMouseY: mouseY,
+      initialMouseX: clientX,
+      initialMouseY: clientY,
     }));
   };
 
   handleMouseUp = () => {
+    this.endDrag();
+  };
+
+  handleTouchEnd = () => {
+    this.endDrag();
+  };
+
+  endDrag = () => {
     this.setState({ isDragging: false });
     document.removeEventListener('mousemove', this.handleMouseMove as any);
     document.removeEventListener('mouseup', this.handleMouseUp as any);
+
+    document.removeEventListener('touchmove', this.handleTouchMove as any);
+    document.removeEventListener('touchend', this.handleTouchEnd as any);
   };
 
   render() {
@@ -76,15 +105,16 @@ class Bot extends Component<{}, State> {
         style={{
           left: `${initialDivX}px`,
           top: `${initialDivY}px`,
-          zIndex:`5`,
-          position:`absolute`,
-          width:`100px`,
-          height:`100px`,
-          cursor:`grab`
+          zIndex: `5`,
+          position: `absolute`,
+          width: `100px`,
+          height: `100px`,
+          cursor: `grab`,
         }}
         onMouseDown={this.handleMouseDown}
+        onTouchStart={this.handleTouchStart}
       >
-       <img src="/pikachuBot.gif" alt="" />
+        <img src="/pikachuBot.gif" alt="" />
       </div>
     );
   }
