@@ -48,6 +48,7 @@ body {
   background: black;
   position: relative;
   margin-bottom: 3rem;
+  overflow-x: hidden;
 }
 
 /* A elements that don't have a class get default styles */
@@ -85,6 +86,11 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+
+
+
+/* ------------------------------------- */
 
 .infopagemain {
   width: 100%;
