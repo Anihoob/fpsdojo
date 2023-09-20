@@ -7,9 +7,9 @@ import "swiper/css/pagination";
 
 import "./components.css";
 import Link from "next/link";
-import Supabase from "@/thirdparty_req/supabase";
-import animereq from "@/thirdparty_req/animereq";
-import moviereq from "@/thirdparty_req/moviereq";
+import Supabase from "@/lib/supabase/supabase";
+import animereq from "@/lib/animereq";
+import moviereq from "@/lib/moviereq";
 import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";

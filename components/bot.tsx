@@ -1,31 +1,16 @@
-'use client'
 
-import { useState } from "react"
-
-
-
+import Link from "next/link";
 export default function Bot() {
-  const [popup, setPopup] = useState(false)
-  function botClick(){
-    if(!popup){
-      setPopup(true)
-    }
 
-    setInterval(()=>{
-      setPopup(false)
-    },2000)
-  }
 
 
   return (
-    <div
-    className="BotMain"
-  >
-    <button onClick={botClick}>
-      <img src="/pikachuBot.gif" alt="" />
-      {popup && <p>pika!</p>}
-    </button>
-  </div>
-
-  )
+    <>
+      <div className="BotMain">
+        {/* <Link href={'/Bot'}> */}
+          <img src="/pikachuBot.gif" alt="" />
+        {/* </Link> */}
+      </div>
+    </>
+  );
 }

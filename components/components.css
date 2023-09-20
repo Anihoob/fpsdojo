@@ -14,7 +14,7 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  pointer-events: auto; 
+  pointer-events: auto;
 }
 
 .nav-links {
@@ -43,11 +43,11 @@
   color: white;
 }
 
-.nav-links li a h6{
-  font-size: .6rem;
+.nav-links li a h6 {
+  font-size: 0.6rem;
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .nav-main {
     position: fixed;
     bottom: 2%;
@@ -59,8 +59,8 @@
   }
 }
 
-@media screen and (min-width:1440px) {
-  .nav-main{
+@media screen and (min-width: 1440px) {
+  .nav-main {
     width: 30%;
   }
 }
@@ -71,8 +71,6 @@
   width: 100%;
   height: 570px;
 }
-
-
 
 .homemainsliderswiperslide {
   display: block;
@@ -89,30 +87,27 @@
   background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
 }
 
-.homemainsliderswiperslide img{
+.homemainsliderswiperslide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.homemainsliderswiperslide .mobileimg{
+.homemainsliderswiperslide .mobileimg {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.homemainsliderswiperslide .deskimg{
- display: none;
+.homemainsliderswiperslide .deskimg {
+  display: none;
 }
-
-
-
 
 .homemainsliderinfo {
   width: 100%;
   position: absolute;
   bottom: 5%;
-  left:50%;
-  transform: translate(-50%,0%);
+  left: 50%;
+  transform: translate(-50%, 0%);
   color: white;
   z-index: 3;
   display: flex;
@@ -133,7 +128,7 @@
   gap: 1rem;
 }
 
-.homemainsliderinfo span h6{
+.homemainsliderinfo span h6 {
   background: rgba(41, 41, 41, 0.5);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(5px);
@@ -141,7 +136,6 @@
   padding: 5px;
   border-radius: 20px;
 }
-
 
 .homemainsliderswiper .swiper-pagination-bullet {
   opacity: 50%;
@@ -161,42 +155,39 @@
   font-size: 1rem;
 }
 
-
-@media screen and (min-width:1024px) {
-  .homemainsliderswiper{
+@media screen and (min-width: 1024px) {
+  .homemainsliderswiper {
     height: 550px;
   }
 
-  .homemainsliderswiperslide{
+  .homemainsliderswiperslide {
     justify-content: flex-start;
   }
 
-  .homemainsliderinfo{
+  .homemainsliderinfo {
     bottom: 10%;
     align-items: flex-start;
   }
   .homemainsliderinfo-name {
     font-size: 2rem;
   }
-  .homemainsliderinfo .about{
+  .homemainsliderinfo .about {
     width: 50%;
     text-align: left;
   }
-  .homemainsliderswiperslide .mobileimg{
+  .homemainsliderswiperslide .mobileimg {
     display: none;
   }
-  .homemainsliderswiperslide .deskimg{
+  .homemainsliderswiperslide .deskimg {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
-  
 }
 
-
-@media screen and (min-width:1440px){
-  .homemainsliderswiper{
+@media screen and (min-width: 1440px) {
+  .homemainsliderswiper {
     height: 600px;
   }
   .homemainsliderinfo-name {
@@ -248,8 +239,6 @@
   z-index: 3;
 }
 
-
-
 .homesliderswiperslide-info {
   width: 90%;
   color: white;
@@ -260,46 +249,43 @@
   justify-content: center;
 }
 
-
-
-.homesliderswiperslide-name{
+.homesliderswiperslide-name {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-weight: 600;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
-.homesliderswiperslide-datentime{
-  font-size: .6rem;
+.homesliderswiperslide-datentime {
+  font-size: 0.6rem;
 }
 
-.homesliderswiperslide-info span{
+.homesliderswiperslide-info span {
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
-.homesliderswiperslide-info span hr{
+.homesliderswiperslide-info span hr {
   width: 1px;
   height: 5px;
   padding: 0;
   margin: 0;
 }
 
-
 /* home slider end */
 
 /* dropdown */
-.dropdown-main{
+.dropdown-main {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.dropdown-question{
+.dropdown-question {
   border-radius: 5px;
   width: 100%;
   display: flex;
@@ -308,19 +294,19 @@
   padding: 5px;
   background: rgb(42, 42, 42);
 }
-.quest-title{
+.quest-title {
   font-size: 1rem;
 }
 
-input[type="checkbox"]{
+input[type="checkbox"] {
   display: none;
 }
 
-.dropdown-answerone{
-display: none;
+.dropdown-answerone {
+  display: none;
 }
 
-#checkone:checked ~ .dropdown-answerone{
+#checkone:checked ~ .dropdown-answerone {
   padding: 10px;
   text-align: justify;
   width: 100%;
@@ -328,11 +314,11 @@ display: none;
   border-radius: 0px 0px 5px 5px;
   background: rgba(42, 42, 42, 0.552);
 }
-.dropdown-answertwo{
-display: none;
+.dropdown-answertwo {
+  display: none;
 }
 
-#checktwo:checked ~ .dropdown-answertwo{
+#checktwo:checked ~ .dropdown-answertwo {
   padding: 10px;
   text-align: justify;
   width: 100%;
@@ -340,11 +326,11 @@ display: none;
   border-radius: 0px 0px 5px 5px;
   background: rgba(42, 42, 42, 0.552);
 }
-.dropdown-answerthree{
-display: none;
+.dropdown-answerthree {
+  display: none;
 }
 
-#checkthree:checked ~ .dropdown-answerthree{
+#checkthree:checked ~ .dropdown-answerthree {
   padding: 10px;
   text-align: justify;
   width: 100%;
@@ -352,11 +338,11 @@ display: none;
   border-radius: 0px 0px 5px 5px;
   background: rgba(42, 42, 42, 0.552);
 }
-.dropdown-answerfour{
-display: none;
+.dropdown-answerfour {
+  display: none;
 }
 
-#checkfour:checked ~ .dropdown-answerfour{
+#checkfour:checked ~ .dropdown-answerfour {
   padding: 10px;
   text-align: justify;
   width: 100%;
@@ -364,11 +350,11 @@ display: none;
   border-radius: 0px 0px 5px 5px;
   background: rgba(42, 42, 42, 0.552);
 }
-.dropdown-answerfive{
-display: none;
+.dropdown-answerfive {
+  display: none;
 }
 
-#checkfive:checked ~ .dropdown-answerfive{
+#checkfive:checked ~ .dropdown-answerfive {
   padding: 10px;
   text-align: justify;
   width: 100%;
@@ -376,15 +362,12 @@ display: none;
   border-radius: 0px 0px 5px 5px;
   background: rgba(42, 42, 42, 0.552);
 }
-
-
-
 
 /* dropdown end*/
 
 /* Bot */
 
-.BotMain{
+.BotMain {
   position: fixed;
   z-index: 5;
   width: 100px;
@@ -393,14 +376,14 @@ display: none;
   right: 0%;
 }
 
-.BotMain button{
+.BotMain a {
   background: transparent;
   border: none;
   cursor: grab;
   position: relative;
 }
 
-.BotMain button p{
+.BotMain a p {
   position: absolute;
   top: 0;
   right: 0;
@@ -408,12 +391,135 @@ display: none;
   padding: 1.5px 5px;
   text-align: center;
   border-radius: 20px;
-  color:black;
+  color: black;
 }
 
-@media screen and (min-width:1024px) {
-  .BotMain{
+@media screen and (min-width: 1024px) {
+  .BotMain {
     bottom: 0%;
   }
 }
 
+/* botChat */
+
+.botChatMain {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: 1rem ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  gap: .5rem;
+}
+
+.chatInput {
+  width: 90%;
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  background: #585858;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.chatInput input {
+  background: #585858;
+  width: 80%;
+  height: 100%;
+  border: none;
+  caret-color: white;
+}
+
+.chatInput input:focus {
+  outline: none;
+}
+
+.chatInput button {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.closeChat {
+  position: fixed;
+  top: 2%;
+  right: 2%;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.closeIcon {
+  color: white;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: aqua; */
+}
+
+.sendIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.chats {
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: auto;
+}
+
+.clearchats{
+  width: 90%;
+}
+
+.clearchats button{
+  background: red;
+  color: white;
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 5px;
+}
+
+
+
+
+.userChats {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #121212;
+}
+
+.userChats p {
+  width: 100%;
+  text-align: right;
+  color: white;
+}
+
+.botChats {
+  width: 90%;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #121212;
+}
+
+.botChats p {
+  width: 100%;
+  text-align: left;
+  color: white;
+}

@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import Styles from "./search.module.css";
-import Supabase from "@/thirdparty_req/supabase";
+import Supabase from "@/lib/supabase/supabase";
 import Link from "next/link";
-import animereq from "@/thirdparty_req/animereq";
-import moviereq from "@/thirdparty_req/moviereq";
-import { searchAnime, searchMovie } from "@/thirdparty_req/search";
+import animereq from "@/lib/animereq";
+import moviereq from "@/lib/moviereq";
+import { searchAnime, searchMovie } from "@/lib/search";
 import Image from "next/image";
 
 type searchCard = {

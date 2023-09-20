@@ -12,6 +12,11 @@ const nextConfig = {
             hostname: 'img.flixhq.to',
             port: '',
           },
+          {
+            protocol: 'https',
+            hostname: 'image.tmdb.org',
+            port: '',
+          },
 
         ],
       },

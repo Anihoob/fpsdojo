@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import "../../../globals.css"
-import Supabase from "@/thirdparty_req/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
-import moviereq from "@/thirdparty_req/moviereq";
 import Image from "next/image";
+import Supabase from "@/lib/supabase/supabase";
+import moviereq from "@/lib/moviereq";
 
 interface umrl {
   title: string | undefined | any;

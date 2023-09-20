@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 
 import "./test.css";
@@ -19,53 +17,23 @@ interface dataType {
   synopsis?: string;
 }
 
-import Supabase from "@/thirdparty_req/supabase";
-import { fetchJikan } from "@/thirdparty_req/malapi";
+import Supabase from "@/lib/supabase/supabase";
+import tmdb from "@/lib/tmdb";
+const superbase = Supabase();
 
-export default function page() {
-  const superbase = Supabase();
-
-  const [malid, setMalid] = useState<any>();
-  const [details, setDetails] = useState<dataType[]>();
-
-  async function fetchSupabase() {
-    const { data: testing } = await superbase.from("testing").select("*");
-    const mapped = testing?.map((lel: any) => lel.id);
-    setMalid(mapped);
-  }
-
-  useEffect(() => {
-    fetchSupabase();
-  }, []);
-
-  async function fetchedAnime() {
-    if (!malid) return;
-    const detailsPromises = malid.map(async (id: string) => {
-      const jikan = await fetchJikan({ id: id });
-      return jikan;
-    });
-
-    const fetchedDetails = await Promise.all(detailsPromises);
-    setDetails(fetchedDetails);
-  }
-
-  useEffect(() => {
-    fetchedAnime();
-  }, [malid]);
+export default async function page() {
+  const TMDB = await tmdb();
+  const movieData = TMDB;
+  console.log(movieData)
 
   return (
+  <div style={{color:'white'}}>
+    {movieData && 
     <>
-      {details &&
-        details.map((anime: dataType) => (
-          <div style={{ color: "white" }} key={anime.mal_id}>
-            <h4>{anime.title}</h4>
-            <img src={anime.images?.webp.image_url} alt="" />
-            <p>{anime.type}</p>
-            <p>{anime.episodes}</p>
-            <p>{anime.rating}</p>
-            <p>{anime.synopsis}</p>
-          </div>
-        ))}
+    <h4>{movieData.original_title}</h4>
+    <p>{movieData.overview}</p>
+    <img src={`https://image.tmdb.org/t/p/w500${movieData.backdrop_path}`} alt="" />
     </>
-  );
+    }
+    </div>);
 }

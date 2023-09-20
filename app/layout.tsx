@@ -1,23 +1,25 @@
-import Navbar from '@/components/navbar'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import Bot from '@/components/bot'
+import Navbar from "@/components/navbar";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import Bot from "@/components/bot";
 const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-})
- 
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={inter.className}>
       <head>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-M8YRNGE6LL"></script>
-      <script
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-M8YRNGE6LL"
+        ></script>
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -28,10 +30,11 @@ export default function RootLayout({
           }}
         ></script>
       </head>
-      <body>{children}
-      <Bot/>
-      <Navbar/>
+      <body>
+        {children}
+        <Bot />
+        <Navbar />
       </body>
     </html>
-  )
+  );
 }

@@ -1,7 +1,6 @@
 import CaroselSlider from '@/components/caroselslider'
 import Styles from './home.module.css'
 import MainSlider from '@/components/slidermain'
-import Bot from '@/components/bot'
 
 export default function Home() {
   return (

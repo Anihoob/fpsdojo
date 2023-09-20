@@ -16,7 +16,8 @@ export default async function animereq(props: Props) {
     releaseDate: data.releaseDate,
     description: data.description,
     genres: data.genres,
-    otherName:data.otherName,
+    otherName: data.otherName,
     type: "Anime",
   };
 }
+

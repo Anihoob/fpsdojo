@@ -33,124 +33,61 @@ type animedes = {
 
 import { usePathname } from "next/navigation";
 // supabase
-import Supabase from "@/thirdparty_req/supabase";
-import animereq from "@/thirdparty_req/animereq";
-import moviereq from "@/thirdparty_req/moviereq";
+import Supabase from "@/lib/supabase/supabase";
+import animereq from "@/lib/animereq";
+import moviereq from "@/lib/moviereq";
 import Link from "next/link";
+import Sanime from "@/lib/supabase/anime";
+import Smovie from "@/lib/supabase/movies";
+
+interface umrl {
+  id: string | any;
+}
 
 export default function MainSlider() {
   const pathname = usePathname();
 
-  const superbase = Supabase();
+  const [animeData, setAnimeData] = useState<animedes[] | any>(null);
 
-  const [animecontainer, setAnimecontainer] = useState<animeslider[] | null>(
-    null
-  );
-
-  async function fetchslideranime() {
-    if (pathname === "/") {
-      if (animecontainer === null) {
-        try {
-          const { data: anime } = await superbase
-            .from("tv_series")
-            .select("*")
-            .order("id", { ascending: false })
-            .limit(5);
-          if (anime === null) {
-            setAnimecontainer([]);
-          } else {
-            const mappedData: animeslider[] = anime.map((item: any) => ({
-              id: item.id,
-              title: item.title,
-              season: item.seasons,
-            }));
-            setAnimecontainer(mappedData);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    } else if (pathname === "/Movies") {
-      if (animecontainer === null) {
-        try {
-          const { data: movie } = await superbase
-            .from("movies")
-            .select("*")
-            .order("id", { ascending: false })
-            .limit(5);
-          if (movie === null) {
-            setAnimecontainer([]);
-          } else {
-            const mappedData: animeslider[] = movie.map((item: any) => ({
-              id: item.id,
-              title: item.title,
-              movies_quality: item.movies_quality,
-            }));
-            setAnimecontainer(mappedData);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        return;
-      }
-    }
-  }
-  useEffect(() => {
-    fetchslideranime();
-  });
-
-  const [animeData, setAnimeData] = useState<animedes[] | null>(null);
   async function fetchDetails() {
-    if (!animecontainer) return;
-    if (pathname === "/") {
-      if (animeData === null) {
-        try {
-          const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const animeFetch = await animereq({ id: singleanime.title });
-            return animeFetch;
-          });
-          const animeData = await Promise.all(animeDataPromise);
-          setAnimeData(animeData);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        return;
+    const animecontainer = await Sanime({ pathname: pathname });
+    const moviecontainer = await Smovie({ pathname: pathname });
+    if (animecontainer) {
+      try {
+        const animeDataPromise = animecontainer?.map(async (singleanime) => {
+          const animeFetch = await animereq({ id: singleanime.title });
+          return animeFetch;
+        });
+        const animeData = await Promise.all(animeDataPromise);
+        setAnimeData(animeData);
+      } catch (error) {
+        console.error(error);
       }
-    } else if (pathname === "/Movies") {
-      if (animeData === null) {
-        try {
-          const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            const movieFetch = await moviereq({ id: singlemovie.title });
-            const moviQuality = singlemovie.movies_quality;
-            const withMovieQuality = {
-              ...movieFetch,
-              movie_quality: moviQuality,
-            };
-            return withMovieQuality;
-          });
-          const MovieData = await Promise.all(movieDataPromise);
-          setAnimeData(MovieData);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        return;
+    } else if (moviecontainer) {
+      try {
+        const movieDataPromise = moviecontainer?.map(async (singlemovie) => {
+          const movieFetch = await moviereq({ id: singlemovie.title });
+          const moviQuality = singlemovie.movies_quality;
+          const withMovieQuality = {
+            ...movieFetch,
+            movie_quality: moviQuality,
+          };
+          return withMovieQuality;
+        });
+        const MovieData = await Promise.all(movieDataPromise);
+        setAnimeData(MovieData);
+      } catch (error) {
+        console.log(error);
       }
+    } else {
+      return;
     }
   }
 
   useEffect(() => {
     fetchDetails();
-  });
+  },[]);
 
-  // const japanesRegex =
-  //   /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Han}ー,]/gu;
-
-  // const loaderProp = ({ src }: any) => {
-  //   return src;
-  // };
 
   return (
     <>
@@ -159,7 +96,7 @@ export default function MainSlider() {
         modules={[Pagination]}
         className="homemainsliderswiper"
       >
-        {animeData?.map((animedescription) => (
+        {animeData?.map((animedescription: animedes) => (
           <SwiperSlide
             key={animedescription.id}
             className="homemainsliderswiperslide"
@@ -214,13 +151,11 @@ export default function MainSlider() {
                 <h6>{animedescription.genres[0]}</h6>
                 <h6>{animedescription.releaseDate?.substring(0, 4)}</h6>
               </span>
-              {
-                animedescription.movie_quality && (
-                  <span>
+              {animedescription.movie_quality && (
+                <span>
                   <h6>{animedescription.movie_quality}</h6>
                 </span>
-                  )
-                }
+              )}
               <p className="about">{animedescription.description}</p>
             </Link>
           </SwiperSlide>

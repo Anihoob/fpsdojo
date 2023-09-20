@@ -1,10 +1,10 @@
 "use client";
 import "../../../globals.css";
 import Link from "next/link";
-import Supabase from "@/thirdparty_req/supabase";
+import Supabase from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
-import animereq from "@/thirdparty_req/animereq";
+import animereq from "@/lib/animereq";
 
 interface umrl {
   title: string | undefined | any;
