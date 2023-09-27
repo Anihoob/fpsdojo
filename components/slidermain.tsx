@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/effect-creative";
+import { EffectCreative } from "swiper";
 import "./components.css";
 // import swiper modules
 import { Pagination } from "swiper";
@@ -33,16 +35,14 @@ type animedes = {
 
 import { usePathname } from "next/navigation";
 // supabase
-import Supabase from "@/lib/supabase/supabase";
-import animereq from "@/lib/animereq";
-import moviereq from "@/lib/moviereq";
+// import Supabase from "@/lib/supabase/supabase";
+// import animereq from "@/lib/animereq";
+// import moviereq from "@/lib/moviereq";
 import Link from "next/link";
 import Sanime from "@/lib/supabase/anime";
 import Smovie from "@/lib/supabase/movies";
+import Tmdb from "@/lib/tmdb/tmdb";
 
-interface umrl {
-  id: string | any;
-}
 
 export default function MainSlider() {
   const pathname = usePathname();
@@ -55,7 +55,11 @@ export default function MainSlider() {
     if (animecontainer) {
       try {
         const animeDataPromise = animecontainer?.map(async (singleanime) => {
-          const animeFetch = await animereq({ id: singleanime.title });
+          // const animeFetch = await animereq({ id: singleanime.title });
+          const animeFetch = await Tmdb({
+            id: singleanime.title,
+            type: singleanime.type,
+          });
           return animeFetch;
         });
         const animeData = await Promise.all(animeDataPromise);
@@ -63,11 +67,13 @@ export default function MainSlider() {
       } catch (error) {
         console.error(error);
       }
-    } else if (moviecontainer) {
+    }
+    else if (moviecontainer) {
       try {
         const movieDataPromise = moviecontainer?.map(async (singlemovie) => {
-          const movieFetch = await moviereq({ id: singlemovie.title });
-          const moviQuality = singlemovie.movies_quality;
+          // const movieFetch = await moviereq({ id: singlemovie.title });
+          const movieFetch = await Tmdb({id:singlemovie.title, type:singlemovie.type})
+          const moviQuality = singlemovie.quality;
           const withMovieQuality = {
             ...movieFetch,
             movie_quality: moviQuality,
@@ -86,78 +92,92 @@ export default function MainSlider() {
 
   useEffect(() => {
     fetchDetails();
-  },[]);
-
+  }, []);
 
   return (
     <>
       <Swiper
         pagination={true}
-        modules={[Pagination]}
+        grabCursor={true}
+        effect={"creative"}
+        creativeEffect={{
+          prev: {
+            shadow: true,
+            translate: ["-80%", 0, -1]
+          },
+          next: {
+            translate: ["100%", 0, 0]
+          }
+        }}
+        modules={[Pagination,EffectCreative]}
         className="homemainsliderswiper"
       >
-        {animeData?.map((animedescription: animedes) => (
+        {animeData?.map((animedescription: any) => (
           <SwiperSlide
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
             {pathname === "/" && (
-              <Image
-                width={300}
-                height={300}
-                src={decodeURI(animedescription.image)}
-                quality={75}
-                alt={animedescription.title}
-              />
-            )}
-            {pathname === "/Movies" && (
               <>
                 <Image
-                  className="mobileimg"
-                  width={300}
-                  height={300}
-                  src={decodeURI(animedescription.image)}
+                  className="deskimg"
+                  width={700}
+                  height={700}
+                  src={animedescription.cover}
                   quality={75}
                   alt={animedescription.title}
                 />
                 <Image
-                  className="deskimg"
-                  width={300}
-                  height={300}
-                  src={decodeURI(animedescription.cover)}
+                  className="mobileimg"
+                  width={400}
+                  height={400}
+                  src={animedescription.poster}
                   quality={75}
                   alt={animedescription.title}
                 />
               </>
             )}
-            <Link
+            {pathname === "/Movies" && (
+              <>
+                <Image
+                  className="mobileimg"
+                  width={350}
+                  height={350}
+                  src={animedescription.poster}
+                  quality={75}
+                  alt={animedescription.title}
+                />
+                <Image
+                  className="deskimg"
+                  width={700}
+                  height={700}
+                  src={animedescription.cover}
+                  quality={75}
+                  alt={animedescription.title}
+                />
+              </>
+            )}
+            <div
               className="homemainsliderinfo"
-              href={
-                pathname === "/Movies"
-                  ? `/AniDojo/movie/${animedescription.id.replace(
-                      "movie/",
-                      ""
-                    )}`
-                  : `/AniDojo/anime/${animedescription.id}`
-              }
             >
-              <h4 className="homemainsliderinfo-name">
-                {animedescription.title?.toUpperCase()}
-              </h4>
+              <span className="homemainsliderinfo-name">
+                <img src={animedescription.logo} alt="" />
+              </span>
 
               <span>
-                {animedescription.type === "Anime" && <h6>Tv</h6>}
-                {animedescription.type === "Movie" && <h6>Movie</h6>}
-                <h6>{animedescription.genres[0]}</h6>
-                <h6>{animedescription.releaseDate?.substring(0, 4)}</h6>
+                {/* {animedescription.type === "Anime" && <h6>Tv</h6>}
+                {animedescription.type === "Movie" && <h6>Movie</h6>} */}
+                <h6>{animedescription.genre}</h6>
+                <h6>{animedescription.year.substring(0, 4)}</h6>
               </span>
-              {animedescription.movie_quality && (
+              {/* {animedescription.movie_quality && (
                 <span>
                   <h6>{animedescription.movie_quality}</h6>
                 </span>
-              )}
+              )} */}
               <p className="about">{animedescription.description}</p>
-            </Link>
+              <Link href={pathname === '/' ? `AniDojo/anime/${animedescription.id}`:`AniDojo/movie/${animedescription.id}` } className={'btntopage'} >DOWNLOAD</Link>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

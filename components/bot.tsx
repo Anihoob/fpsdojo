@@ -7,9 +7,9 @@ export default function Bot() {
   return (
     <>
       <div className="BotMain">
-        {/* <Link href={'/Bot'}> */}
+        <Link href={'/Bot'}>
           <img src="/pikachuBot.gif" alt="" />
-        {/* </Link> */}
+        </Link>
       </div>
     </>
   );

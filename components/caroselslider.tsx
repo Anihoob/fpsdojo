@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Tmdb from "@/lib/tmdb/tmdb";
 
 type Props = {
   starting: number;
@@ -23,6 +24,7 @@ type Props = {
 type animeslider = {
   id?: number;
   title?: string;
+  type?:string;
   movies_quality?: string | any;
   description?: string | undefined;
 };
@@ -37,6 +39,7 @@ type animedes = {
   cover?: string | any;
   otherName?: string | any;
   movie_quality?: string | any;
+  year?:string | any
 };
 
 export default function CaroselSlider(props: Props) {
@@ -52,7 +55,8 @@ export default function CaroselSlider(props: Props) {
       if (animecontainer === null) {
         try {
           const { data: anime } = await superbase
-            .from("tv_series")
+            .from("tmdbanimes")
+            // .from("tv_series")
             .select("*")
             .order("id", { ascending: true })
             .range(props.starting, props.ending);
@@ -62,7 +66,8 @@ export default function CaroselSlider(props: Props) {
             const mappedData: animeslider[] = anime.map((item: any) => ({
               id: item.id,
               title: item.title,
-              season: item.seasons,
+              type:item.type
+              // season: item.seasons,
             }));
             setAnimecontainer(mappedData);
           }
@@ -76,7 +81,7 @@ export default function CaroselSlider(props: Props) {
       if (animecontainer === null) {
         try {
           const { data: movie } = await superbase
-            .from("movies")
+            .from("tmdbmovies")
             .select("*")
             .order("id", { ascending: true })
             .range(props.starting, props.ending);
@@ -86,6 +91,7 @@ export default function CaroselSlider(props: Props) {
             const mappedData: animeslider[] = movie.map((item: any) => ({
               id: item.id,
               title: item.title,
+              type:item.type,
               movies_quality: item.movies_quality,
             }));
             setAnimecontainer(mappedData);
@@ -103,15 +109,18 @@ export default function CaroselSlider(props: Props) {
     fetchcarosel();
   });
 
-  const [animeData, setAnimeData] = useState<animedes[] | null>(null);
+  const [animeData, setAnimeData] = useState<animedes[] | any>(null);
 
   async function fetchDetails() {
     if (!animecontainer) return;
-    if (pathname === "/") {
       if (animeData === null) {
         try {
           const animeDataPromise = animecontainer.map(async (singleanime) => {
-            const animeFetch = animereq({ id: singleanime.title });
+            // const animeFetch = animereq({ id: singleanime.title });
+            const animeFetch = await Tmdb({
+              id: singleanime.title,
+              type: singleanime.type,
+            });
             return animeFetch;
           });
           const animeData = await Promise.all(animeDataPromise);
@@ -122,11 +131,11 @@ export default function CaroselSlider(props: Props) {
       } else {
         return;
       }
-    } else if (pathname === "/Movies") {
       if (animeData === null) {
         try {
           const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            const movieFetch = await moviereq({ id: singlemovie.title });
+            // const movieFetch = await moviereq({ id: singlemovie.title });
+            const movieFetch = await Tmdb({id:singlemovie.title, type:singlemovie.type})
             const moviQuality = singlemovie.movies_quality;
             const withMovieQuality = {
               ...movieFetch,
@@ -142,12 +151,11 @@ export default function CaroselSlider(props: Props) {
       } else {
         return;
       }
-    }
   }
 
   useEffect(() => {
     fetchDetails();
-  });
+  },);
 
   return (
     <>
@@ -175,18 +183,18 @@ export default function CaroselSlider(props: Props) {
           }}
           className="homesliderswiper"
         >
-          {animeData?.map((animeinfo) => (
+          {animeData?.map((animeinfo:any) => (
             <SwiperSlide className="homesliderswiperslide" key={animeinfo.id}>
               <Link
                 href={
                   pathname === "/Movies"
-                    ? `/AniDojo/movie/${animeinfo.id.replace("movie/", "")}`
+                    ? `/AniDojo/movie/${animeinfo.id}`
                     : `/AniDojo/anime/${animeinfo.id}`
                 }
               >
                 <Image
-                  width={100}
-                  height={100}
+                  width={500}
+                  height={500}
                   style={{
                     width: "210px",
                     height: "130px",
@@ -194,7 +202,7 @@ export default function CaroselSlider(props: Props) {
                     objectPosition: "center",
                   }}
                   quality={75}
-                  src={pathname === "/" ? animeinfo.image : animeinfo.cover}
+                  src={animeinfo.cover}
                   alt={animeinfo.title}
                 />
                 <div className="homesliderswiperslide-info">
@@ -209,7 +217,7 @@ export default function CaroselSlider(props: Props) {
                     )}
                     <hr />
                     <h4 className="homesliderswiperslide-datentime">
-                      {animeinfo.releaseDate?.substring(0, 4)}
+                      {animeinfo.year.substring(0, 4)}
                     </h4>
                   </span>
                 </div>

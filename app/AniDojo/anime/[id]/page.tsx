@@ -4,23 +4,20 @@ import Link from "next/link";
 import Supabase from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
-import animereq from "@/lib/animereq";
-
-interface umrl {
-  title: string | undefined | any;
-  id: string | any;
-}
+import Tmdb, { tmdbseasondata } from "@/lib/tmdb/tmdb";
+import Image from "next/image";
 
 interface datatype {
-  id: number;
-  tv_series_title: string;
-  season_number: number | any;
-  episode_number: number | any;
-  episode_link: string;
-  episode_id: string;
-  season_id: string;
-  tv_series_id: string;
-  season_quality: string;
+  id?: number;
+  tv_series_title?: string;
+  season_number?: number | any;
+  episode_number?: number | any;
+  episode_link?: string;
+  episode_id?: string;
+  season_id?: string;
+  tv_series_id?: string;
+  season_quality?: string;
+  tmdbanimes_title?: string | any;
 }
 
 type animedes = {
@@ -34,8 +31,7 @@ type animedes = {
   genres: string;
 };
 
-export default function Tv({ params }: { params: umrl }) {
-
+export default function Tv({ params }: { params: { id: any } }) {
   const whichanime = params.id;
 
   const superbase = Supabase();
@@ -45,7 +41,7 @@ export default function Tv({ params }: { params: umrl }) {
   async function fetchsupabase() {
     if (!supabasedata) {
       try {
-        const { data } = await superbase.rpc("fetch_anime");
+        const { data } = await superbase.rpc("get_tmdbanime");
         setSupabasedata(data);
       } catch (error) {
         console.log(error);
@@ -59,8 +55,9 @@ export default function Tv({ params }: { params: umrl }) {
     fetchsupabase();
   });
 
-  const [fetchepsiode, setFetchepisode] = useState<datatype[] | null>(null);
-  const [selectedSeason, setSelectedSeason] = useState<number | null>(null);
+  const [fetchepsiode, setFetchepisode] = useState<datatype | any>(null);
+  const [selectedSeason, setSelectedSeason] = useState<number | any>(null);
+  console.log(selectedSeason);
   const [selectedEpisode, setSelectedEpisode] = useState<datatype | null>(null);
   const [selectedEpisodeDownloadLink, setSelectedEpisodeDownloadLink] =
     useState<string | null>(null);
@@ -73,7 +70,7 @@ export default function Tv({ params }: { params: umrl }) {
     if (!fetchepsiode) {
       if (supabasedata) {
         const rez = supabasedata.filter(
-          (bruh: datatype) => whichanime === bruh.tv_series_title
+          (bruh: datatype) => whichanime === bruh.tmdbanimes_title
         );
         setFetchepisode(rez);
       }
@@ -87,18 +84,23 @@ export default function Tv({ params }: { params: umrl }) {
   useEffect(() => {
     if (selectedSeason !== null) {
       const episodesInSelectedSeason = fetchepsiode?.filter(
-        (episode) => episode.season_number === selectedSeason
+        (episode: any) => episode.season_number === selectedSeason
       );
       setFilteredEpisodes(episodesInSelectedSeason || null);
     }
   }, [selectedSeason, fetchepsiode]);
 
-  const [gugudata, setGugudata] = useState<animedes | null>(null);
+  const [gugudata, setGugudata] = useState<animedes | any>(null);
 
   async function gugu() {
     if (gugudata === null) {
       try {
-        const animeFetch = await animereq({ id: whichanime });
+        // const animeFetch = await animereq({ id: whichanime });
+        const animeType = fetchepsiode.map((lao: any) => lao.tmdbanimes_type);
+        const animeFetch = await Tmdb({
+          id: whichanime,
+          type: animeType[0],
+        });
         setGugudata(animeFetch);
       } catch (error) {
         console.log(error);
@@ -110,7 +112,7 @@ export default function Tv({ params }: { params: umrl }) {
 
   useEffect(() => {
     gugu();
-  }, []);
+  }, [whichanime, fetchepsiode]);
 
   const [expanded, setExpanded] = useState(false);
 
@@ -125,9 +127,9 @@ export default function Tv({ params }: { params: umrl }) {
 
     if (navigator.share) {
       navigator.share({
-        title: 'Share this url',
-        text: 'url: ',
-        url: currentUrl
+        title: "Share this url",
+        text: "url: ",
+        url: currentUrl,
       });
     } else {
       navigator.clipboard.writeText(currentUrl).then(() => {
@@ -137,11 +139,21 @@ export default function Tv({ params }: { params: umrl }) {
     }
   };
 
-  // function backUrl(){
-  //   const previousUrl = history.back()
-  //   console.log(previousUrl)
-  //   return previousUrl
-  // }
+  const [epidata, setEpidata] = useState<any>();
+  console.log(epidata)
+  async function bruh() {
+    if (selectedSeason > 0) {
+      const fetchepdata = await tmdbseasondata({
+        id: whichanime,
+        seasonNo: selectedSeason,
+      });
+      setEpidata(fetchepdata);
+    }
+  }
+
+  useEffect(() => {
+    bruh();
+  }, [whichanime, selectedSeason]);
 
   return (
     <div className={"infopagemain"}>
@@ -158,137 +170,87 @@ export default function Tv({ params }: { params: umrl }) {
           </div>
         </span>
       </div>
-      {copied && <p className={'copiedpopup'}>Url Copied</p>}
+      {copied && <p className={"copiedpopup"}>Url Copied</p>}
 
       {gugudata && (
         <>
           <div className={"infopageposter"}>
-            <img src={gugudata.image} alt="" />
+            <Image
+              width={350}
+              height={350}
+              className="mobileimg"
+              src={gugudata.poster}
+              alt={gugudata.title}
+            />
+            <Image
+              width={800}
+              height={800}
+              className="deskimg"
+              src={gugudata.cover}
+              alt={gugudata.title}
+            />
           </div>
-          <div className={"infopageinfo"}>
-            <div className={"infopagecard"}>
-              <h4 className={"infopagetitle"}>
-                {gugudata.title?.toUpperCase()}
-              </h4>
-              <div className={"infopagegenre"}>
-                <h5>{gugudata.genres[0]}</h5>
-                <hr />
-                <h5>{gugudata.releaseDate}</h5>
-                <hr />
-                <h5>{gugudata.totalEpisodes} Ep</h5>
+          <div className="infosection">
+            <div className="infomain">
+              <div className="infosub">
+                <img src={gugudata.logo} alt="" />
+                <span>
+                  <h5>{gugudata.genre}</h5>
+                  <hr />
+                  <h5>{gugudata.year.substring(0, 4)}</h5>
+                </span>
               </div>
-
+            </div>
+            <div className="infosub2">
+              <div className="description">
+                <p className={expanded ? "more" : "less"}>
+                  {gugudata.description}
+                </p>
+                <button onClick={toggleDescription}>
+                  {expanded ? "Less" : "More"}
+                </button>
+              </div>
+              <hr className="divider" />
               {fetchepsiode && (
-                <div className={"infopageselectbtn"}>
-                  <select
-                    onChange={(e) =>
-                      setSelectedSeason(parseInt(e.target.value))
-                    }
-                    className={"infopagedwnldselect"}
-                  >
-                    <option value="0" hidden>Season</option>
+                <div className="season-select">
+                  <select onChange={(e) => setSelectedSeason(e.target.value)}>
+                    <option value="0" hidden>
+                      Season
+                    </option>
                     {Array.from(
                       new Set(
-                        fetchepsiode.map((episode) => episode.season_number)
+                        fetchepsiode.map(
+                          (episode: any) => episode.season_number
+                        )
                       )
-                    ).map((seasonNumber) => (
-                      <option key={seasonNumber} value={seasonNumber}>
+                    ).map((seasonNumber: any) => (
+                      <option value={seasonNumber} key={seasonNumber}>
                         Season {seasonNumber}
                       </option>
                     ))}
                   </select>
-                  <select
-                    onChange={(e) =>
-                      setSelectedEpisodeDownloadLink(
-                        filteredEpisodes?.find(
-                          (episode) =>
-                            episode.episode_number === parseInt(e.target.value)
-                        )?.episode_link || null
-                      )
-                    }
-                    className={"infopagedwnldselect"}
-                  >
-                    <option value="0" hidden>Episode</option>
-                    {filteredEpisodes
-                      ?.sort((a, b) => a.episode_number - b.episode_number)
-                      .map((episode) => (
-                        <option
-                          key={episode.episode_id}
-                          value={episode.episode_number}
-                        >
-                          Episode {episode.episode_number}
-                        </option>
+                  <div className="episodes-list">
+                    {epidata &&
+                      epidata.map((epis: any) => (
+                        epis.overview ? (
+
+                          <div className="episode" key={epidata.id}>
+                          <img
+                            src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
+                            alt=""
+                            />
+                          <span><h5>Episode {epis.episode_number}</h5> <h5>{epis.air_date}</h5></span>
+                          <h4>{epis.name}</h4>
+                          <p>{epis.overview}</p>
+                          <Link href={"/"}>
+                            <button>Download</button>
+                          </Link>
+                        </div>
+                            ):null
                       ))}
-                  </select>
+                  </div>
                 </div>
               )}
-              {selectedEpisodeDownloadLink && (
-                <div className={"infopagedwnldbtn"}>
-                  <Link href={selectedEpisodeDownloadLink} target="_blank">
-                    <button>Download</button>
-                  </Link>
-                </div>
-              )}
-              <div className={expanded ? "expanded" : "infopageabout"}>
-                <p className={"infopagedes"}>{gugudata.description}</p>
-              </div>
-              <button className={"showMoreButton"} onClick={toggleDescription}>
-                {expanded ? "...Less" : "...More"}
-              </button>
-              {fetchepsiode &&
-                fetchepsiode.some(
-                  (episode) => episode.season_quality === "4k60fps"
-                ) && (
-                  <div className={"infopageaquality"}>
-                    <Icon
-                      icon={"iconoir:modern-tv-4k"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <Icon
-                      icon={"fluent:fps-60-24-filled"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                  </div>
-                )}
-              {fetchepsiode &&
-                fetchepsiode.some(
-                  (episode) => episode.season_quality === "1080p60fps"
-                ) && (
-                  <div className={"infopageaquality"}>
-                    <Icon
-                      icon={"material-symbols:full-hd-outline-rounded"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <Icon
-                      icon={"fluent:fps-60-24-filled"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                  </div>
-                )}
-              {fetchepsiode &&
-                fetchepsiode.some(
-                  (episode) => episode.season_quality === "1080p144fps"
-                ) && (
-                  <div className={"infopageaquality"}>
-                    <Icon
-                      icon={"material-symbols:full-hd-outline-rounded"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <p>144fps</p>
-                  </div>
-                )}
-              {fetchepsiode &&
-                fetchepsiode.some(
-                  (episode) => episode.season_quality === "1080p120fps"
-                ) && (
-                  <div className={"infopageaquality"}>
-                    <Icon
-                      icon={"material-symbols:full-hd-outline-rounded"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <p>120fps</p>
-                  </div>
-                )}
             </div>
           </div>
         </>

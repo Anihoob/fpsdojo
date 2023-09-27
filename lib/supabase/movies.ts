@@ -13,7 +13,7 @@ export default async function Smovie(props:Props) {
   if (props.pathname === "/Movies") {
     try {
       const { data: movie } = await superbase
-        .from("movies")
+        .from("tmdbmovies")
         .select("*")
         .order("id", { ascending: false })
         .limit(5);
@@ -23,7 +23,8 @@ export default async function Smovie(props:Props) {
         const mappedData = movie.map((item: any) => ({
           id: item.id,
           title: item.title,
-          movies_quality: item.movies_quality,
+          type:item.type,
+          quality: item.movies_quality,
         }));
         return mappedData;
       }

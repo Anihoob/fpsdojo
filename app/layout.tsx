@@ -32,7 +32,6 @@ export default function RootLayout({
       </head>
       <body>
         {children}
-        <Bot />
         <Navbar />
       </body>
     </html>
