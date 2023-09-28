@@ -57,14 +57,6 @@ export default function Tv({ params }: { params: { id: any } }) {
 
   const [fetchepsiode, setFetchepisode] = useState<datatype | any>(null);
   const [selectedSeason, setSelectedSeason] = useState<number | any>(null);
-  console.log(selectedSeason);
-  const [selectedEpisode, setSelectedEpisode] = useState<datatype | null>(null);
-  const [selectedEpisodeDownloadLink, setSelectedEpisodeDownloadLink] =
-    useState<string | null>(null);
-
-  const [filteredEpisodes, setFilteredEpisodes] = useState<datatype[] | null>(
-    null
-  );
 
   function fetchAnimeByTitle() {
     if (!fetchepsiode) {
@@ -81,14 +73,7 @@ export default function Tv({ params }: { params: { id: any } }) {
     fetchAnimeByTitle();
   }, [supabasedata, whichanime]);
 
-  useEffect(() => {
-    if (selectedSeason !== null) {
-      const episodesInSelectedSeason = fetchepsiode?.filter(
-        (episode: any) => episode.season_number === selectedSeason
-      );
-      setFilteredEpisodes(episodesInSelectedSeason || null);
-    }
-  }, [selectedSeason, fetchepsiode]);
+
 
   const [gugudata, setGugudata] = useState<animedes | any>(null);
 
@@ -140,7 +125,6 @@ export default function Tv({ params }: { params: { id: any } }) {
   };
 
   const [epidata, setEpidata] = useState<any>();
-  console.log(epidata)
   async function bruh() {
     if (selectedSeason > 0) {
       const fetchepdata = await tmdbseasondata({
@@ -231,9 +215,50 @@ export default function Tv({ params }: { params: { id: any } }) {
                   </select>
                   <div className="episodes-list">
                     {epidata &&
-                      epidata.map((epis: any) => (
-                        epis.overview ? (
+                      epidata.map((epis: any) => {
+                        const episodeWithLink = fetchepsiode.find(
+                          (episode: any) =>
+                            episode.episode_number === epis.episode_number
+                        );
 
+                        if (episodeWithLink) {
+                          return (
+                            <div className="episode" key={epis.id}>
+                              <Image
+                              width={400}
+                              height={400}
+                                src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
+                                alt=""
+                              />
+                              <span>
+                                <h5>Episode {epis.episode_number}</h5>
+                                <h5>{epis.air_date}</h5>
+                              </span>
+                              <h4>{epis.name}</h4>
+                              <p>{epis.overview}</p>
+                              <h5>{episodeWithLink.episode_quality}</h5>
+                              <Link
+                                href={
+                                  fetchepsiode.find(
+                                    (episode: any) =>
+                                      episode.episode_number ===
+                                      epis.episode_number
+                                  )?.episode_link || "/"
+                                }
+                              >
+                                <button>Download</button>
+                              </Link>
+                            </div>
+                          );
+                        } else {
+                          return null;
+                        }
+                      })}
+                  </div>
+                  {/* <div className="episodes-list">
+                    {epidata &&
+                      epidata.map((epis: any) => (
+                        fetchepsiode.find((ifep:any) => ifep.episode_link ) ? (
                           <div className="episode" key={epidata.id}>
                           <img
                             src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
@@ -242,13 +267,14 @@ export default function Tv({ params }: { params: { id: any } }) {
                           <span><h5>Episode {epis.episode_number}</h5> <h5>{epis.air_date}</h5></span>
                           <h4>{epis.name}</h4>
                           <p>{epis.overview}</p>
-                          <Link href={"/"}>
+                          
+                          <Link href={fetchepsiode.find((episode:any)=> episode.episode_number === epis.episode_number)?.episode_link || '/'}>
                             <button>Download</button>
                           </Link>
                         </div>
                             ):null
                       ))}
-                  </div>
+                  </div> */}
                 </div>
               )}
             </div>
