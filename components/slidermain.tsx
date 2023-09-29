@@ -5,8 +5,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/effect-creative";
-import { EffectCreative } from "swiper";
 import "./components.css";
 // import swiper modules
 import { Pagination } from "swiper";
@@ -98,18 +96,7 @@ export default function MainSlider() {
     <>
       <Swiper
         pagination={true}
-        grabCursor={true}
-        effect={"creative"}
-        creativeEffect={{
-          prev: {
-            shadow: true,
-            translate: ["-80%", 0, -1]
-          },
-          next: {
-            translate: ["100%", 0, 0]
-          }
-        }}
-        modules={[Pagination,EffectCreative]}
+        modules={[Pagination]}
         className="homemainsliderswiper"
       >
         {animeData?.map((animedescription: any) => (

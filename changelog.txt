@@ -1,3 +1,6 @@
 major changes tmdb revamped && style
 
 -- asigned download link corresponds to the ep. only fetch data if download link available. some css fixes and changes 
+
+
+--removed effect from swiper(choppyness)
