@@ -40,7 +40,7 @@ import Link from "next/link";
 import Sanime from "@/lib/supabase/anime";
 import Smovie from "@/lib/supabase/movies";
 import Tmdb from "@/lib/tmdb/tmdb";
-import { Redis } from "ioredis";
+
 
 export default function MainSlider() {
   const pathname = usePathname();
