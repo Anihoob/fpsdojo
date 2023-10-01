@@ -54,34 +54,34 @@ export default async function Tmdb(props: Props) {
     // console.log('data fetched from db')
 
     await redis.set(cacheKey, JSON.stringify(combinedData))
-
-    if (props.type === "tv") {
-      return {
-        id: combinedData.id,
-        title: combinedData.name,
-        episodes: combinedData.number_of_episodes,
-        logo: `${imageUrl}${combinedData.extra.logos[0].file_path}`,
-        genre: combinedData.genres[1].name,
-        description: combinedData.overview,
-        year: combinedData.first_air_date,
-        cover: `${imageUrl}${combinedData.extra.backdrops[0].file_path}`,
-        poster: `${imageUrl}${combinedData.extra.posters[0].file_path}`,
-        type: "tv",
-      };
-    } else if (props.type === "movie") {
-      return {
-        id: combinedData.id,
-        title: combinedData.original_title,
-        logo: `${imageUrl}${combinedData.extra.logos[0].file_path}`,
-        genre: combinedData.genres[1].name,
-        description: combinedData.overview,
-        year: combinedData.release_date,
-        cover: `${imageUrl}${combinedData.extra.backdrops[0].file_path}`,
-        poster: `${imageUrl}${combinedData.extra.posters[0].file_path}`,
-        runtime: combinedData.runtime,
-        type: "movie",
-      };
-    }
+    return combinedData
+    // if (props.type === "tv") {
+    //   return {
+    //     id: combinedData.id,
+    //     title: combinedData.name,
+    //     episodes: combinedData.number_of_episodes,
+    //     logo: `${imageUrl}${combinedData.extra.logos[0].file_path}`,
+    //     genre: combinedData.genres[1].name,
+    //     description: combinedData.overview,
+    //     year: combinedData.first_air_date,
+    //     cover: `${imageUrl}${combinedData.extra.backdrops[0].file_path}`,
+    //     poster: `${imageUrl}${combinedData.extra.posters[0].file_path}`,
+    //     type: "tv",
+    //   };
+    // } else if (props.type === "movie") {
+    //   return {
+    //     id: combinedData.id,
+    //     title: combinedData.original_title,
+    //     logo: `${imageUrl}${combinedData.extra.logos[0].file_path}`,
+    //     genre: combinedData.genres[1].name,
+    //     description: combinedData.overview,
+    //     year: combinedData.release_date,
+    //     cover: `${imageUrl}${combinedData.extra.backdrops[0].file_path}`,
+    //     poster: `${imageUrl}${combinedData.extra.posters[0].file_path}`,
+    //     runtime: combinedData.runtime,
+    //     type: "movie",
+    //   };
+    // }
   } catch (error) {
     console.error("Error:", error);
     throw error;
