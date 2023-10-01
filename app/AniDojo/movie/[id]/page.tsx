@@ -59,7 +59,6 @@ export default function Movie({ params }: { params: umrl }) {
       const rez = supabasedata.find(
         (lmao: datatype) => lmao.movie_title === whichmovie
       );
-      console.log(rez)
       setFetchmovie(rez);
     }
   }
@@ -115,9 +114,6 @@ export default function Movie({ params }: { params: umrl }) {
     }
   };
 
-  // function backUrl(){
-  //   history.back()
-  // }
 
   return (
     <div className={"movieinfopagemain"}>
@@ -142,27 +138,27 @@ export default function Movie({ params }: { params: umrl }) {
               width={350}
               height={350}
               className="mobileimg"
-              src={flixData.poster}
-              alt={flixData.title}
+              src={`https://image.tmdb.org/t/p/original${flixData.poster_path}`}
+              alt={flixData.name}
             />
             <Image
               width={700}
               height={700}
               className="deskimg"
-              src={flixData.cover}
-              alt={flixData.title}
+              src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[0].file_path}`}
+              alt={flixData.name}
             />
           </div>
           <div className="movieinfosection">
             <div className="movieinfomain">
               <div className="movieinfosub">
-                <img src={flixData.logo} alt="" />
+                <img src={`https://image.tmdb.org/t/p/original${flixData.extra.logos[0].file_path}`} alt="" />
                 <span>
-                  <h5>{flixData.genre}</h5>
+                  <h5>{flixData.genres[1].name}</h5>
                   <hr />
-                  <h5>{flixData.year.substring(0, 4)}</h5>
+                  <h5>{flixData.release_date.substring(0, 4)}</h5>
                   <hr />
-                  <h5>{flixData.runtime}</h5>
+                  <h5>{flixData.runtime}mins</h5>
                 </span>
                 {fetchmovie && fetchmovie.movies_quality === "1080p60fps" && (
                   <span>
@@ -224,7 +220,7 @@ export default function Movie({ params }: { params: umrl }) {
             </div>
             <div className="movieinfosub2">
             <div className="description">
-            <p className={expanded ? 'more' : 'less'}>{flixData.description}</p>
+            <p className={expanded ? 'more' : 'less'}>{flixData.overview}</p>
             <button onClick={toggleDescription}>{expanded ? 'Less' : 'More'}</button>
             </div>
             <hr className="divider" />

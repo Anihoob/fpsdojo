@@ -40,7 +40,7 @@ import Link from "next/link";
 import Sanime from "@/lib/supabase/anime";
 import Smovie from "@/lib/supabase/movies";
 import Tmdb from "@/lib/tmdb/tmdb";
-
+import { Redis } from "ioredis";
 
 export default function MainSlider() {
   const pathname = usePathname();
@@ -65,12 +65,14 @@ export default function MainSlider() {
       } catch (error) {
         console.error(error);
       }
-    }
-    else if (moviecontainer) {
+    } else if (moviecontainer) {
       try {
         const movieDataPromise = moviecontainer?.map(async (singlemovie) => {
           // const movieFetch = await moviereq({ id: singlemovie.title });
-          const movieFetch = await Tmdb({id:singlemovie.title, type:singlemovie.type})
+          const movieFetch = await Tmdb({
+            id: singlemovie.title,
+            type: singlemovie.type,
+          });
           const moviQuality = singlemovie.quality;
           const withMovieQuality = {
             ...movieFetch,
@@ -110,7 +112,7 @@ export default function MainSlider() {
                   className="deskimg"
                   width={700}
                   height={700}
-                  src={animedescription.cover}
+                  src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
                   quality={75}
                   alt={animedescription.title}
                 />
@@ -118,7 +120,7 @@ export default function MainSlider() {
                   className="mobileimg"
                   width={400}
                   height={400}
-                  src={animedescription.poster}
+                  src={`https://image.tmdb.org/t/p/original${animedescription.poster_path}`}
                   quality={75}
                   alt={animedescription.title}
                 />
@@ -130,7 +132,7 @@ export default function MainSlider() {
                   className="mobileimg"
                   width={350}
                   height={350}
-                  src={animedescription.poster}
+                  src={`https://image.tmdb.org/t/p/original${animedescription.poster_path}`}
                   quality={75}
                   alt={animedescription.title}
                 />
@@ -138,32 +140,46 @@ export default function MainSlider() {
                   className="deskimg"
                   width={700}
                   height={700}
-                  src={animedescription.cover}
+                  src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
                   quality={75}
                   alt={animedescription.title}
                 />
               </>
             )}
-            <div
-              className="homemainsliderinfo"
-            >
+            <div className="homemainsliderinfo">
               <span className="homemainsliderinfo-name">
-                <img src={animedescription.logo} alt="" />
+                <img
+                  src={`https://image.tmdb.org/t/p/original${animedescription.extra.logos[0].file_path}`}
+                  alt=""
+                />
               </span>
 
               <span>
                 {/* {animedescription.type === "Anime" && <h6>Tv</h6>}
                 {animedescription.type === "Movie" && <h6>Movie</h6>} */}
-                <h6>{animedescription.genre}</h6>
-                <h6>{animedescription.year.substring(0, 4)}</h6>
+                <h6>{animedescription.genres[1].name}</h6>
+                {animedescription.first_air_date ? (
+                  <h6>{animedescription.first_air_date.substring(0, 4)}</h6>
+                ) : (
+                  <h6>{animedescription.release_date.substring(0, 4)}</h6>
+                )}
               </span>
               {/* {animedescription.movie_quality && (
                 <span>
                   <h6>{animedescription.movie_quality}</h6>
                 </span>
               )} */}
-              <p className="about">{animedescription.description}</p>
-              <Link href={pathname === '/' ? `AniDojo/anime/${animedescription.id}`:`AniDojo/movie/${animedescription.id}` } className={'btntopage'} >DOWNLOAD</Link>
+              <p className="about">{animedescription.overview}</p>
+              <Link
+                href={
+                  pathname === "/"
+                    ? `AniDojo/anime/${animedescription.id}`
+                    : `AniDojo/movie/${animedescription.id}`
+                }
+                className={"btntopage"}
+              >
+                DOWNLOAD
+              </Link>
             </div>
           </SwiperSlide>
         ))}

@@ -37,7 +37,6 @@ export default function Tv({ params }: { params: { id: any } }) {
   const superbase = Supabase();
 
   const [supabasedata, setSupabasedata] = useState<datatype[]>();
-
   async function fetchsupabase() {
     if (!supabasedata) {
       try {
@@ -163,32 +162,38 @@ export default function Tv({ params }: { params: { id: any } }) {
               width={350}
               height={350}
               className="mobileimg"
-              src={gugudata.poster}
-              alt={gugudata.title}
+              src={`https://image.tmdb.org/t/p/original${gugudata.poster_path}`}
+              alt={gugudata.name}
             />
             <Image
               width={800}
               height={800}
               className="deskimg"
-              src={gugudata.cover}
-              alt={gugudata.title}
+              src={`https://image.tmdb.org/t/p/original${gugudata.extra.backdrops[0].file_path}`}
+              alt={gugudata.name}
             />
           </div>
           <div className="infosection">
             <div className="infomain">
               <div className="infosub">
-                <img src={gugudata.logo} alt="" />
+                <img src={`https://image.tmdb.org/t/p/original${gugudata.extra.logos[0].file_path}`} alt="" />
                 <span>
                   <h5>{gugudata.genre}</h5>
                   <hr />
-                  <h5>{gugudata.year.substring(0, 4)}</h5>
+                  {gugudata.first_air_date ? (
+                    <h5>{gugudata.first_air_date.substring(0, 4)}</h5>
+                    
+                    ):(
+                    <h5>{gugudata.release_date.substring(0, 4)}</h5>
+
+                  )}
                 </span>
               </div>
             </div>
             <div className="infosub2">
               <div className="description">
                 <p className={expanded ? "more" : "less"}>
-                  {gugudata.description}
+                  {gugudata.overview}
                 </p>
                 <button onClick={toggleDescription}>
                   {expanded ? "Less" : "More"}

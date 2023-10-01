@@ -24,7 +24,7 @@ type Props = {
 type animeslider = {
   id?: number;
   title?: string;
-  type?:string;
+  type?: string;
   movies_quality?: string | any;
   description?: string | undefined;
 };
@@ -39,7 +39,7 @@ type animedes = {
   cover?: string | any;
   otherName?: string | any;
   movie_quality?: string | any;
-  year?:string | any
+  year?: string | any;
 };
 
 export default function CaroselSlider(props: Props) {
@@ -66,7 +66,7 @@ export default function CaroselSlider(props: Props) {
             const mappedData: animeslider[] = anime.map((item: any) => ({
               id: item.id,
               title: item.title,
-              type:item.type
+              type: item.type,
               // season: item.seasons,
             }));
             setAnimecontainer(mappedData);
@@ -91,7 +91,7 @@ export default function CaroselSlider(props: Props) {
             const mappedData: animeslider[] = movie.map((item: any) => ({
               id: item.id,
               title: item.title,
-              type:item.type,
+              type: item.type,
               movies_quality: item.movies_quality,
             }));
             setAnimecontainer(mappedData);
@@ -113,49 +113,52 @@ export default function CaroselSlider(props: Props) {
 
   async function fetchDetails() {
     if (!animecontainer) return;
-      if (animeData === null) {
-        try {
-          const animeDataPromise = animecontainer.map(async (singleanime) => {
-            // const animeFetch = animereq({ id: singleanime.title });
-            const animeFetch = await Tmdb({
-              id: singleanime.title,
-              type: singleanime.type,
-            });
-            return animeFetch;
+    if (animeData === null) {
+      try {
+        const animeDataPromise = animecontainer.map(async (singleanime) => {
+          // const animeFetch = animereq({ id: singleanime.title });
+          const animeFetch = await Tmdb({
+            id: singleanime.title,
+            type: singleanime.type,
           });
-          const animeData = await Promise.all(animeDataPromise);
-          setAnimeData(animeData);
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        return;
+          return animeFetch;
+        });
+        const animeData = await Promise.all(animeDataPromise);
+        setAnimeData(animeData);
+      } catch (error) {
+        console.error(error);
       }
-      if (animeData === null) {
-        try {
-          const movieDataPromise = animecontainer.map(async (singlemovie) => {
-            // const movieFetch = await moviereq({ id: singlemovie.title });
-            const movieFetch = await Tmdb({id:singlemovie.title, type:singlemovie.type})
-            const moviQuality = singlemovie.movies_quality;
-            const withMovieQuality = {
-              ...movieFetch,
-              movie_quality: moviQuality,
-            };
-            return withMovieQuality;
+    } else {
+      return;
+    }
+    if (animeData === null) {
+      try {
+        const movieDataPromise = animecontainer.map(async (singlemovie) => {
+          // const movieFetch = await moviereq({ id: singlemovie.title });
+          const movieFetch = await Tmdb({
+            id: singlemovie.title,
+            type: singlemovie.type,
           });
-          const MovieData = await Promise.all(movieDataPromise);
-          setAnimeData(MovieData);
-        } catch (error) {
-          console.log(error);
-        }
-      } else {
-        return;
+          const moviQuality = singlemovie.movies_quality;
+          const withMovieQuality = {
+            ...movieFetch,
+            movie_quality: moviQuality,
+          };
+          return withMovieQuality;
+        });
+        const MovieData = await Promise.all(movieDataPromise);
+        setAnimeData(MovieData);
+      } catch (error) {
+        console.log(error);
       }
+    } else {
+      return;
+    }
   }
 
   useEffect(() => {
     fetchDetails();
-  },);
+  });
 
   return (
     <>
@@ -183,7 +186,7 @@ export default function CaroselSlider(props: Props) {
           }}
           className="homesliderswiper"
         >
-          {animeData?.map((animeinfo:any) => (
+          {animeData?.map((animeinfo: any) => (
             <SwiperSlide className="homesliderswiperslide" key={animeinfo.id}>
               <Link
                 href={
@@ -202,12 +205,12 @@ export default function CaroselSlider(props: Props) {
                     objectPosition: "center",
                   }}
                   quality={75}
-                  src={animeinfo.cover}
-                  alt={animeinfo.title}
+                  src={`https://image.tmdb.org/t/p/original${animeinfo.extra.backdrops[0].file_path}`}
+                  alt={animeinfo.name}
                 />
                 <div className="homesliderswiperslide-info">
                   <h4 className="homesliderswiperslide-name">
-                    {animeinfo.title}
+                    {animeinfo.name}
                   </h4>
                   <span>
                     {animeinfo.movie_quality && (
@@ -216,9 +219,15 @@ export default function CaroselSlider(props: Props) {
                       </h4>
                     )}
                     <hr />
-                    <h4 className="homesliderswiperslide-datentime">
-                      {animeinfo.year.substring(0, 4)}
-                    </h4>
+                    {animeinfo.first_air_date ? (
+                      <h4 className="homesliderswiperslide-datentime">
+                        {animeinfo.first_air_date.substring(0,4)}
+                      </h4>
+                    ) : (
+                      <h4 className="homesliderswiperslide-datentime">
+                        {animeinfo.release_date.substring(0,4)}
+                      </h4>
+                    )}
                   </span>
                 </div>
               </Link>

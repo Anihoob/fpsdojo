@@ -1,4 +1,4 @@
-import CaroselSlider from '@/components/caroselslider'
+ import CaroselSlider from '@/components/caroselslider'
 import Styles from './home.module.css'
 import MainSlider from '@/components/slidermain'
 
