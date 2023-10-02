@@ -97,7 +97,6 @@ export default function MainSlider() {
   return (
     <>
       <Swiper
-      speed={500}
       loop={true}
         pagination={true}
         modules={[Pagination]}
