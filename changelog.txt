@@ -10,3 +10,6 @@ major changes tmdb revamped && style
 
 --caching added to supabase data
 2/10/23
+
+--smooth scroll on swiper
+3/10/23

@@ -164,6 +164,7 @@ export default function CaroselSlider(props: Props) {
     <>
       {animeData !== null ? (
         <Swiper
+        speed={600}
           spaceBetween={20}
           slidesPerView={1.6}
           breakpoints={{
@@ -177,11 +178,11 @@ export default function CaroselSlider(props: Props) {
             },
             1024: {
               spaceBetween: 20,
-              slidesPerView: 4,
+              slidesPerView: 3.5,
             },
             1440: {
               spaceBetween: 20,
-              slidesPerView: 5,
+              slidesPerView: 4.5,
             },
           }}
           className="homesliderswiper"
@@ -196,11 +197,26 @@ export default function CaroselSlider(props: Props) {
                 }
               >
                 <Image
+                className="mobile"
                   width={500}
                   height={500}
                   style={{
                     width: "210px",
                     height: "130px",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                  quality={75}
+                  src={`https://image.tmdb.org/t/p/original${animeinfo.extra.backdrops[0].file_path}`}
+                  alt={animeinfo.name}
+                />
+                 <Image
+                className="desktop"
+                  width={500}
+                  height={500}
+                  style={{
+                    width: "280px",
+                    height: "170px",
                     objectFit: "cover",
                     objectPosition: "center",
                   }}

@@ -1,3 +1,22 @@
+/* constants */
+
+.mobile{
+  display: block;
+}
+
+.desktop{
+  display: none;
+}
+
+@media screen and (min-width:1024px) {
+  .mobile{
+    display: none;
+  }
+  .desktop{
+    display: block;
+  }
+}
+
 /* Navbar */
 .active {
   color: #e86f00;
@@ -77,6 +96,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
+  transition: all 0.3s ease-in-out;
 }
 
 .homemainsliderswiperslide::after {
@@ -86,7 +106,6 @@
   left: 0%;
   width: 100%;
   height: 300px;
-  /* background: linear-gradient( rgba(0, 0, 0, 0), rgb(0, 0, 0)); */
   background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
   mask: linear-gradient(to top, black 75%, transparent);
   backdrop-filter: blur(10px);
@@ -341,6 +360,13 @@
   height: 5px;
   padding: 0;
   margin: 0;
+}
+
+@media screen and (min-width:1024px) {
+  .homesliderswiper {
+    height: 300px;
+  }
+
 }
 
 /* home slider end */
