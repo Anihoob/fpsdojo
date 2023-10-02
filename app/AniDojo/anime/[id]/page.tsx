@@ -178,7 +178,7 @@ export default function Tv({ params }: { params: { id: any } }) {
               <div className="infosub">
                 <img src={`https://image.tmdb.org/t/p/original${gugudata.extra.logos[0].file_path}`} alt="" />
                 <span>
-                  <h5>{gugudata.genre}</h5>
+                  <h5>{gugudata.genres[0].name}</h5>
                   <hr />
                   {gugudata.first_air_date ? (
                     <h5>{gugudata.first_air_date.substring(0, 4)}</h5>

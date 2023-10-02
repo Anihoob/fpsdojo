@@ -16,6 +16,7 @@ h3,
 h4,
 h5,
 h6,
+hr,
 p,
 figure,
 blockquote,
@@ -344,6 +345,28 @@ select {
     height: 600px;
   }
 
+  .infomain::before{
+    height: 300px;
+  }
+
+  
+  .infosub{
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .infosub > img{
+    width: 300px;
+    height: 100px;
+    object-position: left;
+  }
+  
+  .infosub > span{
+    width: 300px;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .infopageposter .deskimg {
     width: 100%;
     height: 100%;
@@ -354,6 +377,17 @@ select {
   .infopageposter .mobileimg {
     display: none;
   }
+  .episodes-list{
+      scrollbar-width: thin; 
+
+  }
+  
+  .episodes-list::-webkit-scrollbar { 
+    display: block;  
+    color: white;
+    background: white;
+  }
+
   
 
 }

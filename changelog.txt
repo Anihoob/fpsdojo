@@ -7,3 +7,6 @@ major changes tmdb revamped && style
 
 --added redis caching
 2/10/23
+
+--caching added to supabase data
+2/10/23

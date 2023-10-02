@@ -52,7 +52,7 @@ export default function MainSlider() {
     const moviecontainer = await Smovie({ pathname: pathname });
     if (animecontainer) {
       try {
-        const animeDataPromise = animecontainer?.map(async (singleanime) => {
+        const animeDataPromise = animecontainer?.map(async (singleanime :any) => {
           // const animeFetch = await animereq({ id: singleanime.title });
           const animeFetch = await Tmdb({
             id: singleanime.title,
@@ -67,7 +67,7 @@ export default function MainSlider() {
       }
     } else if (moviecontainer) {
       try {
-        const movieDataPromise = moviecontainer?.map(async (singlemovie) => {
+        const movieDataPromise = moviecontainer?.map(async (singlemovie:any) => {
           // const movieFetch = await moviereq({ id: singlemovie.title });
           const movieFetch = await Tmdb({
             id: singlemovie.title,
@@ -97,6 +97,8 @@ export default function MainSlider() {
   return (
     <>
       <Swiper
+      speed={500}
+      loop={true}
         pagination={true}
         modules={[Pagination]}
         className="homemainsliderswiper"
