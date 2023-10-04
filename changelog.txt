@@ -13,3 +13,6 @@ major changes tmdb revamped && style
 
 --smooth scroll on swiper
 3/10/23
+
+--some movie page css
+5/10/23

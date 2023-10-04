@@ -570,6 +570,32 @@ select {
   background: rgba(255, 255, 255, 0.3);
 }
 
+.download {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 0rem;
+}
+
+.download span{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.download span img{
+  width: 100%;
+  border-radius: 20px;
+}
+
+.download span a{
+  background: #fff;
+  border-radius: 5px;
+  padding: .5rem 1rem;
+  font-weight: 600;
+
+}
 
 /* 
 .movieinfopageinfo {

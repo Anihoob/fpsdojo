@@ -114,7 +114,6 @@ export default function Movie({ params }: { params: umrl }) {
     }
   };
 
-
   return (
     <div className={"movieinfopagemain"}>
       <div className={"movieinfopageoptions"}>
@@ -152,9 +151,12 @@ export default function Movie({ params }: { params: umrl }) {
           <div className="movieinfosection">
             <div className="movieinfomain">
               <div className="movieinfosub">
-                <img src={`https://image.tmdb.org/t/p/original${flixData.extra.logos[0].file_path}`} alt="" />
+                <img
+                  src={`https://image.tmdb.org/t/p/original${flixData.extra.logos[0].file_path}`}
+                  alt=""
+                />
                 <span>
-                  <h5>{flixData.genres[1].name}</h5>
+                  <h5>{flixData.genres[0].name}</h5>
                   <hr />
                   <h5>{flixData.release_date.substring(0, 4)}</h5>
                   <hr />
@@ -219,92 +221,26 @@ export default function Movie({ params }: { params: umrl }) {
               </div>
             </div>
             <div className="movieinfosub2">
-            <div className="description">
-            <p className={expanded ? 'more' : 'less'}>{flixData.overview}</p>
-            <button onClick={toggleDescription}>{expanded ? 'Less' : 'More'}</button>
-            </div>
-            <hr className="divider" />
-            <div className="download">
-              <h4>Download</h4>
-            </div>
+              <div className="description">
+                <p className={expanded ? "more" : "less"}>
+                  {flixData.overview}
+                </p>
+                <button onClick={toggleDescription}>
+                  {expanded ? "Less" : "More"}
+                </button>
+              </div>
+              <hr className="divider" />
+              <div className="download">
+                <span>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[2].file_path}`}
+                    alt={flixData.name}
+                  />
+                  <Link href={fetchmovie?.download_link ? fetchmovie?.download_link : '/Movies' }>Download</Link>
+                </span>
+              </div>
             </div>
           </div>
-          {/* <div className={"movieinfopageinfo"}>
-            <div className={"movieinfopagecard"}>
-              <div className={"movieinfopagetitle"}>
-                <img src={flixData.logo} alt="" /></div>
-              <div className={"movieinfopagegenre"}>
-                <h5>{flixData.genre}</h5>
-                <hr />
-                <h5>{flixData.year.substring(0,4)}</h5>
-                <hr />
-                <h5>{flixData.runtime}</h5>
-              </div>
-              {fetchmovie && fetchmovie.download_link && (
-                <div className={"movieinfopagedwnldbtn"}>
-                  <Link href={fetchmovie.download_link} target="_blank">
-                    <button>Download</button>
-                  </Link>
-                </div>
-              )}
-              <div className={expanded ? "expanded" : "movieinfopageabout"}>
-                <p>{flixData.description}</p>
-              </div>
-              <button className={"showMoreButton"} onClick={toggleDescription}>
-                {expanded ? "...Less" : "...More"}
-              </button>
-              {fetchmovie && (
-                fetchmovie.movies_quality === "1080p60fps" && (
-                  <div className={"movieinfopageaquality"}>
-                    <Icon
-                      icon={"material-symbols:full-hd-outline-rounded"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <Icon
-                      icon={"fluent:fps-60-24-filled"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                  </div>
-                )
-              )}
-              {fetchmovie && (
-                fetchmovie.movies_quality === "4k60fps" && (
-                  <div className={"movieinfopageaquality"}>
-                  <Icon
-                    icon={"iconoir:modern-tv-4k"}
-                    style={{ fontSize: "30px", color: "white" }}
-                  />
-                  <Icon
-                    icon={"fluent:fps-60-24-filled"}
-                    style={{ fontSize: "30px", color: "white" }}
-                  />
-                </div>
-                )
-              )}
-              {fetchmovie && (
-                fetchmovie.movies_quality === "1080p144fps" && (
-                  <div className={"movieinfopageaquality"}>
-                  <Icon
-                    icon={"material-symbols:full-hd-outline-rounded"}
-                    style={{ fontSize: "30px", color: "white" }}
-                  />
-                  <p>144fps</p>
-                </div>
-                )
-              )}
-              {fetchmovie && (
-                fetchmovie.movies_quality === "1080p120fps" && (
-                  <div className={"movieinfopageaquality"}>
-                    <Icon
-                      icon={"material-symbols:full-hd-outline-rounded"}
-                      style={{ fontSize: "30px", color: "white" }}
-                    />
-                    <p>120fps</p>
-                  </div>
-                )
-              )}
-            </div>
-          </div> */}
         </>
       )}
     </div>
