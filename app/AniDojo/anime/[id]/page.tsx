@@ -55,7 +55,10 @@ export default function Tv({ params }: { params: { id: any } }) {
   });
 
   const [fetchepsiode, setFetchepisode] = useState<datatype | any>(null);
-  const [selectedSeason, setSelectedSeason] = useState<number | any>(null);
+  const ifMovie = fetchepsiode?.map((lao: any) => lao.season_number)
+  const ifMoviel = fetchepsiode?.map((lao: any) => lao.episode_link)
+  console.log(ifMoviel)
+  const [selectedSeason, setSelectedSeason] = useState<number | any>(0);
 
   function fetchAnimeByTitle() {
     if (!fetchepsiode) {
@@ -71,8 +74,6 @@ export default function Tv({ params }: { params: { id: any } }) {
   useEffect(() => {
     fetchAnimeByTitle();
   }, [supabasedata, whichanime]);
-
-
 
   const [gugudata, setGugudata] = useState<animedes | any>(null);
 
@@ -176,16 +177,17 @@ export default function Tv({ params }: { params: { id: any } }) {
           <div className="infosection">
             <div className="infomain">
               <div className="infosub">
-                <img src={`https://image.tmdb.org/t/p/original${gugudata.extra.logos[0].file_path}`} alt="" />
+                <img
+                  src={`https://image.tmdb.org/t/p/original${gugudata.extra.logos[0].file_path}`}
+                  alt=""
+                />
                 <span>
                   <h5>{gugudata.genres[0].name}</h5>
                   <hr />
                   {gugudata.first_air_date ? (
                     <h5>{gugudata.first_air_date.substring(0, 4)}</h5>
-                    
-                    ):(
+                  ) : (
                     <h5>{gugudata.release_date.substring(0, 4)}</h5>
-
                   )}
                 </span>
               </div>
@@ -200,7 +202,7 @@ export default function Tv({ params }: { params: { id: any } }) {
                 </button>
               </div>
               <hr className="divider" />
-              {fetchepsiode && (
+              {fetchepsiode && ifMovie != 0 ? (
                 <div className="season-select">
                   <select onChange={(e) => setSelectedSeason(e.target.value)}>
                     <option value="0" hidden>
@@ -221,7 +223,11 @@ export default function Tv({ params }: { params: { id: any } }) {
                   <div className="episodes-list">
                     {epidata &&
                       epidata.map((epis: any) => {
-                        const episodeWithLink = fetchepsiode.find(
+                        const seasonEpisodes = fetchepsiode.filter(
+                          (episode: any) =>
+                            episode.season_number === parseInt(selectedSeason)
+                        );
+                        const episodeWithLink = seasonEpisodes.find(
                           (episode: any) =>
                             episode.episode_number === epis.episode_number
                         );
@@ -230,8 +236,8 @@ export default function Tv({ params }: { params: { id: any } }) {
                           return (
                             <div className="episode" key={epis.id}>
                               <Image
-                              width={400}
-                              height={400}
+                                width={400}
+                                height={400}
                                 src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
                                 alt=""
                               />
@@ -244,11 +250,9 @@ export default function Tv({ params }: { params: { id: any } }) {
                               <h5>{episodeWithLink.episode_quality}</h5>
                               <Link
                                 href={
-                                  fetchepsiode.find(
-                                    (episode: any) =>
-                                      episode.episode_number ===
-                                      epis.episode_number
-                                  )?.episode_link || "/"
+                                  episodeWithLink.episode_link
+                                    ? episodeWithLink.episode_link
+                                    : "/"
                                 }
                               >
                                 <button>Download</button>
@@ -260,27 +264,17 @@ export default function Tv({ params }: { params: { id: any } }) {
                         }
                       })}
                   </div>
-                  {/* <div className="episodes-list">
-                    {epidata &&
-                      epidata.map((epis: any) => (
-                        fetchepsiode.find((ifep:any) => ifep.episode_link ) ? (
-                          <div className="episode" key={epidata.id}>
-                          <img
-                            src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
-                            alt=""
-                            />
-                          <span><h5>Episode {epis.episode_number}</h5> <h5>{epis.air_date}</h5></span>
-                          <h4>{epis.name}</h4>
-                          <p>{epis.overview}</p>
-                          
-                          <Link href={fetchepsiode.find((episode:any)=> episode.episode_number === epis.episode_number)?.episode_link || '/'}>
-                            <button>Download</button>
-                          </Link>
-                        </div>
-                            ):null
-                      ))}
-                  </div> */}
                 </div>
+              ):(
+                <div className="download">
+                <span>
+                  <img
+                    src={`https://image.tmdb.org/t/p/original${gugudata.extra.backdrops[2].file_path}`}
+                    alt={gugudata.name}
+                  />
+                  <Link href={ifMoviel[0] ? ifMoviel[0] : "/"}>Download</Link>
+                </span>
+              </div>
               )}
             </div>
           </div>

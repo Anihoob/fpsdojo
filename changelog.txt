@@ -16,3 +16,6 @@ major changes tmdb revamped && style
 
 --some movie page css
 5/10/23
+
+-- conditional rendering if movie(anime)
+6/10/23
