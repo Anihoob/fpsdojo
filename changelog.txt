@@ -19,3 +19,5 @@ major changes tmdb revamped && style
 
 -- conditional rendering if movie(anime)
 6/10/23
+
+-- few fixes

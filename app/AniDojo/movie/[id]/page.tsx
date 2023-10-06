@@ -145,7 +145,7 @@ export default function Movie({ params }: { params: umrl }) {
               height={700}
               className="deskimg"
               src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[0].file_path}`}
-              alt={flixData.name}
+              alt={flixData.title}
             />
           </div>
           <div className="movieinfosection">
@@ -236,6 +236,7 @@ export default function Movie({ params }: { params: umrl }) {
                     src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[2].file_path}`}
                     alt={flixData.name}
                   />
+                  <h4>{flixData.title}</h4>
                   <Link href={fetchmovie?.download_link ? fetchmovie?.download_link : '/Movies' }>Download</Link>
                 </span>
               </div>

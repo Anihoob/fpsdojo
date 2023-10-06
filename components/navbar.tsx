@@ -37,37 +37,37 @@ export default function Navbar() {
             <h6 className={pathname === "/Movies" ? "active" : ""}>MOVIES</h6>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link href={"/Search"}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 256 256"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 256 256"
             >
-            <path
-              fill={pathname === "/Search" ? "#e86f00" : "white"}
-              d="m229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32ZM40 112a72 72 0 1 1 72 72a72.08 72.08 0 0 1-72-72Z"
+              <path
+                fill={pathname === "/Search" ? "#e86f00" : "white"}
+                d="m229.66 218.34l-50.07-50.06a88.11 88.11 0 1 0-11.31 11.31l50.06 50.07a8 8 0 0 0 11.32-11.32ZM40 112a72 72 0 1 1 72 72a72.08 72.08 0 0 1-72-72Z"
               />
-          </svg>
-          <h6 className={pathname === "/Search" ? "active" : ""}>SEARCH</h6>
-              </Link>
-        </li>
+            </svg>
+            <h6 className={pathname === "/Search" ? "active" : ""}>SEARCH</h6>
+          </Link>
+        </li> */}
         <li>
           <Link href={"/Team"}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 20 20"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 20 20"
             >
-            <path
-              fill={pathname === "/Team" ? "#e86f00" : "white"}
-              d="M6.17 4.276A.5.5 0 0 1 6.619 4h6.764a.5.5 0 0 1 .447.276l1.224 2.448a.5.5 0 1 0 .894-.448L14.724 3.83A1.5 1.5 0 0 0 13.382 3H6.618a1.5 1.5 0 0 0-1.342.83L4.053 6.275a.5.5 0 0 0 .894.448l1.224-2.448Zm11.248 4.717c-5.946-.99-8.89-.99-14.836 0a.5.5 0 0 1-.164-.986c6.054-1.01 9.11-1.01 15.164 0a.5.5 0 1 1-.164.986ZM5.5 11a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5ZM2 13.5a3.5 3.5 0 0 1 6.965-.5h2.07a3.5 3.5 0 1 1 0 1h-2.07A3.5 3.5 0 0 1 2 13.5ZM14.5 11a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5Z"
+              <path
+                fill={pathname === "/Team" ? "#e86f00" : "white"}
+                d="M6.17 4.276A.5.5 0 0 1 6.619 4h6.764a.5.5 0 0 1 .447.276l1.224 2.448a.5.5 0 1 0 .894-.448L14.724 3.83A1.5 1.5 0 0 0 13.382 3H6.618a1.5 1.5 0 0 0-1.342.83L4.053 6.275a.5.5 0 0 0 .894.448l1.224-2.448Zm11.248 4.717c-5.946-.99-8.89-.99-14.836 0a.5.5 0 0 1-.164-.986c6.054-1.01 9.11-1.01 15.164 0a.5.5 0 1 1-.164.986ZM5.5 11a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5ZM2 13.5a3.5 3.5 0 0 1 6.965-.5h2.07a3.5 3.5 0 1 1 0 1h-2.07A3.5 3.5 0 0 1 2 13.5ZM14.5 11a2.5 2.5 0 1 0 0 5a2.5 2.5 0 0 0 0-5Z"
               />
-          </svg>
-          <h6 className={pathname === "/Team" ? "active" : ""}>TEAM</h6>
-              </Link>
+            </svg>
+            <h6 className={pathname === "/Team" ? "active" : ""}>TEAM</h6>
+          </Link>
         </li>
       </div>
     </div>

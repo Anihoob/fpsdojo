@@ -226,7 +226,7 @@ export default function CaroselSlider(props: Props) {
                 />
                 <div className="homesliderswiperslide-info">
                   <h4 className="homesliderswiperslide-name">
-                    {animeinfo.name ? animeinfo.name : animeinfo.original_title}
+                    {animeinfo.name ? animeinfo.name : animeinfo.title}
                   </h4>
                   <span>
                     {animeinfo.movie_quality && (

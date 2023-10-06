@@ -57,7 +57,6 @@ export default function Tv({ params }: { params: { id: any } }) {
   const [fetchepsiode, setFetchepisode] = useState<datatype | any>(null);
   const ifMovie = fetchepsiode?.map((lao: any) => lao.season_number)
   const ifMoviel = fetchepsiode?.map((lao: any) => lao.episode_link)
-  console.log(ifMoviel)
   const [selectedSeason, setSelectedSeason] = useState<number | any>(0);
 
   function fetchAnimeByTitle() {
@@ -272,6 +271,7 @@ export default function Tv({ params }: { params: { id: any } }) {
                     src={`https://image.tmdb.org/t/p/original${gugudata.extra.backdrops[2].file_path}`}
                     alt={gugudata.name}
                   />
+                  <h4>{gugudata.title}</h4>
                   <Link href={ifMoviel[0] ? ifMoviel[0] : "/"}>Download</Link>
                 </span>
               </div>
