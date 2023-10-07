@@ -124,6 +124,7 @@ export default function Tv({ params }: { params: { id: any } }) {
   };
 
   const [epidata, setEpidata] = useState<any>();
+
   async function bruh() {
     if (selectedSeason > 0) {
       const fetchepdata = await tmdbseasondata({
@@ -159,8 +160,8 @@ export default function Tv({ params }: { params: { id: any } }) {
         <>
           <div className={"infopageposter"}>
             <Image
-              width={350}
-              height={350}
+              width={300}
+              height={300}
               className="mobileimg"
               src={`https://image.tmdb.org/t/p/original${gugudata.poster_path}`}
               alt={gugudata.name}
@@ -235,8 +236,8 @@ export default function Tv({ params }: { params: { id: any } }) {
                           return (
                             <div className="episode" key={epis.id}>
                               <Image
-                                width={400}
-                                height={400}
+                                width={200}
+                                height={200}
                                 src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
                                 alt=""
                               />
@@ -245,7 +246,6 @@ export default function Tv({ params }: { params: { id: any } }) {
                                 <h5>{epis.air_date}</h5>
                               </span>
                               <h4>{epis.name}</h4>
-                              <p>{epis.overview}</p>
                               <h5>{episodeWithLink.episode_quality}</h5>
                               <Link
                                 href={

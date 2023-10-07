@@ -138,7 +138,7 @@ export default function Movie({ params }: { params: umrl }) {
               height={350}
               className="mobileimg"
               src={`https://image.tmdb.org/t/p/original${flixData.poster_path}`}
-              alt={flixData.name}
+              alt={flixData.title}
             />
             <Image
               width={700}

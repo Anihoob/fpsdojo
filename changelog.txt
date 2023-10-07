@@ -21,3 +21,6 @@ major changes tmdb revamped && style
 6/10/23
 
 -- few fixes
+
+-- some image load handling and few fixes
+8/10/2023
