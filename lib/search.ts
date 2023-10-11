@@ -1,25 +1,38 @@
-interface Props{
-    title:string;
+import Supabase from "./supabase/supabase";
+
+type searchProps = {
+  query: string;
+};
+
+interface Tmdb {
+  id: number;
+  title: string;
+  type: string;
 }
 
+export default async function search(props: searchProps) {
+  const query = props.query.toLowerCase();
+  const superbase = Supabase();
 
-export async function searchAnime(props:Props) {
-    const res = await fetch(`https://api-dojoverse.vercel.app/anime/gogoanime/${props.title}`)
-    const data = await res.json()
-    if (data && Array.isArray(data.results)) {
-        const result = data.results
-        return result.map((bruh:any)=> bruh.id)
-    }
+  const { data: anime } = await superbase.from("tmdbanimes").select("*");
+  const { data: movie } = await superbase.from("tmdbmovies").select("*");
+
+  const mappedAnime = anime?.map((item: any) => ({
+    id: item.title,
+    title: item.anime_name,
+    type: item.type
+  }));
+
+  const mappedMovie = movie?.map((item: any) => ({
+    id: item.title,
+    title: item.movie_name,
+    type: item.type
+  }));
+
+  const merged = [...mappedAnime as any[], ...mappedMovie as any[]];
+
+  const filtered = merged.filter((item: any) => item.title.includes(query));
+  console.log(filtered)
+ return filtered;
+ 
 }
-
-export async function searchMovie(props:Props) {
-    const res = await fetch(`https://api-dojoverse.vercel.app/movies/flixhq/${props.title}`)
-    const data = await res.json()
-    if (data && Array.isArray(data.results)) {
-        const result = data.results
-        return result.map((bruh:any)=> bruh.id)
-    }
-    
-}
-
-

@@ -112,8 +112,8 @@ export default function MainSlider() {
               <>
                 <Image
                   className="deskimg"
-                  width={700}
-                  height={700}
+                  width={900}
+                  height={900}
                   src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
                   quality={75}
                   alt={animedescription.title}
@@ -140,8 +140,8 @@ export default function MainSlider() {
                 />
                 <Image
                   className="deskimg"
-                  width={700}
-                  height={700}
+                  width={900}
+                  height={900}
                   src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
                   quality={75}
                   alt={animedescription.title}

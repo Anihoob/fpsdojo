@@ -37,7 +37,7 @@ export default function Navbar() {
             <h6 className={pathname === "/Movies" ? "active" : ""}>MOVIES</h6>
           </Link>
         </li>
-        {/* <li>
+        <li>
           <Link href={"/Search"}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export default function Navbar() {
             </svg>
             <h6 className={pathname === "/Search" ? "active" : ""}>SEARCH</h6>
           </Link>
-        </li> */}
+        </li>
         <li>
           <Link href={"/Team"}>
             <svg

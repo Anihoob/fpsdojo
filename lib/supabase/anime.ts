@@ -10,7 +10,6 @@ const superbase = Supabase();
 export default async function anime(props: Props) {
   const redis = new Redis({
     url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-
     token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
   });
   if (props.pathname === "/") {

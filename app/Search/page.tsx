@@ -3,98 +3,62 @@ import { useEffect, useState } from "react";
 import Styles from "./search.module.css";
 import Supabase from "@/lib/supabase/supabase";
 import Link from "next/link";
-import animereq from "@/lib/animereq";
-import moviereq from "@/lib/moviereq";
-import { searchAnime, searchMovie } from "@/lib/search";
 import Image from "next/image";
-
-type searchCard = {
-  id?: number | string | any;
-  title: string;
-  description?: string;
-  image?: string | any;
-  name?: string;
-  releaseDate?: string;
-  cover?: string | any;
-  type?: string;
-  otherName?: string | any;
-};
+import search from "@/lib/search";
+import Tmdb from "@/lib/tmdb/tmdb";
 
 export default function SearchPage() {
-  const superbase = Supabase();
   const [searchitem, setSearchitem] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<searchCard[]>([]);
+  const [searchResults, setSearchResults] = useState<any>();
+  console.log(searchResults)
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-
   async function fetchResults() {
-    if (searchitem.trim() === "" || searchitem.length < 2) {
-      setSearchResults([]);
-      return;
-    }
     setIsLoading(true);
-    const updatedSearchResults: searchCard[] = [];
-    const { data: movies } = await superbase.from("movies").select("title");
-    const { data: animeData } = await superbase
-      .from("tv_series")
-      .select("title");
-
-    const movieTitles = movies?.map((movie) => movie.title);
-    const animeTitles = animeData?.map((anime) => anime.title);
-
-    const searchMovieResults = await searchMovie({ title: searchitem });
-    const searchAnimeResults = await searchAnime({ title: searchitem });
-
-    if (movieTitles && animeTitles && searchitem.length > 1) {
-      for (const title of searchMovieResults) {
-        if (movieTitles?.includes(title)) {
-          const movieFetch = await moviereq({ id: title });
-          updatedSearchResults.push(movieFetch);
-        }
+    const searchit = await search({query:searchitem}) 
+    if(searchit){
+      try{
+        const mapdata = searchit.map(async( lmao:any)=> {
+          const fetchdata = await Tmdb({id:lmao.id, type:lmao.type})
+          return fetchdata
+        })
+        const promisedData = await Promise.all(mapdata)
+        setSearchResults(promisedData)
+        setIsLoading(false)
+      }catch(error){
+        console.log(error)
       }
-
-      if (updatedSearchResults.length === 0) {
-        for (const title of searchAnimeResults) {
-          if (animeTitles?.includes(title)) {
-            const animeFetch = await animereq({ id: title });
-            updatedSearchResults.push(animeFetch);
-          }
-        }
-      }
-      setSearchResults(updatedSearchResults);
-      setIsLoading(false);
     }
   }
-
-  useEffect(() => {
-    const Search = setTimeout(() => {
-      fetchResults();
-    },200);
-
-    return () => clearTimeout(Search);
-  }, [searchitem]);
 
   return (
     <div className={Styles.searchmain}>
       <div className={Styles.search}>
         <h4 className={Styles.searchTitle}>Search</h4>
-        <input
-          onChange={(e) => setSearchitem((e.target as HTMLInputElement).value)}
-          type="search"
-          className={Styles.searchbar}
-          placeholder="Search Anime/Movies"
-          value={searchitem}
-        />
+        <span className={Styles.searchwithbtn}>
+          <input
+            onChange={(e) =>
+              setSearchitem((e.target as HTMLInputElement).value)
+            }
+            type="search"
+            className={Styles.searchbar}
+            placeholder="Search Anime/Movies"
+            value={searchitem}
+          />
+          <button onClick={fetchResults} className={Styles.searchbtn}>
+            Search
+          </button>
+        </span>
         <div className={Styles.searched}>
-          {isLoading ? (
+        {isLoading ? (
             <p>Loading...</p>
-          ) : searchResults && searchResults.length > 0 && searchitem ? (
-            searchResults.map((lol) => (
+          ) : searchResults ? (
+            searchResults.map((lol:any) => (
               <Link
                 href={
                   lol.type === "Anime"
                     ? `/AniDojo/anime/${lol.id}`
-                    : `/AniDojo/movie/${lol.id.replace("movie/", "")}`
+                    : `/AniDojo/movie/${lol.id}`
                 }
                 className={Styles.fetchedItem}
               >
@@ -104,22 +68,22 @@ export default function SearchPage() {
                     height={60}
                     quality={75}
                     className={Styles.fetchedImg}
-                    src={lol.image ? lol.image : lol.cover}
+                    src={`https://image.tmdb.org/t/p/original${lol.extra.backdrops[0].file_path}`}
                     alt={lol.title}
                   />
                   <span>
-                    <h4 className={Styles.fetchedTitle}>{lol.title}</h4>
+                    <h4 className={Styles.fetchedTitle}>{lol.name ? lol.name : lol.title}</h4>
                     <h4 className={Styles.fetchedTitle}>
-                      {lol.releaseDate?.substring(0, 4)}
+                      {lol.first_air_date ? lol.first_air_date.substring(0,4): lol.release_date.substring(0,4)}
                     </h4>
                   </span>
                 </div>
                 <hr className={Styles.fetcheddivider} />
               </Link>
             ))
-          ) : !isLoading && searchitem.length > 1 && searchResults.length === 0  ? (
-            <p>No Results</p>
-          ) : "Search Something"}
+          ) : !isLoading && !searchResults && (
+            <p>Search Something</p>
+          )}
         </div>
       </div>
     </div>
