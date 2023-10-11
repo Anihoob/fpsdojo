@@ -152,7 +152,7 @@ export default function MainSlider() {
               <span className="homemainsliderinfo-name">
                 <img
                   src={`https://image.tmdb.org/t/p/original${animedescription.extra.logos[0].file_path}`}
-                  alt=""
+                  alt={animedescription.title}
                 />
               </span>
 

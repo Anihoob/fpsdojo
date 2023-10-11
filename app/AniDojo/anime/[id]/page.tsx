@@ -179,7 +179,7 @@ export default function Tv({ params }: { params: { id: any } }) {
               <div className="infosub">
                 <img
                   src={`https://image.tmdb.org/t/p/original${gugudata.extra.logos[0].file_path}`}
-                  alt=""
+                  alt={gugudata.name}
                 />
                 <span>
                   <h5>{gugudata.genres[0].name}</h5>
@@ -239,7 +239,7 @@ export default function Tv({ params }: { params: { id: any } }) {
                                 width={200}
                                 height={200}
                                 src={`https://image.tmdb.org/t/p/original${epis.still_path}`}
-                                alt=""
+                                alt={epis.name}
                               />
                               <span>
                                 <h5>Episode {epis.episode_number}</h5>

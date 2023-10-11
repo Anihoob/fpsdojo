@@ -9,16 +9,17 @@ import Tmdb from "@/lib/tmdb/tmdb";
 
 export default function SearchPage() {
   const [searchitem, setSearchitem] = useState<string>("");
+  const [searchedtype, setSearchedtype] = useState<string>('')
   const [searchResults, setSearchResults] = useState<any>();
-  console.log(searchResults)
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function fetchResults() {
     setIsLoading(true);
     const searchit = await search({query:searchitem}) 
-    if(searchit){
+    if(searchit && Array.isArray(searchit)){
       try{
         const mapdata = searchit.map(async( lmao:any)=> {
+          setSearchedtype(lmao.class)
           const fetchdata = await Tmdb({id:lmao.id, type:lmao.type})
           return fetchdata
         })
@@ -55,10 +56,10 @@ export default function SearchPage() {
           ) : searchResults ? (
             searchResults.map((lol:any) => (
               <Link
-                href={
-                  lol.type === "Anime"
-                    ? `/AniDojo/anime/${lol.id}`
-                    : `/AniDojo/movie/${lol.id}`
+              key={lol.id}
+                href={searchedtype === 'anime' ?
+                `/AniDojo/anime/${lol.id}`:
+                `/AniDojo/movie/${lol.id}`
                 }
                 className={Styles.fetchedItem}
               >
@@ -69,7 +70,7 @@ export default function SearchPage() {
                     quality={75}
                     className={Styles.fetchedImg}
                     src={`https://image.tmdb.org/t/p/original${lol.extra.backdrops[0].file_path}`}
-                    alt={lol.title}
+                    alt={lol.title ? lol.title : lol.name}
                   />
                   <span>
                     <h4 className={Styles.fetchedTitle}>{lol.name ? lol.name : lol.title}</h4>

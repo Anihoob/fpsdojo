@@ -9,7 +9,7 @@ export default function page() {
   return (
     <div className={Styles.Teammain}>
       <div className={Styles.Teamlogo}>
-        <img className={Styles.Teamlogoimg} src="/anime-bg.gif" alt="" />
+        <img className={Styles.Teamlogoimg} src="/anime-bg.gif" alt="anime background" />
         <h4 className={Styles.Teamlogotitle}>F P S 道場</h4>
         <p className={Styles.Teamlogopara}>
           FPS DOJO is an advanced media encoding and video interpolation program
@@ -26,7 +26,7 @@ export default function page() {
               <img
                 className={Styles.chadimg}
                 src="/ichigo.gif"
-                alt=""
+                alt="kurosaki ichigo pfp"
               />
             </Link>
             <h5>Ichigo</h5>
@@ -36,7 +36,7 @@ export default function page() {
               <img
                 className={Styles.chadimg}
                 src="/qewerty.gif"
-                alt=""
+                alt="qewerty gif"
               />
             </Link>
             <h5>Qewerty</h5>
@@ -46,7 +46,7 @@ export default function page() {
               <img
                 className={Styles.chadimg}
                 src="/hinata.gif"
-                alt=""
+                alt="hinata gif"
               />
             </Link>
             <h5>Hinata</h5>

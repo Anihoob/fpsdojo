@@ -153,7 +153,7 @@ export default function Movie({ params }: { params: umrl }) {
               <div className="movieinfosub">
                 <img
                   src={`https://image.tmdb.org/t/p/original${flixData.extra.logos[0].file_path}`}
-                  alt=""
+                  alt={flixData.title}
                 />
                 <span>
                   <h5>{flixData.genres[0].name}</h5>

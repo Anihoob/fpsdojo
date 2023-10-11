@@ -27,3 +27,5 @@ major changes tmdb revamped && style
 
 -- finished with search 
 11/10/2023
+
+-- silly fix for search when anime is a movie, added alt in every image, added redis caching in search

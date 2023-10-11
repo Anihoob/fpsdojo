@@ -6,11 +6,11 @@ export default function Bot() {
 
   return (
     <>
-      <div className="BotMain">
+      {/* <div className="BotMain">
         <Link href={'/Bot'}>
           <img src="/pikachuBot.gif" alt="" />
         </Link>
-      </div>
+      </div> */}
     </>
   );
 }
