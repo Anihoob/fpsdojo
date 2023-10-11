@@ -120,8 +120,8 @@ export default function MainSlider() {
                 />
                 <Image
                   className="mobileimg"
-                  width={400}
-                  height={400}
+                  width={350}
+                  height={350}
                   src={`https://image.tmdb.org/t/p/original${animedescription.poster_path}`}
                   quality={75}
                   alt={animedescription.title}
