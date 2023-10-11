@@ -15,12 +15,12 @@ export default async function Smovie(props: Props) {
   });
   if (props.pathname === "/Movies") {
     try {
-      const cacheKey = `movie:data`;
-      const cachedData: any = await redis.get(cacheKey);
+      // const cacheKey = `movie:data`;
+      // const cachedData: any = await redis.get(cacheKey);
 
-      if (cachedData) {
-        return cachedData;
-      } else {
+      // if (cachedData) {
+      //   return cachedData;
+      // } else {
         const { data: movie } = await superbase
           .from("tmdbmovies")
           .select("*")
@@ -35,10 +35,10 @@ export default async function Smovie(props: Props) {
             type: item.type,
             quality: item.movies_quality,
           }));
-          await redis.set(cacheKey, JSON.stringify(mappedData));
+          // await redis.set(cacheKey, JSON.stringify(mappedData));
           return mappedData;
         }
-      }
+      // }
     } catch (error) {
       console.log(error);
     }

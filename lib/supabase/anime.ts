@@ -14,12 +14,12 @@ export default async function anime(props: Props) {
   });
   if (props.pathname === "/") {
     try {
-      const cacheKey = `anime:data`;
-      const cachedData: any = await redis.get(cacheKey);
+      // const cacheKey = `anime:data`;
+      // const cachedData: any = await redis.get(cacheKey);
 
-      if (cachedData) {
-        return cachedData;
-      } else {
+      // if (cachedData) {
+      //   return cachedData;
+      // } else {
         const { data: anime } = await superbase
           .from("tmdbanimes")
           .select("*")
@@ -34,10 +34,10 @@ export default async function anime(props: Props) {
             type: item.type,
           }));
 
-          await redis.set(cacheKey, JSON.stringify(mappedData));
+          // await redis.set(cacheKey, JSON.stringify(mappedData));
           return mappedData;
         }
-      }
+      // }
     } catch (error) {
       console.log(error);
     }
