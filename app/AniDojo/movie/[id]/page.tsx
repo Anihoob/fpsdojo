@@ -237,7 +237,9 @@ export default function Movie({ params }: { params: umrl }) {
                     alt={flixData.name}
                   />
                   <h4>{flixData.title}</h4>
-                  <Link href={fetchmovie?.download_link && fetchmovie?.download_link}>Download</Link>
+                  {fetchmovie?.download_link && (
+                    <Link href={fetchmovie?.download_link}>Download</Link>
+                  )}
                 </span>
               </div>
             </div>
