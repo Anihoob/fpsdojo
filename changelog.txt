@@ -36,3 +36,6 @@ major changes tmdb revamped && style
 12/10/23
 --- splitted the slider according to anime and movies to avoid const refetching (success)
 --- shifted whole fetching to lib 
+
+
+--- removed cache for testing

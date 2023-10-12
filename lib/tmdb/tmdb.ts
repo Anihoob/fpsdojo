@@ -6,18 +6,17 @@ interface Props {
 }
 
 export default async function Tmdb(props: Props) {
-  const redis = new Redis({
-    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  });
+  // const redis = new Redis({
+  //   url: process.env.NEXT_PUBLIC_REDIS_URL as string,
+  //   token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
+  // });
 
-  const cacheKey = `tmdb:${props.type}:${props.id}`;
-  const cachedData: any = await redis.get(cacheKey);
+  // const cacheKey = `tmdb:${props.type}:${props.id}`;
+  // const cachedData: any = await redis.get(cacheKey);
 
-  if (cachedData) {
-    // console.log('Data retrieved from cache');
-    return cachedData;
-  }
+  // if (cachedData) {
+  //   return cachedData;
+  // }
 
   const baseUrl = "https://api.themoviedb.org/3";
   const dataUrl = `${baseUrl}/${props.type}/${props.id}`;
@@ -48,10 +47,8 @@ export default async function Tmdb(props: Props) {
       ...mainData,
       extra: logoData,
     };
-    // console.log(combinedData)
-    // console.log('data fetched from db')
 
-    await redis.set(cacheKey, JSON.stringify(combinedData));
+    // await redis.set(cacheKey, JSON.stringify(combinedData));
     return combinedData;
   } catch (error) {
     console.error("Error:", error);
@@ -65,12 +62,7 @@ type seasondataType = {
 };
 
 export async function tmdbseasondata(props: seasondataType) {
-  const redis = new Redis({
-    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
 
-    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  });
-  
 
   const options = {
     method: "GET",
