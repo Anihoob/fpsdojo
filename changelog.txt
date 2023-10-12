@@ -31,3 +31,8 @@ major changes tmdb revamped && style
 -- silly fix for search when anime is a movie, added alt in every image, added redis caching in search
 
 -- removed redis cache from main slider
+
+
+12/10/23
+--- splitted the slider according to anime and movies to avoid const refetching (success)
+--- shifted whole fetching to lib 

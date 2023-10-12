@@ -1,25 +1,14 @@
+import animereq from "../animereq";
+import Tmdb from "../tmdb/tmdb";
 import Supabase from "./supabase";
 import { Redis } from "@upstash/redis/nodejs";
 
-type Props = {
-  pathname: string;
-};
+
 
 const superbase = Supabase();
 
-export default async function anime(props: Props) {
-  const redis = new Redis({
-    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  });
-  if (props.pathname === "/") {
+export default async function anime() {
     try {
-      // const cacheKey = `anime:data`;
-      // const cachedData: any = await redis.get(cacheKey);
-
-      // if (cachedData) {
-      //   return cachedData;
-      // } else {
         const { data: anime } = await superbase
           .from("tmdbanimes")
           .select("*")
@@ -28,18 +17,17 @@ export default async function anime(props: Props) {
         if (anime === null) {
           return;
         } else {
-          const mappedData = anime.map((item: any) => ({
-            id: item.id,
-            title: item.title,
-            type: item.type,
-          }));
-
-          // await redis.set(cacheKey, JSON.stringify(mappedData));
-          return mappedData;
+          const mappedData = anime.map(async(item: any) => {
+            const animeFetch = await Tmdb({
+              id:item.title,
+              type:item.type
+            })
+            return animeFetch;
+          });
+          const animeData = await Promise.all(mappedData);
+          return animeData;
         }
-      // }
     } catch (error) {
       console.log(error);
     }
-  }
 }

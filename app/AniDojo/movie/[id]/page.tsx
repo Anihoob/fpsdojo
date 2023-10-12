@@ -18,7 +18,7 @@ interface datatype {
   movie_title: string | any;
   movie_type: string | any;
   download_id: string;
-  download_link: string | any | null;
+  download_link: string ;
   movies_quality: string | any;
 }
 
@@ -38,7 +38,7 @@ export default function Movie({ params }: { params: umrl }) {
   const whichmovie = params.id;
   const superbase = Supabase();
 
-  const [supabasedata, setSupabasedata] = useState<datatype[]>();
+  const [supabasedata, setSupabasedata] = useState<any>();
   async function fetchMoviesupabase() {
     if (!supabasedata) {
       try {
@@ -53,11 +53,11 @@ export default function Movie({ params }: { params: umrl }) {
     fetchMoviesupabase();
   });
 
-  const [fetchmovie, setFetchmovie] = useState<datatype | null>();
+  const [fetchmovie, setFetchmovie] = useState<datatype>();
   function fetchMovieByTitle() {
     if (supabasedata) {
       const rez = supabasedata.find(
-        (lmao: datatype) => lmao.movie_title === whichmovie
+        (lmao: any) => lmao.movie_title === whichmovie
       );
       setFetchmovie(rez);
     }
@@ -65,7 +65,7 @@ export default function Movie({ params }: { params: umrl }) {
 
   useEffect(() => {
     fetchMovieByTitle();
-  }, [supabasedata]);
+  }, );
 
   const [flixData, setFlixdata] = useState<movides | any>(null);
   async function flixhq() {
@@ -237,7 +237,7 @@ export default function Movie({ params }: { params: umrl }) {
                     alt={flixData.name}
                   />
                   <h4>{flixData.title}</h4>
-                  {fetchmovie?.download_link && (
+                  {fetchmovie && fetchmovie?.download_link && (
                     <Link href={fetchmovie?.download_link}>Download</Link>
                   )}
                 </span>

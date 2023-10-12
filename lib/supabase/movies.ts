@@ -1,3 +1,4 @@
+import Tmdb from "../tmdb/tmdb";
 import Supabase from "./supabase";
 import { Redis } from "@upstash/redis/nodejs";
 
@@ -7,20 +8,8 @@ type Props = {
   pathname: string;
 };
 
-export default async function Smovie(props: Props) {
-  const redis = new Redis({
-    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-
-    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  });
-  if (props.pathname === "/Movies") {
+export default async function movie() {
     try {
-      // const cacheKey = `movie:data`;
-      // const cachedData: any = await redis.get(cacheKey);
-
-      // if (cachedData) {
-      //   return cachedData;
-      // } else {
         const { data: movie } = await superbase
           .from("tmdbmovies")
           .select("*")
@@ -29,18 +18,23 @@ export default async function Smovie(props: Props) {
         if (movie === null) {
           return;
         } else {
-          const mappedData = movie.map((item: any) => ({
-            id: item.id,
-            title: item.title,
-            type: item.type,
-            quality: item.movies_quality,
-          }));
-          // await redis.set(cacheKey, JSON.stringify(mappedData));
-          return mappedData;
+          const mappedData = movie.map(async(item: any) => {
+            const movieFetch = await Tmdb({
+              id:item.title,
+              type:item.type
+            })
+            const withquality = {
+              ...movieFetch,
+              quality: item.quality
+            }
+            return withquality;
+          });
+          const movieData = await Promise.all(mappedData);
+          console.log(movieData)
+          return movieData;
+
         }
-      // }
     } catch (error) {
       console.log(error);
     }
-  }
 }

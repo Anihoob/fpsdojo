@@ -1,12 +1,12 @@
 
 import CaroselSlider from '@/components/caroselslider'
 import Styles from './movies.module.css'
-import MainSlider from '@/components/slidermain'
+import SliderMovie from '@/components/slidermain'
 
 export default function Movies() {
   return (
     <div className={Styles.moviesmain}>
-        <MainSlider />
+        <SliderMovie/>
         <CaroselSlider starting={1} ending={5}/>
         <CaroselSlider starting={6} ending={10}/>
         <CaroselSlider starting={11} ending={15}/>
