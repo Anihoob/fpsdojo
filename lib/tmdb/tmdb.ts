@@ -6,22 +6,26 @@ interface Props {
 }
 
 export default async function Tmdb(props: Props) {
-  // const redis = new Redis({
-  //   url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-  //   token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  // });
 
-  // const cacheKey = `tmdb:${props.type}:${props.id}`;
-  // const cachedData: any = await redis.get(cacheKey);
 
-  // if (cachedData) {
-  //   return cachedData;
-  // }
+  const redis = new Redis({
+    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
+    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
+  });
+
+  const cacheKey = `${props.id}`;
+  const cachedData: any = await redis.get(cacheKey);
+
+  console.log(cachedData)
+
+  if (cachedData) {
+    return cachedData
+  }
 
   const baseUrl = "https://api.themoviedb.org/3";
   const dataUrl = `${baseUrl}/${props.type}/${props.id}`;
   const logoUrl = `${dataUrl}/images`;
-  const imageUrl = `https://image.tmdb.org/t/p/original`;
+
   const options = {
     method: "GET",
     headers: {
@@ -29,6 +33,8 @@ export default async function Tmdb(props: Props) {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
     },
   };
+
+
 
   try {
     const [mainResponse, imagesResponse] = await Promise.all([
@@ -48,7 +54,7 @@ export default async function Tmdb(props: Props) {
       extra: logoData,
     };
 
-    // await redis.set(cacheKey, JSON.stringify(combinedData));
+    await redis.set(cacheKey, JSON.stringify(combinedData));
     return combinedData;
   } catch (error) {
     console.error("Error:", error);
@@ -60,6 +66,8 @@ type seasondataType = {
   id: string | number;
   seasonNo: string;
 };
+
+// 
 
 export async function tmdbseasondata(props: seasondataType) {
 
