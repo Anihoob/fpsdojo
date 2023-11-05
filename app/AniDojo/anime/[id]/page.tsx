@@ -126,7 +126,7 @@ export default function Tv({ params }: { params: { id: any } }) {
   const [epidata, setEpidata] = useState<any>();
 
   async function bruh() {
-    if (selectedSeason >= 0) {
+    if (selectedSeason > 0) {
       const fetchepdata = await tmdbseasondata({
         id: whichanime,
         seasonNo: selectedSeason,
