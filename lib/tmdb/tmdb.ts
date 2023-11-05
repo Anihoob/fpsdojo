@@ -16,10 +16,11 @@ export default async function Tmdb(props: Props) {
   const cacheKey = `${props.id}`;
   const cachedData: any = await redis.get(cacheKey);
 
-  console.log(cachedData)
+  const cacheofflineData = cachedData;
+
 
   if (cachedData) {
-    return cachedData
+    return cacheofflineData
   }
 
   const baseUrl = "https://api.themoviedb.org/3";
@@ -93,7 +94,6 @@ export async function tmdbseasondata(props: seasondataType) {
 
     if (data && Array.isArray(data.episodes)) {
       const episodedata = data.episodes;
-      console.log(episodedata)
       return episodedata;
     }
   } catch (error) {

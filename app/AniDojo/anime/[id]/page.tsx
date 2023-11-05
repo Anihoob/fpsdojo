@@ -11,7 +11,7 @@ interface datatype {
   id?: number;
   tv_series_title?: string;
   season_number?: number | any;
-  episode_number?: number | any;
+  episode_number?: string | any;
   episode_link?: string;
   episode_id?: string;
   season_id?: string;
@@ -57,7 +57,7 @@ export default function Tv({ params }: { params: { id: any } }) {
   const [fetchepsiode, setFetchepisode] = useState<datatype | any>(null);
   const ifMovie = fetchepsiode?.map((lao: any) => lao.season_number)
   const ifMoviel = fetchepsiode?.map((lao: any) => lao.episode_link)
-  const [selectedSeason, setSelectedSeason] = useState<number | any>(0);
+  const [selectedSeason, setSelectedSeason] = useState<any>(0);
 
   function fetchAnimeByTitle() {
     if (!fetchepsiode) {
@@ -126,7 +126,7 @@ export default function Tv({ params }: { params: { id: any } }) {
   const [epidata, setEpidata] = useState<any>();
 
   async function bruh() {
-    if (selectedSeason > 0) {
+    if (selectedSeason > 0 || selectedSeason === 'Specials') {
       const fetchepdata = await tmdbseasondata({
         id: whichanime,
         seasonNo: selectedSeason,
@@ -225,7 +225,7 @@ export default function Tv({ params }: { params: { id: any } }) {
                       epidata.map((epis: any) => {
                         const seasonEpisodes = fetchepsiode.filter(
                           (episode: any) =>
-                            episode.season_number === parseInt(selectedSeason)
+                            episode.season_number === selectedSeason
                         );
                         const episodeWithLink = seasonEpisodes.find(
                           (episode: any) =>
