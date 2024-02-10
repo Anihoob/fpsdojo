@@ -1,5 +1,4 @@
-'use client'
-import { useEffect } from "react";
+export const dynamic = 'force-dynamic'
 import Home from "./Home/page";
 
 

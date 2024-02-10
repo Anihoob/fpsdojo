@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify-icon/react";
 import Image from "next/image";
 import Supabase from "@/lib/supabase/supabase";
-import moviereq from "@/lib/moviereq";
 import Tmdb from "@/lib/tmdb/tmdb";
 
 interface umrl {

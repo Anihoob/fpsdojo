@@ -1,15 +1,14 @@
- import CaroselSlider from '@/components/caroselslider'
 import Styles from './home.module.css'
-import { SliderAnime } from '@/components/slidermain'
+import GetAnimes from './getAnimes'
+import { getAnime } from '@/lib/supabase/carosel'
+import { AnimeCarousel } from '@/components/caroselslider'
 
-export default function Home() {
+export default async function Home() {
+  const animeDetails = await getAnime()
   return (
     <div className={Styles.homemain}>
-        <SliderAnime/>
-        <CaroselSlider starting={0} ending={4}/>
-        <CaroselSlider starting={5} ending={9}/>
-        <CaroselSlider starting={10} ending={14}/>
-        <CaroselSlider starting={15} ending={20}/>
+      <GetAnimes/>
+      <AnimeCarousel data={animeDetails}/>
     </div>
   )
 }

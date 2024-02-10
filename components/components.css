@@ -1,25 +1,28 @@
 /* constants */
 
-.mobile{
+.mobile {
   display: block;
 }
 
-.desktop{
+.desktop {
   display: none;
 }
 
-@media screen and (min-width:1024px) {
-  .mobile{
+@media screen and (min-width: 1024px) {
+  .mobile {
     display: none;
   }
-  .desktop{
+  .desktop {
     display: block;
   }
 }
 
 /* Navbar */
 .active {
-  color: #e86f00;
+  color: #fff;
+  background: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
 }
 
 .nav-main {
@@ -30,7 +33,7 @@
   width: 100%;
   height: 60px;
   background: rgba(41, 41, 41, 0.5);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   pointer-events: auto;
@@ -63,13 +66,13 @@
 }
 
 .nav-links li a h6 {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
 }
 
 @media screen and (min-width: 1024px) {
   .nav-main {
     position: fixed;
-    bottom: 2%;
+    bottom: 90%;
     left: 50%;
     transform: translate(-50%, -0%);
     width: 40%;
@@ -88,7 +91,7 @@
 
 .homemainsliderswiper {
   width: 100%;
-  height: 570px;
+  height: 90vh;
 }
 
 .homemainsliderswiperslide {
@@ -97,6 +100,7 @@
   align-items: center;
   position: relative;
   transition: all 0.3s ease-in-out;
+  cursor: grab;
 }
 
 .homemainsliderswiperslide::after {
@@ -105,11 +109,13 @@
   bottom: 0%;
   left: 0%;
   width: 100%;
-  height: 300px;
-  background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
-  mask: linear-gradient(to top, black 75%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    #181818 0,
+    #181818 0,
+    rgba(24, 24, 24, 0) 100%
+  );
   overflow: hidden;
 }
 
@@ -145,19 +151,17 @@
   text-align: center;
 }
 
-
 .homemainsliderinfo-name {
   text-align: center;
   font-size: 1.2rem;
 }
 
-.homemainsliderinfo-name img{
+.homemainsliderinfo-name img {
   width: 200px;
   height: 50px;
   object-fit: contain;
   object-position: bottom;
 }
-
 
 .homemainsliderinfo span {
   display: flex;
@@ -174,10 +178,10 @@
   border-radius: 20px;
 }
 
-.btntopage{
+.btntopage {
   border: none;
   border-radius: 10px;
-  padding: .5rem 4rem;
+  padding: 0.5rem 4rem;
   font-weight: 600;
   background: white;
   color: black;
@@ -186,7 +190,8 @@
 .homemainsliderswiper .swiper-pagination-bullet {
   opacity: 50%;
   background: white;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }
 .homemainsliderswiper .swiper-pagination-bullet-active {
   opacity: 100%;
@@ -196,8 +201,8 @@
   position: relative;
 }
 
-.homemainsliderswiper .swiper-pagination-bullet-active::after{
-  content: '';
+.homemainsliderswiper .swiper-pagination-bullet-active::after {
+  content: "";
   position: absolute;
   left: 0%;
   width: 10px;
@@ -218,21 +223,20 @@
 
 @media screen and (min-width: 1024px) {
   .homemainsliderswiper {
-    height: 550px;
+    height: 100vh;
   }
 
   .homemainsliderswiperslide {
     justify-content: flex-start;
   }
 
-  .homemainsliderswiperslide::after{
-    top: 0;
-    width: 40%;
-    height: 100%;
-    background: linear-gradient(to left , rgba(0, 0, 0, 0), rgb(0, 0, 0));
-    mask: linear-gradient(to right, black 75%, transparent);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  .homemainsliderswiperslide::after {
+    background: linear-gradient(
+      90deg,
+      #181818 0,
+      #181818 0,
+      rgba(24, 24, 24, 0) 100%
+    );
   }
 
   .homemainsliderinfo {
@@ -246,13 +250,12 @@
     font-size: 2rem;
   }
 
-  .homemainsliderinfo-name img{
+  .homemainsliderinfo-name img {
     width: 300px;
     height: 100px;
     object-fit: contain;
     object-position: left;
   }
-  
 
   .homemainsliderinfo .about {
     width: 100%;
@@ -271,7 +274,7 @@
 
 @media screen and (min-width: 1440px) {
   .homemainsliderswiper {
-    height: 600px;
+    height: 100vh;
   }
   .homemainsliderinfo-name {
     font-size: 2.5rem;
@@ -279,7 +282,7 @@
 
   .homemainsliderinfo .about {
     font-size: 1.3rem;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
   }
 }
 /* home main slider end */
@@ -297,10 +300,10 @@
   padding: 10px;
   background: linear-gradient(
     180deg,
-    #010101 0%,
-    #090909 76.03%,
-    #171717 91.39%,
-    #1b1b1d 100%
+    #181818 0,
+    #181818 0,
+    #181818 100%,
+    rgba(24, 24, 24, 0) 100%
   );
 }
 
@@ -313,7 +316,6 @@
   cursor: pointer;
 }
 
-
 .homesliderswiperslide img {
   width: 210px;
   border-radius: 15px;
@@ -323,8 +325,6 @@
   position: relative;
   z-index: 3;
 }
-
-
 
 .homesliderswiperslide-info {
   width: 90%;
@@ -362,11 +362,10 @@
   margin: 0;
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .homesliderswiper {
     height: 300px;
   }
-
 }
 
 /* home slider end */

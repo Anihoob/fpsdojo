@@ -1,12 +1,8 @@
 import Tmdb from "../tmdb/tmdb";
 import Supabase from "./supabase";
-import { Redis } from "@upstash/redis/nodejs";
 
 const superbase = Supabase();
 
-type Props = {
-  pathname: string;
-};
 
 export default async function movie() {
     try {
@@ -30,7 +26,6 @@ export default async function movie() {
             return withquality;
           });
           const movieData = await Promise.all(mappedData);
-          console.log(movieData)
           return movieData;
 
         }

@@ -1,33 +1,34 @@
-import animereq from "../animereq";
+import { SliderAnime } from "@/components/slidermain";
 import Tmdb from "../tmdb/tmdb";
 import Supabase from "./supabase";
-import { Redis } from "@upstash/redis/nodejs";
-
-
 
 const superbase = Supabase();
 
-export default async function anime() {
-    try {
-        const { data: anime } = await superbase
-          .from("tmdbanimes")
-          .select("*")
-          .order("id", { ascending: false })
-          .limit(5);
-        if (anime === null) {
-          return;
-        } else {
-          const mappedData = anime.map(async(item: any) => {
-            const animeFetch = await Tmdb({
-              id:item.title,
-              type:item.type
-            })
-            return animeFetch;
+export default async function Anime() {
+  try {
+    const { data: anime } = await superbase
+      .from("tmdbanimes")
+      .select("*")
+      .order("id", { ascending: false })
+      .limit(5);
+    if (anime === null) return;
+    else {
+      const mappedData = anime.map(async (item: any) => {
+        try {
+          const animeFetch = await Tmdb({
+            id: item.title,
+            type: item.type,
           });
-          const animeData = await Promise.all(mappedData);
-          return animeData;
+          return animeFetch;
+        } catch (err) {
+          console.log(err);
         }
-    } catch (error) {
-      console.log(error);
+      });
+      const animeFetchedData = await Promise.all(mappedData);
+      if (!animeFetchedData) return;
+      else return animeFetchedData
     }
+  } catch (error) {
+    console.log(error);
+  }
 }

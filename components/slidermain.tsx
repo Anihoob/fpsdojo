@@ -10,12 +10,8 @@ import { Pagination } from "swiper";
 
 import Image from "next/image";
 import Link from "next/link";
-import anime from "@/lib/supabase/anime";
-import movie from "@/lib/supabase/movies";
 
-export default async function SliderMovie() {
-  const movieData = await movie()
-
+export default function SliderMovie({ movieData }: any) {
   return (
     <>
       <Swiper
@@ -30,6 +26,7 @@ export default async function SliderMovie() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
+            
             <Image
               className="mobileimg"
               width={350}
@@ -38,12 +35,9 @@ export default async function SliderMovie() {
               quality={75}
               alt={animedescription.title}
             />
-            <Image
+            <img
               className="deskimg"
-              width={900}
-              height={900}
               src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
-              quality={75}
               alt={animedescription.title}
             />
 
@@ -54,7 +48,6 @@ export default async function SliderMovie() {
                   alt={animedescription.title}
                 />
               </span>
-
               <span>
                 <h6>{animedescription.genres[1].name}</h6>
                 <h6>{animedescription.release_date.substring(0, 4)}</h6>
@@ -74,9 +67,7 @@ export default async function SliderMovie() {
   );
 }
 
-export async function SliderAnime() {
-  const animeData = await anime();
-
+export function SliderAnime({ animeData }: any) {
   return (
     <>
       <Swiper
@@ -91,13 +82,10 @@ export async function SliderAnime() {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
-            <Image
-              className="deskimg"
-              width={900}
-              height={900}
+            <img
               src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
-              quality={75}
               alt={animedescription.title}
+              className="deskimg"
             />
             <Image
               className="mobileimg"

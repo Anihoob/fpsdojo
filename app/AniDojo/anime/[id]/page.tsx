@@ -170,7 +170,7 @@ export default function Tv({ params }: { params: { id: any } }) {
               width={800}
               height={800}
               className="deskimg"
-              src={`https://image.tmdb.org/t/p/original${gugudata.extra.backdrops[0].file_path}`}
+              src={`https://image.tmdb.org/t/p/original${gugudata.backdrop_path}`}
               alt={gugudata.name}
             />
           </div>

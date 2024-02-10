@@ -1,54 +1,38 @@
+import Tmdb from "../tmdb/tmdb";
 import Supabase from "./supabase";
-
-type Carosel = {
-  start: number;
-  end: number;
-};
 
 const superbase = Supabase();
 
-export default async function CaroselAnime(props: Carosel) {
-    try {
-      const { data: anime } = await superbase
-        .from("tmdbanimes")
-        .select("*")
-        .order("id", { ascending: true })
-        .range(props.start, props.end);
-      if (anime) {
-        const mappedData = anime.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          type: item.type,
-        }));
-        return mappedData;
-      } else {
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-    }
+export async function getAnime() {
+  if (!superbase) return;
+  const { data: animeId } = await superbase
+    .from("tmdbanimes")
+    .select("*")
+    .order("id", { ascending: true });
+  if (!animeId) return;
+  const mappAnimeId = animeId.map(async (item: any) => {
+    const fetchAnimeDetails = await Tmdb({
+      id: item.title,
+      type: item.type,
+    });
+    return fetchAnimeDetails;
+  });
+  return Promise.all(mappAnimeId);
 }
 
-export async function CaroselMovies(props: Carosel) {
-    try {
-      const { data: anime } = await superbase
-        .from("tmdbmovies")
-        .select("*")
-        .order("id", { ascending: true })
-        .range(props.start, props.end);
-      if (anime) {
-        const mappedData = anime.map((item: any) => ({
-          id: item.id,
-          title: item.title,
-          type: item.type,
-          movies_quality: item.movies_quality,
-        }));
-        return mappedData;
-      } else {
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  
+export async function getMovies() {
+  if (!superbase) return;
+  const { data: movieId } = await superbase
+    .from("tmdbmovies")
+    .select("*")
+    .order("id", { ascending: true });
+    if(!movieId) return;
+    const mappMovieId = movieId.map(async(item:any)=> {
+      const fetchMovieDetails = await Tmdb({
+        id:item.title,
+        type:item.type,
+      })
+      return fetchMovieDetails
+    })
+    return Promise.all(mappMovieId)
 }

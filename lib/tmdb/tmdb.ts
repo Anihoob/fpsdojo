@@ -1,31 +1,50 @@
-import { Redis } from "@upstash/redis/nodejs";
+
 
 interface Props {
   id: string | any;
   type: string | any;
 }
 
-export default async function Tmdb(props: Props) {
+class RateLimiter {
+  private tokens: number;
+  private lastRefreshed: number;
 
-
-  const redis = new Redis({
-    url: process.env.NEXT_PUBLIC_REDIS_URL as string,
-    token: process.env.NEXT_PUBLIC_REDIS_TOKEN as string,
-  });
-
-  const cacheKey = `${props.id}`;
-  const cachedData: any = await redis.get(cacheKey);
-
-  const cacheofflineData = cachedData;
-
-
-  if (cachedData) {
-    return cacheofflineData
+  constructor(private readonly rateLimit: number) {
+    this.tokens = rateLimit;
+    this.lastRefreshed = Date.now();
   }
+
+  async getToken() {
+    const now = Date.now();
+    const elapsedTime = now - this.lastRefreshed;
+    const newTokens = Math.floor(elapsedTime / 50); // 50ms interval
+
+    if (newTokens > 0) {
+      this.tokens = Math.min(this.tokens + newTokens, this.rateLimit);
+      this.lastRefreshed = now;
+    }
+
+    if (this.tokens > 0) {
+      this.tokens--;
+      return true;
+    }
+
+    return new Promise((resolve) => {
+      const timeToWait = 50 - ((now - this.lastRefreshed) % 50);
+      setTimeout(() => resolve(this.getToken()), timeToWait);
+    });
+  }
+}
+
+const tmdbRateLimiter = new RateLimiter(20);
+
+
+export default async function Tmdb(props: Props) {
+  await tmdbRateLimiter.getToken();
 
   const baseUrl = "https://api.themoviedb.org/3";
   const dataUrl = `${baseUrl}/${props.type}/${props.id}`;
-  const logoUrl = `${dataUrl}/images`;
+  const logoUrl = `${dataUrl}/images?include_image_language=en`;
 
   const options = {
     method: "GET",
@@ -34,9 +53,7 @@ export default async function Tmdb(props: Props) {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_ACCESS_TOKEN}`,
     },
   };
-
-
-
+  
   try {
     const [mainResponse, imagesResponse] = await Promise.all([
       fetch(dataUrl, options),
@@ -54,8 +71,6 @@ export default async function Tmdb(props: Props) {
       ...mainData,
       extra: logoData,
     };
-
-    await redis.set(cacheKey, JSON.stringify(combinedData));
     return combinedData;
   } catch (error) {
     console.error("Error:", error);

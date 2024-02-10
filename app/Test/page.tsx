@@ -1,18 +1,11 @@
-
-import search from "@/lib/search"
-import anime from "@/lib/supabase/anime"
-import movie from "@/lib/supabase/movies"
+import { getLatestAnime } from "@/lib/supabase/carosel";
 
 export default async function page() {
 
-  const bruh = await movie()
-  console.log(bruh)
+  const bruh = await getLatestAnime()
 
   return (
-    <div>
-      {bruh?.map((lmao)=> (
-        <h4 style={{color:'white'}}>{lmao.title}</h4>
-      ))}
-    </div>
+    <>
+    </>
   )
 }
