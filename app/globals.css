@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 :root {
   --bg: #121212;
 }
@@ -7,7 +7,6 @@
 *::after {
   box-sizing: border-box;
 }
-
 
 /* Remove default margin */
 body,
@@ -194,15 +193,15 @@ select {
   position: relative;
 }
 
-.infomain::before{
+.infomain::before {
   content: "";
   position: absolute;
   bottom: 0%;
   left: 0%;
   width: 100%;
-  height: 200px;
+  height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
-  mask: linear-gradient(to top, black 75%, transparent);
+  mask: linear-gradient(to top, black 20%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -219,34 +218,33 @@ select {
   padding: 1rem;
 }
 
-.infosub > img{
+.infosub > img {
   width: 300px;
   height: 50px;
   object-fit: contain;
   object-position: center;
-  
 }
 
 .infosub > span {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
-.infosub2{
+.infosub2 {
   padding: 1rem 1rem 8rem 1rem;
   width: 100%;
   height: 100%;
   background: black;
 }
 
-.description{
+.description {
   background: black;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.description .less{
+.description .less {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -254,31 +252,31 @@ select {
   text-align: justify;
 }
 
-.description .more{
+.description .more {
   text-align: justify;
   display: block;
 }
 
-.description button{
+.description button {
   border: none;
   color: white;
   background: transparent;
 }
 
-.infosection  .divider{
+.infosection .divider {
   width: 100%;
-  height: .5px;
+  height: 0.5px;
   border: none;
   background: rgba(255, 255, 255, 0.3);
 }
 
-.season-select{
+.season-select {
   width: 100%;
   height: 100%;
   background: black;
 }
 
-.season-select select{
+.season-select select {
   background: #121212;
   color: white;
   border: none;
@@ -286,32 +284,31 @@ select {
   padding: 1rem;
 }
 
-.episodes-list{
+.episodes-list {
   display: grid;
-  grid-auto-flow: column;  
+  grid-auto-flow: column;
   gap: 1rem;
   padding: 1rem 0rem;
   overflow-x: auto;
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   color: white;
 }
 
-.episodes-list::-webkit-scrollbar { 
-  display: none;  
+.episodes-list::-webkit-scrollbar {
+  display: none;
 }
 
-.episode{
+.episode {
   width: 300px;
   height: 350px;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
-  border-radius: 0px 10px 10px 0px ;
-
+  gap: 0.5rem;
+  border-radius: 0px 10px 10px 0px;
 }
 
-.episode img{
+.episode img {
   width: 300px;
   height: 180px;
   object-fit: cover;
@@ -323,19 +320,18 @@ select {
   justify-content: space-between;
 }
 
-.episode p{
+.episode p {
   width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.episode button{
+.episode button {
   border: none;
   border-radius: 5px;
   background: white;
 }
-
 
 @media screen and (min-width: 1024px) {
   .infopageoptions span .icons {
@@ -347,53 +343,47 @@ select {
     height: 600px;
   }
 
-  .infomain::before{
+  .infomain::before {
     height: 300px;
   }
 
-  
-  .infosub{
+  .infosub {
     justify-content: center;
     align-items: flex-start;
   }
-  
-  .infosub > img{
+
+  .infosub > img {
     width: 300px;
     height: 100px;
     object-position: left;
   }
-  
-  .infosub > span{
+
+  .infosub > span {
     width: 300px;
     align-items: center;
     justify-content: center;
   }
-  
+
   .infopageposter .deskimg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
   }
-  
+
   .infopageposter .mobileimg {
     display: none;
   }
-  .episodes-list{
-      scrollbar-width: thin; 
-
+  .episodes-list {
+    scrollbar-width: thin;
   }
-  
-  .episodes-list::-webkit-scrollbar { 
-    display: block;  
+
+  .episodes-list::-webkit-scrollbar {
+    display: block;
     color: white;
     background: white;
   }
-
-  
-
 }
-
 
 /*  */
 
@@ -470,10 +460,14 @@ select {
   top: 0;
 }
 
-.movieinfopageposter .mobileimg {
+.movieinfopageposter img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.movieinfopageposter .mobileimg {
+  display: block;
 }
 
 .movieinfopageposter .deskimg {
@@ -494,15 +488,15 @@ select {
   position: relative;
 }
 
-.movieinfomain::before{
+.movieinfomain::before {
   content: "";
   position: absolute;
   bottom: 0%;
   left: 0%;
   width: 100%;
-  height: 200px;
+  height: 100%;
   background: linear-gradient(rgba(0, 0, 0, 0), rgb(0, 0, 0));
-  mask: linear-gradient(to top, black 75%, transparent);
+  mask: linear-gradient(to top, black 20%, transparent);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -519,34 +513,35 @@ select {
   padding: 1rem;
 }
 
-.movieinfosub > img{
+.movieinfosub > img {
   width: 300px;
   height: 50px;
   object-fit: contain;
   object-position: center;
-  
 }
 
 .movieinfosub > span {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
-.movieinfosub2{
+.movieinfosub2 {
   padding: 1rem 1rem 8rem 1rem;
   width: 100%;
   height: 100%;
   background: black;
+  display: flex;
+  flex-direction: column;
 }
 
-.description{
+.description {
   background: black;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
 
-.description .less{
+.description .less {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -554,20 +549,20 @@ select {
   text-align: justify;
 }
 
-.description .more{
+.description .more {
   text-align: justify;
   display: block;
 }
 
-.description button{
+.description button {
   border: none;
   color: white;
   background: transparent;
 }
 
-.movieinfosection  .divider{
+.movieinfosection .divider {
   width: 100%;
-  height: .5px;
+  height: 0.5px;
   border: none;
   background: rgba(255, 255, 255, 0.3);
 }
@@ -578,7 +573,7 @@ select {
   padding: 1rem 0rem;
 }
 
-.download span{
+.download span {
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -586,182 +581,32 @@ select {
   gap: 1rem;
 }
 
-.download span img{
+.download span img {
   width: 100%;
   border-radius: 20px;
 }
 
-.download span a{
+.download span a {
   background: #fff;
   border-radius: 5px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-weight: 600;
   color: black;
-
 }
 
-/* 
-.movieinfopageinfo {
-  top: 0%;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #000;
-}
-
-.movieinfopagecard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  gap: 0.5rem;
-}
-
-.movieinfopagetitle {
-  width: 100%;
-}
-
-.movieinfopagetitle img{
-  width: 400px;
-}
-
-.movieinfopagegenre {
-  display: flex;
-  color: white;
-  width: 100%;
-  justify-content: center;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-.movieinfopagegenre hr {
-  height: 2px;
-  margin: 0;
-}
-
-.movieinfopageselectbtn {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  padding: 10px;
-}
-
-.movieinfopagedwnldselect {
-  background: url("https://api.iconify.design/material-symbols:arrow-drop-down.svg")
-    no-repeat right #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 30px;
-  font-weight: 700;
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
-  appearance: none;
-  overflow-y: auto;
-  color: black;
-}
-
-.movieinfopagedwnldbtn {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-.movieinfopagedwnldbtn button {
-  background: white;
-  border: 0;
-  padding: 10px 30px;
-  border-radius: 10px;
-  font-weight: 700;
-  color: black;
-}
-
-.movieinfopageabout {
-  padding: 0px 20px;
-  text-align: justify;
-  color: white;
-  background: black;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.movieinfopageabout p{
-  transition: 1s ease-in-out;
-}
-
-.expanded {
-  padding: 10px 20px;
-  text-align: justify;
-  color: white;
-  background: black;
-}
-
-.showMoreButton {
-  display: block;
-  margin-top: 10px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.movieinfopageaquality {
-  width: 100%;
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  gap: 0.5rem;
-  color: white;
-  font-weight: bolder;
-}
-.movieinfopageaquality p{
-  border: 1px white solid;
-  font-size: .7rem;
-  padding: 2px;
-}
-
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .movieinfopageposter .mobileimg {
     display: none;
   }
-  
-  .movieinfopageposter .deskimg{
+
+  .movieinfopageposter .deskimg {
     display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
 
-  .movieinfopageoptions span .icons{
-    width: 50px;
-    height: 50px;
+  .movieinfosub2 {
+    padding: 2rem;
   }
-
-  .movieinfopageposter{
-    height: 600px;
-  }
-
-  .movieinfopagetitle {
-    font-size: 3rem;
-  }
-
-  .movieinfopagecard {
-    top: 40%;
-  }
-  
-  .movieinfopageabout{
-    width: 70%;
-  }
-
-  .expanded{
-    width: 70%;
-  }
-
-
-  
-} */
+}
 
 /*  */
 .loading_main {

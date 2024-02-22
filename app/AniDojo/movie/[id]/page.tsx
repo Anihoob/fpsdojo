@@ -139,9 +139,7 @@ export default function Movie({ params }: { params: umrl }) {
               src={`https://image.tmdb.org/t/p/original${flixData.poster_path}`}
               alt={flixData.title}
             />
-            <Image
-              width={700}
-              height={700}
+            <img
               className="deskimg"
               src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[0].file_path}`}
               alt={flixData.title}
@@ -231,11 +229,6 @@ export default function Movie({ params }: { params: umrl }) {
               <hr className="divider" />
               <div className="download">
                 <span>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${flixData.extra.backdrops[2].file_path}`}
-                    alt={flixData.name}
-                  />
-                  <h4>{flixData.title}</h4>
                   {fetchmovie && fetchmovie?.download_link && (
                     <Link href={fetchmovie?.download_link}>Download</Link>
                   )}
