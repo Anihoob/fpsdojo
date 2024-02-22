@@ -21,9 +21,9 @@ export default function SliderMovie({ movieData }: any) {
         modules={[Pagination]}
         className="homemainsliderswiper"
       >
-        {movieData?.map((animedescription: any) => (
+        {movieData?.map((moviedescription: any) => (
           <SwiperSlide
-            key={animedescription.id}
+            key={moviedescription.id}
             className="homemainsliderswiperslide"
           >
             
@@ -31,30 +31,38 @@ export default function SliderMovie({ movieData }: any) {
               className="mobileimg"
               width={350}
               height={350}
-              src={`https://image.tmdb.org/t/p/original${animedescription.poster_path}`}
+              src={`https://image.tmdb.org/t/p/original${moviedescription.poster_path}`}
               quality={75}
-              alt={animedescription.title}
+              alt={moviedescription.title}
             />
+              {moviedescription.extra.backdrops[0] ? 
             <img
-              className="deskimg"
-              src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
-              alt={animedescription.title}
+            src={`https://image.tmdb.org/t/p/original${moviedescription.extra.backdrops[0].file_path}`}
+            alt={moviedescription.title}
+            className="deskimg"
             />
+            :
+            <img
+            src={`https://image.tmdb.org/t/p/original${moviedescription.backdrop_path}`}
+            alt={moviedescription.title}
+            className="deskimg"
+            />
+          }
 
             <div className="homemainsliderinfo">
               <span className="homemainsliderinfo-name">
                 <img
-                  src={`https://image.tmdb.org/t/p/original${animedescription.extra.logos[0].file_path}`}
-                  alt={animedescription.title}
+                  src={`https://image.tmdb.org/t/p/original${moviedescription.extra.logos[0].file_path}`}
+                  alt={moviedescription.title}
                 />
               </span>
               <span>
-                <h6>{animedescription.genres[1].name}</h6>
-                <h6>{animedescription.release_date.substring(0, 4)}</h6>
+                <h6>{moviedescription.genres[1].name}</h6>
+                <h6>{moviedescription.release_date.substring(0, 4)}</h6>
               </span>
-              <p className="about">{animedescription.overview}</p>
+              <p className="about">{moviedescription.overview}</p>
               <Link
-                href={`AniDojo/movie/${animedescription.id}`}
+                href={`AniDojo/movie/${moviedescription.id}`}
                 className={"btntopage"}
               >
                 DOWNLOAD
@@ -82,11 +90,19 @@ export function SliderAnime({ animeData }: any) {
             key={animedescription.id}
             className="homemainsliderswiperslide"
           >
+            {animedescription.extra.backdrops[0] ? 
             <img
-              src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
-              alt={animedescription.title}
-              className="deskimg"
+            src={`https://image.tmdb.org/t/p/original${animedescription.extra.backdrops[0].file_path}`}
+            alt={animedescription.title}
+            className="deskimg"
             />
+            :
+            <img
+            src={`https://image.tmdb.org/t/p/original${animedescription.backdrop_path}`}
+            alt={animedescription.title}
+            className="deskimg"
+            />
+          }
             <Image
               className="mobileimg"
               width={350}
