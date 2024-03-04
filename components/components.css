@@ -103,6 +103,7 @@
   cursor: grab;
 }
 
+
 .homemainsliderswiperslide::after {
   content: "";
   position: absolute;
@@ -232,7 +233,7 @@
 
   .homemainsliderswiperslide::after {
     background: linear-gradient(
-      90deg,
+      360deg,
       #181818 0,
       #181818 0,
       rgba(24, 24, 24, 0) 100%
