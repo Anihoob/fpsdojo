@@ -21,7 +21,7 @@ export default async function Anime() {
           });
           return animeFetch;
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       });
       const animeFetchedData = await Promise.all(mappedData);

@@ -15,19 +15,23 @@ export default async function movie() {
           return;
         } else {
           const mappedData = movie.map(async(item: any) => {
-            const movieFetch = await Tmdb({
-              id:item.title,
-              type:item.type
-            })
-            const withquality = {
-              ...movieFetch,
-              quality: item.quality
+            try {
+              const movieFetch = await Tmdb({
+                id:item.title,
+                type:item.type
+              })
+              const withquality = {
+                ...movieFetch,
+                quality: item.quality
+              }
+              return withquality;
+            } catch (error) {
+              console.error(error)
             }
-            return withquality;
           });
           const movieData = await Promise.all(mappedData);
+          if(!movieData) return;
           return movieData;
-
         }
     } catch (error) {
       console.log(error);
