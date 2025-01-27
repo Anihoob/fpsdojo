@@ -10,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <script async src="https://api.linkshortify.com/verify.js" defer></script>
+      {/* <script async src="https://api.linkshortify.com/verify.js" defer></script> */}
+
+<script defer src="https://track.shotcut.in/pixel/LhZmb8NhjlnaTt1t"></script>
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-M8YRNGE6LL"
